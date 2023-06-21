@@ -48,7 +48,7 @@
         <span style="text-decoration:line-through!important;">99 USDT</span>
         <p class="card-description">
           Each blind box contains a NFT, which may be one of the
-          <a target="_blank" href="https://chessofstars.io/nftlist">NFTs here</a>.
+          <a target="_blank" href="https://www.chessofstars.io/#gameCards">NFTs here</a>.
         </p>
         <button class="btn btn-primary btn-round" @click="getCard()">Try your luck</button>
       </div>

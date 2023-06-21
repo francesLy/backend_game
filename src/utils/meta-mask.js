@@ -6,7 +6,7 @@ import store from "../store/index";
 import router from "../router/index";
 import { messageHelper } from "@/utils/message-box";
 import { chainApi, userApi } from '@/api/request';
-import { ElNotification } from 'element-plus';
+import { ElMessage, ElNotification } from 'element-plus';
 let option = {
   injectProvider: false,
   communicationLayerPreference: 'webrtc',
@@ -62,27 +62,30 @@ export class MetaMask {
     if (this.provider !== window.ethereum) {
       console.error('Do you have multiple wallets installed?');
     }
-
-    const CHAINID = toHex(store.state.abi.chainId)
-    this.chainId = await ethereum.request({ method: 'eth_chainId' })
-    if (this.chainId !== CHAINID) {
-      let isChecked = await this.checkNetwork();
-      console.log("checkednetwork", isChecked)
-      if (!isChecked) return;
-      this.chainId = this.toHex(store.state.abi.chainId)
-    }
-    const accounts = await ethereum.request({ method: 'eth_requestAccounts' })
-    if (accounts && accounts.length) this.account = accounts[0];
-    if (this.account) {
-      await chainApi.getWalletUrl(this.chainId).then(res => {
-        if (res.code == 0) {
-          this.url = res.data;
-          store.commit("setMetaMask", { chainID: this.chainId, account: this.account, url: res.data });
-          this.isCurrentAccount()
-        }
-      })
-    } else {
-      this.disconnect()
+    try {
+      const CHAINID = toHex(store.state.abi.chainId)
+      this.chainId = await ethereum.request({ method: 'eth_chainId' })
+      if (this.chainId !== CHAINID) {
+        let isChecked = await this.checkNetwork();
+        console.log("checkednetwork", isChecked)
+        if (!isChecked) return;
+        this.chainId = this.toHex(store.state.abi.chainId)
+      }
+      const accounts = await ethereum.request({ method: 'eth_requestAccounts' })
+      if (accounts && accounts.length) this.account = accounts[0];
+      if (this.account) {
+        await chainApi.getWalletUrl(this.chainId).then(res => {
+          if (res.code == 0) {
+            this.url = res.data;
+            store.commit("setMetaMask", { chainID: this.chainId, account: this.account, url: res.data });
+            this.isCurrentAccount()
+          }
+        })
+      } else {
+        this.disconnect()
+      }
+    } catch (error) {
+      errorHandlerOfMetaMaskRequest(error)
     }
   }
   isMetaMaskInstalled() {
@@ -114,7 +117,7 @@ export class MetaMask {
         method: "wallet_switchEthereumChain",
         params: [{ chainId: CHAINID }], // chainId must be in hexadecimal numbers
       }).then(res => {
-        console.log(res)
+        console.log("success")
       })
       return true;
     } catch (error) {
@@ -147,13 +150,14 @@ export class MetaMask {
           },
         ],
       }).then(res => {
-        console.log(res)
+        console.log("success")
       })
       console.log("add network success")
       return true
     } catch (error) {
       console.log(error)
       console.log("cancel")
+      errorHandlerOfMetaMaskRequest(error)
       return false
     }
   }
@@ -286,7 +290,7 @@ export class MetaMask {
       myContract.methods.buyToken(this.toHex(param.amount)).send({
         from: param.from
       }).then(res => {
-        console.log(res)
+        console.log("success")
         ElNotification({ type: "success", message: "transcation successfully\nIf the balance is not refreshed, manually refresh later" })
         resolve(res)
       }).catch(err => {
@@ -348,7 +352,7 @@ export class MetaMask {
           ElNotification({ type: "success", message: `You've authorized ${param.amount} usdt for purchasing, please click buy to proceed.` })
           resolve(res)
         }).catch(err => {
-          ElMessage.error(err)
+          errorHandlerOfMetaMaskRequest(err)
           reject(err)
         })
     })
@@ -361,11 +365,10 @@ export class MetaMask {
         from: param.from
       }).then(res => {
         ElNotification({ type: "success", message: "Stake successfully\nIf the balance is not refreshed, manually refresh later" })
-        console.log(res)
+        console.log("success")
         resolve(res)
       }).catch(err => {
-        ElMessage.error(!err.status ? "Stake failed" : err)
-        console.log(err)
+        errorHandlerOfMetaMaskRequest(err)
         reject(err)
       })
     })
@@ -380,7 +383,7 @@ export class MetaMask {
         ElNotification({ type: "success", message: "Unstake successfully\nIf the balance is not refreshed, manually refresh later" })
         resolve(res)
       }).catch(err => {
-        ElMessage.error(err)
+        errorHandlerOfMetaMaskRequest(err)
         reject(err)
       })
     })
@@ -394,8 +397,7 @@ export class MetaMask {
         ElNotification({ type: "success", message: "Claim rewards successfully" })
         resolve(res)
       }).catch(err => {
-        console.log(err)
-        ElMessage.error(err)
+        errorHandlerOfMetaMaskRequest(err)
         reject(err)
       })
     })
@@ -410,8 +412,7 @@ export class MetaMask {
         ElNotification({ type: "success", message: "You have successfully purchased the NFT blind box, It will take a few minutes,you can refresh later" })
         resolve(res)
       }).catch(err => {
-        console.log(err)
-        ElMessage.error(err)
+        errorHandlerOfMetaMaskRequest(err)
         reject(err)
       })
     })
@@ -427,13 +428,12 @@ export class MetaMask {
       myContract.methods.transfer(param.from, this.toHex(param.amount)).send({
         from: param.from
       }).then(res => {
-        console.log(res)
+        console.log("success")
         ElNotification({ type: "success", message: "it will take a few minutes,please refresh later" })
         resolve(res)
       }).catch(err => {
-        console.log(err)
+        errorHandlerOfMetaMaskRequest(err)
         reject(err)
-        ElMessage.error(err)
       })
     })
   }
@@ -443,18 +443,32 @@ export class MetaMask {
       myContract.methods.addNFT(param.tokenId).send({
         from: param.from
       }).then(res => {
-        console.log(res)
+        console.log("success")
         resolve(res)
       }).catch(err => {
-        console.log(err)
+        errorHandlerOfMetaMaskRequest(err)
         reject(err)
       })
     })
   }
 }
+function errorHandlerOfMetaMaskRequest(error) {
+  console.log(error)
+  if (error.code == 4001) {
+    ElMessage.error("You have rejected this operation.")
+  }else if (error.code == 4100) {
+    ElMessage.error("The requested account and/or method has not been authorized.")
+  }else if (error.code == -32603) {
+    ElMessage.error("It seems that something wrong happens in your wallet, please check and solve it first.")
+  }else if (error.code == -32002) {
+    ElMessage.error("The wallet is processing your request, please finish the operation in the wallet.")
+  }else{
+    ElMessage.error(error?.message)
+  }
+}
 export const savaAfterTranscation = (param) => {
   chainApi.save(param).then(res => {
-    console.log(res)
+    console.log("success")
     console.log("saved")
   }).catch((err) => {
     console.log(err)

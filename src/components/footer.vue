@@ -3,7 +3,7 @@
     <div class="copyright float-right">
       &copy;
       {{ date }}, made with <i class="fa fa-heart"></i> by
-      <a href="https://chessofstars.io" target="_blank">COSD</a> for a better GameFi.
+      <a href="https://www.chessofstars.io" target="_blank">COSD</a> for a better GameFi.
     </div>
   </div>
 </template>

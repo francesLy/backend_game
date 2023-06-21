@@ -29,7 +29,7 @@
             </div>
             <div class="card-footer">
               <div class="stats">
-                <i class="fa fa-money"></i>&nbsp;Evics earned in the game
+                <i class="fa fa-money"></i>&nbsp;All Evics  in the game
                 <!-- <a href="#pablo">Exchange to USDT</a> -->
               </div>
             </div>
@@ -59,7 +59,7 @@
                 <i class="fa fa-gamepad"></i>
               </div>
               <p class="card-category">Games played</p>
-              <h3 class="card-title">{{ dashboard.games }}</h3>
+              <h3 class="card-title">{{ dashboard.nft? dashboard.games:0 }}</h3>
             </div>
             <div class="card-footer">
               <div class="stats">

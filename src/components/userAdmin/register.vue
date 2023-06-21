@@ -159,21 +159,18 @@ function doRegister() {
         if (res.code == 0 && res.msg == "success") {
           formRef.value.resetFields();
           loadingHelper.hide();
-          ElMessageBox.confirm(
-            'Sign up successfully!Do you want to redirected to login now?',
+          ElMessageBox.alert(
+            'Congratulations! You are ready for signing in! ',
             'Success',
             {
               confirmButtonText: 'Yes',
-              cancelButtonText: 'Cancel',
               type: 'success',
+              showClose: false,
+              callback:() => {
+                router.push('/login')
+              }
             }
           )
-            .then(() => {
-              router.push('/login')
-            })
-            .catch(() => {
-              console.log('cancel')
-            })
         }
         
       });
