@@ -1,7 +1,7 @@
 <template>
   <el-button :type="isConnected?'success':'primary'" @click="connectWallet" :disabled="isConnected?true:false" round>
     <span v-if="!isConnected"><i class="fa fa-btc"></i>&nbsp;&nbsp;Connect Wallet</span>
-    <el-popover v-if="isConnected" placement="top" :width="300" trigger="hover">
+    <el-popover v-if="isConnected" placement="bottom" :width="300" trigger="hover">
       <template #reference>
         <span>
           <i class="fa fa-bullseye"></i>
