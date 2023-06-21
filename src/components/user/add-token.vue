@@ -8,7 +8,7 @@
           <el-avatar :src="infos.cosd.image"></el-avatar>
         </el-col>
         <el-col :span="10">
-          <el-button type="primary" style="width:100%" @click="addToken(infos.cosd)" :disabled="$store.state.metaMask?false:true" round>Add to MetaMask</el-button>
+          <el-button v-if="$store.state.metaMask" type="primary" style="width:100%" @click="addToken(infos.cosd)" :disabled="$store.state.metaMask?false:true" round>Add to MetaMask</el-button>
         </el-col>
         <el-col :span="24">
           <span><b>Symbol:&nbsp;&nbsp;</b> {{ infos.cosd.symbol }}&nbsp;&nbsp;<i class="fa fa-copy" @click="copy(infos.cosd.symbol)"></i></span><br />
@@ -23,7 +23,7 @@
           <el-avatar :src="infos.busd.image"></el-avatar>
         </el-col>
         <el-col :span="10">
-          <el-button type="primary" style="width:100%" @click="addToken(infos.busd)" :disabled="$store.state.metaMask?false:true" round>Add to MetaMask</el-button>
+          <el-button v-if="$store.state.metaMask" type="primary" style="width:100%" @click="addToken(infos.busd)" :disabled="$store.state.metaMask?false:true" round>Add to MetaMask</el-button>
         </el-col>
         <el-col :span="24">
           <span><b>Symbol:&nbsp;&nbsp;</b> {{ infos.busd.symbol }}&nbsp;&nbsp;<i class="fa fa-copy" @click="copy(infos.busd.symbol)"></i></span><br />
@@ -66,7 +66,7 @@ const infos = ref({
 const visible = ref(false)
 
 async function open() {
-  if (!metaMask.isAvailable()) return;
+  //if (!metaMask.isAvailable()) return;
   visible.value = true
 }
 async function addToken(data) {
