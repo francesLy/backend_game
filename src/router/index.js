@@ -14,7 +14,7 @@ const routes = [
     name: "login",
     component: Login,
     meta: {
-      title: "登录",
+      title: "login",
       route: "/login",
     }
   },
@@ -23,7 +23,7 @@ const routes = [
     name: "loginadmin",
     component: LoginAdmin,
     meta: {
-      title: "管理员登录",
+      title: "admin login",
       route: "/admin/login",
     }
   },
@@ -41,7 +41,7 @@ const routes = [
     name: "404",
     component: Notfound,
     meta: {
-      title: "找不到页面",
+      title: "no found",
       route: "/404",
     }
   },
@@ -53,7 +53,7 @@ const routes = [
     meta: {
       route: "/plat",
       permission: "user",
-      title: "页面",
+      title: "page",
       name: "plat",
       requireAuth: false,
     },
@@ -102,7 +102,7 @@ const routes = [
     redirect: "/admin/home",
     meta: {
       permission: "admin",
-      title: "页面",
+      title: "admin",
       name: "admin",
       requireAuth: false,
     },

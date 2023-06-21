@@ -11,7 +11,7 @@
       <template #default>
         <div style="text-align: center;">
           <el-image :src="require('@/assets/metamask-fox.svg')"></el-image>
-          <p style="width:60%;margin:5px auto"><small>{{ $store.state.metaMask?.account }}</small></p>
+          <p style="width:60%;margin:5px auto"><small>{{ $store.state.metaMask?.account }} <i class="fa fa-copy" @click="copy($store.state.metaMask?.account)"></i></small></p>
           <el-row :gutter="10" style="margin-top:10px">
             <el-col :span="10">
               <el-tag type="success" round><i class="fa fa-bullseye" style="font-size:12px;"></i> &nbsp;connected</el-tag>
@@ -33,6 +33,7 @@ import { ref, getCurrentInstance, computed } from "vue";
 import { useStore } from "vuex"
 import { chainApi } from "@/api/request";
 import { base64 } from "@/utils/base64";
+import { copyClick } from '@/utils/copy';
 import Bus from "@/utils/event-bus";
 const { proxy } = getCurrentInstance()
 const store = useStore()
@@ -102,4 +103,13 @@ async function connectWallet() {
   await getBalance('cosd')
   Bus.$emit('refresh', true);
 }
+function copy(val){
+  copyClick(val)
+}
 </script>
+<style scoped>
+.fa-copy{
+  cursor: pointer;
+  color:rgb(121, 121, 158)
+}
+</style>
