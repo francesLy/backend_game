@@ -13,11 +13,13 @@
           <el-image :src="require('@/assets/metamask-fox.svg')"></el-image>
           <p style="width:60%;margin:5px auto"><small>{{ $store.state.metaMask?.account }}</small></p>
           <el-row :gutter="10" style="margin-top:10px">
-            <el-col :span="12">
+            <el-col :span="10">
               <el-tag type="success" round><i class="fa fa-bullseye" style="font-size:12px;"></i> &nbsp;connected</el-tag>
             </el-col>
-            <el-col :span="12" style="text-align: right;">
-              <span>{{chains[$store.state.metaMask?.chainID]}}</span> network
+            <el-col :span="14" style="text-align: right;">
+              <el-tooltip effect="light" :content="$store.state.abi?.networkName" placement="bottom">
+              <span :title="$store.state.abi?.networkName">{{$store.state.abi?.networkName.length>20?($store.state.abi?.networkName.substring(0,20)+'...'):$store.state.abi?.networkName}}</span>
+              </el-tooltip>
             </el-col>
           </el-row>
         </div>
