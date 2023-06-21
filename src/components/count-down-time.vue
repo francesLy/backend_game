@@ -35,12 +35,22 @@ function* genTime(num) {
     yield `${second} s`;
   }
 }
-function getVerifyCode() {
+async function emailVaild() {
+  let ret = false;
+  await userApi.checkEmail(emailValue.value).then(res => {
+    if (res.data) ret = true
+    else ElMessage.error("this email has been used,please use another one");
+  })
+  return ret
+}
+async function getVerifyCode() {
   if (!emailValue.value) {
     ElMessage.error("Email is required")
     return;
   }
-  emit("send",true);
+  let isEmailAvaliable = await emailVaild()
+  if(!isEmailAvaliable) return;
+  emit("send", true);
   sendBtnText.value = "Sending..."
   userApi.code({ email: emailValue.value }).then(res => {
     if (res.code == 0) {
@@ -56,8 +66,8 @@ function getVerifyCode() {
       timer = setInterval(() => {
         time.value = gen.next().value;
       })
-    }else{
-      emit("send",false);
+    } else {
+      emit("send", false);
     }
     sendBtnText.value = "Send"
   })
@@ -66,7 +76,7 @@ function clear() {
   clearInterval(timer);
   gen = null;
   btndisabled.value = false;
-  emit("send",false);
+  emit("send", false);
 }
 onBeforeUnmount(() => {
   clear()
