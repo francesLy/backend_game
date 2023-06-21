@@ -5,8 +5,8 @@
       <span class="wtext-l">Chess Of Stars</span>
     </div>
     <div class="login-box" style="margin-top:10px">
-      <h3 class="title-des wtext-xl">Play & Earn,</h3>
-      <p class="text-muted"><small>register your own account^^</small></p>
+      <h3 class="title-des wtext-xl">Play & Earn</h3>
+      <p class="text-muted"><small>Register your own account^^</small></p>
       <el-form ref="formRef" :rules="rules" label-position="top" label-width="100px" :model="form" style="padding-top: 40px">
         <el-form-item label="Email" prop="email">
           <el-input v-model="form.email" placeholder="enter your email" clearable :disabled="btndisabled" />
@@ -39,7 +39,7 @@
           <el-button type="primary" class="w-100 shadow" @click="doRegister()">Sign Up</el-button>
         </el-form-item>
       </el-form>
-      <div style="margin-top: 60px; font-size: 14px"><span class="text-muted">Already have an account？</span><a href="/login">Sign In</a></div>
+      <div style="margin-top: 60px; font-size: 14px;font-weight:500"><span class="text-muted">Already have an account？</span><a href="/login">Sign In</a></div>
     </div>
   </div>
 </template>

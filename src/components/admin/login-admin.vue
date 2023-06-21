@@ -5,7 +5,7 @@
       <span class="wtext-l">Chess Of Stars</span>
     </div>
     <div class="login-box">
-      <h3 class="title-des wtext-xl">Play & Earn,</h3>
+      <h3 class="title-des wtext-xl">Play & Earn</h3>
       <p class="text-muted"><small>Enjoy the GameFi^^</small></p>
       <el-form ref="formRef" :rules="rules" label-position="top" label-width="100px" :model="form" style="padding-top: 40px">
         <el-form-item label="Username" prop="username">
