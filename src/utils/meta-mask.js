@@ -55,7 +55,8 @@ export class MetaMask {
       return
     }
     await this.getProvider()
-    if (!this.provider) {
+    console.log(this.provider.hasOwnProperty("isMetaMask"))
+    if (!this.provider || !this.provider?.hasOwnProperty("isMetaMask")) {
       messageHelper.error(`Please install Metamask Wallet at <a href="https://metamask.io/">metamask.io</a>.`, true, 4000);
       return
     }
