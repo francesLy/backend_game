@@ -455,15 +455,15 @@ export class MetaMask {
 function errorHandlerOfMetaMaskRequest(error) {
   console.log(error)
   if (error.code == 4001) {
-    ElMessage.error("You have rejected this operation.")
+    messageHelper.error("You have rejected this operation.")
   }else if (error.code == 4100) {
-    ElMessage.error("The requested account and/or method has not been authorized.")
+    messageHelper.error("The requested account and/or method has not been authorized.")
   }else if (error.code == -32603) {
-    ElMessage.error("It seems that something wrong happens in your wallet, please check and solve it first.")
+    messageHelper.error("It seems that something wrong happens in your wallet, please check and solve it first.")
   }else if (error.code == -32002) {
-    ElMessage.error("The wallet is processing your request, please finish the operation in the wallet.")
+    messageHelper.error("The wallet is processing your request, please finish the operation in the wallet.")
   }else{
-    ElMessage.error(error?.message)
+    messageHelper.error(error?.message)
   }
 }
 export const savaAfterTranscation = (param) => {
