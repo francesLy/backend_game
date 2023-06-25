@@ -41,17 +41,14 @@ export class MetaMask {
     store.commit("setMetaMask", null)
   }
   async connectMetaMask() {
-    console.log(this.isMetaMaskInstalled())
     if (!this.isMetaMaskInstalled()) {
       messageHelper.error(`Please install Metamask Wallet at <a href="https://metamask.io/">metamask.io</a>.`, true, 4000);
-      console.log(ethereum)
       // 判断是否安装MetaMask扩展工具
       const forwarderOrigin = window.location.origin
       const onboarding = new MetaMaskOnboarding({
         forwarderOrigin
       })
       onboarding.startOnboarding()
-      console.log(onboarding.startOnboarding())
       return
     }else{
       web3 = new Web3(ethereum)
@@ -64,6 +61,7 @@ export class MetaMask {
       console.error('Do you have multiple wallets installed?');
     }
     this.provider = ethereum;
+    
     try {
       const CHAINID = toHex(store.state.abi.chainId)
       this.chainId = await ethereum.request({ method: 'eth_chainId' })
@@ -210,10 +208,11 @@ export class MetaMask {
         })
       })
   }
-  isAvailable() {
+  async isAvailable() {
     let ret = false;
     if (!this.isMetaMaskInstalled()) {
       messageHelper.error(`Please install Metamask Wallet at <a href="https://metamask.io/">metamask.io</a>.`, true, 4000)
+      store.commit("setMetaMask",null)
       return false;
     }
     if (!store.state.metaMask) {
