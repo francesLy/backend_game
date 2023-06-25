@@ -18,6 +18,7 @@ export const POOL = { defi: 1, sl: 2, club: 3 }
 const MMSDK = new MetaMaskSDK(option);
 const ethereum = MMSDK.getProvider();
 const web3 = new Web3(ethereum)
+console.log(ethereum)
 function toHex(num) {
   let hex = '0x' + num.toString(16);
   return hex
@@ -54,15 +55,19 @@ export class MetaMask {
       onboarding.startOnboarding()
       return
     }
-    await this.getProvider()
-    console.log(this.provider.hasOwnProperty("isMetaMask"))
-    if (!this.provider || !this.provider?.hasOwnProperty("isMetaMask")) {
+    let provider = await this.getProvider()
+    if(!provider){
+      messageHelper.error("Unsupported wallet detected,please use MetaMask")
+      return;
+    }
+    if (!provider || !provider?.hasOwnProperty("isMetaMask")) {
       messageHelper.error(`Please install Metamask Wallet at <a href="https://metamask.io/">metamask.io</a>.`, true, 4000);
       return
     }
-    if (this.provider !== window.ethereum) {
+    if (provider !== ethereum) {
       console.error('Do you have multiple wallets installed?');
     }
+    this.provider = ethereum;
     try {
       const CHAINID = toHex(store.state.abi.chainId)
       this.chainId = await ethereum.request({ method: 'eth_chainId' })
