@@ -41,21 +41,25 @@ export class MetaMask {
     store.commit("setMetaMask", null)
   }
   async connectMetaMask() {
+    console.log(this.isMetaMaskInstalled())
     if (!this.isMetaMaskInstalled()) {
       messageHelper.error(`Please install Metamask Wallet at <a href="https://metamask.io/">metamask.io</a>.`, true, 4000);
+      console.log(ethereum)
       // 判断是否安装MetaMask扩展工具
       const forwarderOrigin = window.location.origin
       const onboarding = new MetaMaskOnboarding({
         forwarderOrigin
       })
       onboarding.startOnboarding()
+      console.log(onboarding.startOnboarding())
       return
     }else{
       web3 = new Web3(ethereum)
-      console.log(web3)
     }
+    /*if(!ethereum.hasOwnProperty("isMetaMask")){
+      messageHelper.error(`Unsupported wallet detected, please use MetaMask.`);
+    }*/
     let provider = await this.getProvider()
-    console.log(provider);
     if (provider !== ethereum) {
       console.error('Do you have multiple wallets installed?');
     }
