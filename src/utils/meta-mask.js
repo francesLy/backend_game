@@ -17,8 +17,7 @@ export const ASSETTYPE = { usdt: 0, cosd: 1, nft: 2, evic: 3, sl: 4 }
 export const POOL = { defi: 1, sl: 2, club: 3 }
 const MMSDK = new MetaMaskSDK(option);
 const ethereum = MMSDK.getProvider();
-const web3 = new Web3(ethereum)
-console.log(ethereum)
+let web3;
 function toHex(num) {
   let hex = '0x' + num.toString(16);
   return hex
@@ -32,7 +31,7 @@ export class MetaMask {
     this.url = null;
   }
   async getProvider() {
-    this.provider = await detectEthereumProvider()
+    return await detectEthereumProvider()
   }
   disconnect() {
     this.enabled = false;
@@ -42,11 +41,8 @@ export class MetaMask {
     store.commit("setMetaMask", null)
   }
   async connectMetaMask() {
-    if (!window.ethereum) {
-      messageHelper.error(`Please install Metamask Wallet at <a href="https://metamask.io/">metamask.io</a>.`, true, 4000);
-      return
-    }
     if (!this.isMetaMaskInstalled()) {
+      messageHelper.error(`Please install Metamask Wallet at <a href="https://metamask.io/">metamask.io</a>.`, true, 4000);
       // 判断是否安装MetaMask扩展工具
       const forwarderOrigin = window.location.origin
       const onboarding = new MetaMaskOnboarding({
@@ -54,16 +50,12 @@ export class MetaMask {
       })
       onboarding.startOnboarding()
       return
+    }else{
+      web3 = new Web3(ethereum)
+      console.log(web3)
     }
     let provider = await this.getProvider()
-    if(!provider){
-      messageHelper.error("Unsupported wallet detected,please use MetaMask")
-      return;
-    }
-    if (!provider || !provider?.hasOwnProperty("isMetaMask")) {
-      messageHelper.error(`Please install Metamask Wallet at <a href="https://metamask.io/">metamask.io</a>.`, true, 4000);
-      return
-    }
+    console.log(provider);
     if (provider !== ethereum) {
       console.error('Do you have multiple wallets installed?');
     }
@@ -279,19 +271,24 @@ export class MetaMask {
       .catch((error) => console.error(error));
   }
   async getBalance(account) {
+    if(!web3) return
     let balance = await web3.eth.getBalance(account);
     return balance / Math.pow(10, 18);
   }
   getContract(abi, address) {
+    if(!web3) return false;
     let contract = new web3.eth.Contract(abi, address);
     return contract
   }
   toHex(num) {
+    if(!web3) return
     return web3.utils.toHex(num + '000000000000000000');
   }
   //直接转账充币地址
   async transferByContract(param) {
     const myContract = this.getContract(param.abi, param.address);
+    if(!myContract) return
+    if(!myContract) return
     return new Promise((resolve, reject) => {
       myContract.methods.buyToken(this.toHex(param.amount)).send({
         from: param.from
@@ -309,49 +306,58 @@ export class MetaMask {
   //查询代币余额
   async getBalanceByContract(param) {
     const myContract = this.getContract(param.abi, param.address);
+    if(!myContract) return
     let balance = await myContract.methods.balanceOf(param.from).call()
     return (param.key && param.key == 'nft') ? balance : (balance / Math.pow(10, 18));
   }
   async getMarketBalanceByContract(param) {
     const myContract = this.getContract(param.abi, param.address);
+    if(!myContract) return
     let balance = await myContract.methods.balanceOf(param.baddress).call()
     return balance / Math.pow(10, 18)
   }
   async getRewardByContract(param) {
     const myContract = this.getContract(param.abi, param.address);
+    if(!myContract) return
     let reward = await myContract.methods.stakingReward(param.from).call()
     return reward / Math.pow(10, 18);
   }
   async getRewardRateByContract(param) {
     const myContract = this.getContract(param.abi, param.address);
+    if(!myContract) return
     let rewardRate = await myContract.methods.rewardRateInit().call()
     return rewardRate + "%";
   }
   async getClubStatusByContract(param) {
     const myContract = this.getContract(param.abi, param.address);
+    if(!myContract) return
     let status = await myContract.methods.isClub(param.from).call()
     return status;
   }
   async getStakeStartTimeByContract(param) {
     const myContract = this.getContract(param.abi, param.address);
+    if(!myContract) return
     let time = await myContract.methods.stakingStartTime().call()
     return time;
   }
   //累计购买数量
   async getCOSDHasBuyByContract(param) {
     const myContract = this.getContract(param.abi, param.address);
+    if(!myContract) return
     let balance = await myContract.methods.cumulativePurchase(param.from).call()
     return balance / Math.pow(10, 18);
   }
   //查询授权余额
   async getAllowanceByContract(param) {
     const myContract = this.getContract(param.abi, param.address);
+    if(!myContract) return
     let allowance = await myContract.methods.allowance(param.from, param.to).call()
     return allowance / Math.pow(10, 18);
   }
   //授权
   async approveByContract(param) {
     const myContract = this.getContract(param.abiApprove, param.approveAddress);
+    if(!myContract) return
     return new Promise((resolve, reject) => {
       myContract.methods.approve(param.address, this.toHex(param.amount)).send({ from: param.from })
         .then(res => {
@@ -366,6 +372,7 @@ export class MetaMask {
   //质押：先approve再stake
   async stakingByContract(param) {
     const myContract = this.getContract(param.abi, param.address);
+    if(!myContract) return
     return new Promise((resolve, reject) => {
       myContract.methods.stake(this.toHex(param.amount)).send({
         from: param.from
@@ -382,6 +389,7 @@ export class MetaMask {
   //unstake:defi unstake之后可领取奖励
   async unStakingByContract(param) {
     const myContract = this.getContract(param.abi, param.address);
+    if(!myContract) return
     return new Promise((resolve, reject) => {
       myContract.methods.unStake(this.toHex(param.amount)).send({
         from: param.from
@@ -396,6 +404,7 @@ export class MetaMask {
   }
   async claimRewardByContract(param) {
     const myContract = this.getContract(param.abi, param.address);
+    if(!myContract) return
     return new Promise((resolve, reject) => {
       myContract.methods.claimReward().send({
         from: param.from
@@ -411,6 +420,7 @@ export class MetaMask {
   //nft
   async nftBlindBoxByContract(param) {
     const myContract = this.getContract(param.abi, param.address);
+    if(!myContract) return
     return new Promise((resolve, reject) => {
       myContract.methods.drawCard(this.toHex(param.amount), param.club, param.channel).send({
         from: param.from
@@ -445,6 +455,7 @@ export class MetaMask {
   }
   async addNFTToWalletByContract(param) {
     const myContract = this.getContract(param.abi, param.address);
+    if(!myContract) return
     return new Promise((resolve, reject) => {
       myContract.methods.addNFT(param.tokenId).send({
         from: param.from
