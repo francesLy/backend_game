@@ -7,7 +7,7 @@ import Notfound from "@/components/404.vue";
 const routes = [
   {
     path: "/",
-    redirect: "/login",
+    redirect: "/plat",
   },
   {
     path: "/login",
