@@ -9,7 +9,7 @@ axios.defaults.withCredentials = true;
 //连后台跨域"/proxy"
 //process.env.VUE_APP_URL
 axios.defaults.baseURL = process.env.VUE_APP_URL;
-axios.defaults.headers["token"] = null;
+axios.defaults.headers["Authorization"] = null;
 axios.defaults.timeout = 100000; //超时时间
 //axios.defaults.retry = 1;
 //axios.defaults.retryDelay = 100000;
@@ -49,9 +49,9 @@ axios.defaults.transformRequest = [
 ];
 axios.interceptors.request.use(
   (config) => {
-    let token = sessionStorage.getItem("TOKEN");
+    let token = localStorage.getItem("TOKEN");
     if (token) {
-      config.headers["token"] = token;
+      config.headers["Authorization"] = token;
     }
     removePending(config); //在一个ajax发送前执行一下取消操作
     config.cancelToken = new axios.CancelToken((cancel) => {
@@ -127,18 +127,9 @@ axios.interceptors.response.use(
           }, // 将跳转的路由path作为参数，登录成功后跳转到该路由
         });
       } else if (response.status == 401) {
-        //表示未登录
-        ElNotification.error({
-          message: "Unauthorized access!", //服务器返回来的信息
-          type: "error",
-          position: "bottom-right",
-        });
         router.replace({
           //跳转到登录页面
-          path: "/login",
-          query: {
-            redirect: router.currentRoute.value.fullPath,
-          }, // 将跳转的路由path作为参数，登录成功后跳转到该路由
+          path: "/login"// 将跳转的路由path作为参数，登录成功后跳转到该路由
         });
       } else if (response.data.code == 500) {
         ElNotification.error({

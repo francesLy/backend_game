@@ -87,7 +87,7 @@ function doLogin() {
       };
       userApi.login(data).then((res) => {
         if (res.code == 0 && res.msg == "success") {
-          store.commit("setUser", { name: res.data.userName, account: res.data.walletAddress, id: res.data.userId });
+          store.commit("setUser", { name: res.data.userName, account: res.data?.walletAddress, id: res.data.userId });
           store.commit("setRole", res.data.userType);
           store.commit("setToken", res.data.token);
           getABI()
@@ -104,7 +104,7 @@ function getABI(){
   }
   userApi.abi(data).then(res=>{
     if(res.code == 0){
-      store.commit("setABI",{...res.data});
+      store.commit("setABI",res.data);
       router.push("/plat");
     }
     loadingHelper.hide();

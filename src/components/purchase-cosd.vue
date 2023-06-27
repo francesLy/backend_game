@@ -193,7 +193,7 @@ function purchase() {
 }
 onMounted(()=>{
   if (metaMask.isAvailable()) {
-  getAllowance('buycosd')
+    getAllowance('buycosd')
   }
 })
 </script>

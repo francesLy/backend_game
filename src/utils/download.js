@@ -1,12 +1,12 @@
 import { ElNotification } from 'element-plus';
 export function download(url, method, params) {
     let count = 0;
-    let tk = sessionStorage.getItem('TOKEN');
+    let tk = localStorage.getItem('TOKEN');
     let xhr = new XMLHttpRequest();
     xhr.open(method, url, true);
     xhr.responseType = "blob";
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.setRequestHeader("X-Auth-Token", tk);
+    xhr.setRequestHeader("Authorization", tk);
     xhr.onreadystatechange = function() {
         if (xhr.status !== 200) {
             if (count == 0) {
