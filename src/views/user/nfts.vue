@@ -23,7 +23,8 @@
       </li>
     </ul>
     <div class="card">
-      <page-title :option="title" v-if="activeName !==TYPES.buy" @refresh="query()"></page-title>
+      <page-title :option="title" v-if="activeName ==TYPES.used ||activeName ==TYPES.using" @refresh="query()"></page-title>
+      <page-title :option="title" v-if="activeName ==TYPES.active" @refresh="getActiveList()"></page-title>
       <div class="card-body" v-show="activeName == TYPES.active">
         <dynamic-table v-loading="loading" :data="tableData" :header="tableHeader" :preNum="pageNum * pageSize - pageSize" :operations="operations" @commands="handlerActions"></dynamic-table>
         <el-pagination background layout="total, sizes, prev, pager, next" :total="total" :current-page="pageNum" @current-change="handlePageChange" @size-change="handleSizeChange" :page-size="pageSize" />
@@ -80,32 +81,32 @@
               <div class="table-responsive table-sales">
                 <table class="table">
                   <tbody>
-                      <tr>
-                        <td>NFT type</td>
-                        <td>{{ rowData?.NFT_type }} 
-                          <a :href="$store.state.metaMask?`${$store.state.metaMask?.url}token/${rowData?.contract_address}?a=${rowData?.Token_ID}`:'javascript:void(0);'" :target="$store.state.metaMask?'_blank':null" title="View NFT on blockchain" class="btn btn-round btn-sm btn-info btn-just-icon"><i class="fa fa-external-link"></i></a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Game Chances</td>
-                        <td>{{ rowData?.game_chances }}</td>
-                      </tr>
-                      <tr>
-                        <td>Blockchain</td>
-                        <td>{{ rowData?.blockchain }}</td>
-                      </tr>
-                      <tr title="You can add this NFT to your wallet manually. For example, go to NFTs tab in MetaMask, click Import NFTs, copy and paste the NFT contract address and token ID to the right fields to add NFT to your wallet.">
-                        <td>Token ID</td>
-                        <td>{{ rowData?.Token_ID }}&nbsp;&nbsp;<i class="fa fa-copy" @click="copy(rowData?.Token_ID)"></i></td>
-                      </tr>
-                      <tr title="You can add this NFT to your wallet manually. For example, go to NFTs tab in MetaMask, click Import NFTs, copy and paste the NFT contract address and token ID to the right fields to add NFT to your wallet.">
-                        <td>Contract Address</td>
-                        <td>{{ rowData?.contract_address }}&nbsp;&nbsp;<i class="fa fa-copy" @click="copy(rowData?.contract_address)"></i></td>
-                      </tr>
-                      <tr>
-                        <td>Minted At</td>
-                        <td>{{ rowData?.minted_at }}</td>
-                      </tr>
+                    <tr>
+                      <td>NFT type</td>
+                      <td>{{ rowData?.NFT_type }}
+                        <a :href="$store.state.metaMask?`${$store.state.metaMask?.url}token/${rowData?.contract_address}?a=${rowData?.Token_ID}`:'javascript:void(0);'" :target="$store.state.metaMask?'_blank':null" title="View NFT on blockchain" class="btn btn-round btn-sm btn-info btn-just-icon"><i class="fa fa-external-link"></i></a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Game Chances</td>
+                      <td>{{ rowData?.game_chances }}</td>
+                    </tr>
+                    <tr>
+                      <td>Blockchain</td>
+                      <td>{{ rowData?.blockchain }}</td>
+                    </tr>
+                    <tr title="You can add this NFT to your wallet manually. For example, go to NFTs tab in MetaMask, click Import NFTs, copy and paste the NFT contract address and token ID to the right fields to add NFT to your wallet.">
+                      <td>Token ID</td>
+                      <td>{{ rowData?.Token_ID }}&nbsp;&nbsp;<i class="fa fa-copy" @click="copy(rowData?.Token_ID)"></i></td>
+                    </tr>
+                    <tr title="You can add this NFT to your wallet manually. For example, go to NFTs tab in MetaMask, click Import NFTs, copy and paste the NFT contract address and token ID to the right fields to add NFT to your wallet.">
+                      <td>Contract Address</td>
+                      <td>{{ rowData?.contract_address }}&nbsp;&nbsp;<i class="fa fa-copy" @click="copy(rowData?.contract_address)"></i></td>
+                    </tr>
+                    <tr>
+                      <td>Minted At</td>
+                      <td>{{ rowData?.minted_at }}</td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -143,13 +144,13 @@
   </div>
 </template>
 <script setup>
-import { ref, onMounted, getCurrentInstance,onBeforeUnmount,onUnmounted } from "vue";
+import { ref, onMounted, getCurrentInstance, onBeforeUnmount, onUnmounted } from "vue";
 import { useStore } from "vuex";
 import { nftApi, userApi } from "@/api/request";
 import PageTitle from "@/components/page-title.vue";
 import DynamicTable from "@/components/dynamic-table.vue";
 import { loadingHelper } from "@/utils/loading";
-import { DateHelper,AppHelper } from "@/utils/helper";
+import { DateHelper, AppHelper } from "@/utils/helper";
 import { base64 } from "@/utils/base64";
 import { copyClick } from '@/utils/copy';
 import { ASSETTYPE, TXTYPE, savaAfterTranscation } from "@/utils/meta-mask";
@@ -173,7 +174,7 @@ let pageSize = ref(10);
 let blockChain = ref('Binance Smart Chain')
 let CONTRACTS = store.state.abi.contract;
 let abis = ref({ blindbox: JSON.parse(base64.decode(CONTRACTS.blindbox.abi)), busd: JSON.parse(base64.decode(CONTRACTS.busd.abi)), nft: JSON.parse(base64.decode(CONTRACTS.nft.abi)) })
-const allowance = ref({sl:0,club:0,defi:0,blindbox:0,buycosd:0})
+const allowance = ref({ sl: 0, club: 0, defi: 0, blindbox: 0, buycosd: 0 })
 const isOnlyUpdateStatus = ref(true);
 const hasUpdated = ref(true);
 const address = ref({ channelAddress: "", clubAddress: "", userAddress: "" });
@@ -185,6 +186,7 @@ let metaMask = proxy.metaMask;
 const disabled = ref(false)
 const nftParam = ref({})
 const loading = ref(false)
+const activeList = ref([])
 function handlerActions(data) {
   if (data.command == "view") {
     delay.value = 0
@@ -213,7 +215,7 @@ function query() {
           id: i.id,
           Token_ID: i.tokenId,
           tx_id: i.txId,
-          NFT_type: info.type +' - '+ info.en_name,
+          NFT_type: info.type + ' - ' + info.en_name,
           blockchain: i.blockChain,
           minted_at: DateHelper.toString(i.mintedAt * 1000),
           run_out_time: DateHelper.toString(i.runOutTime * 1000),
@@ -227,6 +229,15 @@ function query() {
     loading.value = false
   })
 }
+function getActiveList() {
+  if (!metaMask.isAvailable()) return;
+  let data = { from: store.state.metaMask?.account, abi: abis.value.nft, address: CONTRACTS['nft'].proxyAddress }
+  metaMask.getNFTActiveListByContract(data).then(res => {
+    activeList.value = res
+    total.value = res.length
+    tableData.value = activeList.value.filter((item, index) => index < pageSize.value * pageNum.value && index >= pageSize.value * (pageNum.value - 1))
+  })
+}
 function setRowdata(data) {
   let res = [data].map(i => {
     return {
@@ -234,7 +245,7 @@ function setRowdata(data) {
       game_chances: i.game_chances,
       blockchain: i.blockchain,
       Token_ID: i.Token_ID,
-      contract_address: CONTRACTS['blindbox'].address,
+      contract_address: CONTRACTS['blindbox'].proxyAddress,
       minted_at: i.minted_at,
       src: i.src,
       status: activeName.value
@@ -246,15 +257,27 @@ function handleTabClick(tab) {
   activeName.value = tab;
   if (tab == TYPES.value.buy) return
   pageNum.value = 1;
-  query();
+  if (tab == TYPES.value.active) {
+    getActiveList()
+  } else {
+    query();
+  }
 }
 function handlePageChange(val) {
   pageNum.value = val;
-  query();
+  if (activeName.value == TYPES.value.active) {
+    getActiveList()
+  } else {
+    query();
+  }
 }
 function handleSizeChange(val) {
   pageSize.value = val;
-  query()
+  if (activeName.value == TYPES.value.active) {
+    getActiveList()
+  } else {
+    query();
+  }
 }
 function translate(type) {
   let rate = 20;
@@ -270,14 +293,14 @@ function isEmpty() {
   }
   return amount.value ? false : true;
 }
-function getAllowance(key){
+function getAllowance(key) {
   let data = {
     abi: abis.value['busd'],
     address: CONTRACTS['busd'].address,
     from: store.state.metaMask?.account,
     to: CONTRACTS[key].address
   }
-  metaMask.getAllowanceByContract(data).then(res=>{
+  metaMask.getAllowanceByContract(data).then(res => {
     allowance.value[key] = res
   })
 }
@@ -289,15 +312,15 @@ function getCard() {
     if (res.code == 0) {
       address.value = res.data;
       disabled.value = false;
-      
+
     }
   });
 }
 function nftApprove() {
   if (!metaMask.isAvailable()) return;
   if (isEmpty()) return;
-  let data = { from: store.state.metaMask?.account, address: CONTRACTS['blindbox'].address, amount: amount.value, abi: abis.value.blindbox, club: address.value.clubAddress, channel: address.value.channelAddress }
-  if(!address.value.clubAddress) return;
+  let data = { from: store.state.metaMask?.account, address: CONTRACTS['blindbox'].proxyAddress, amount: amount.value, abi: abis.value.blindbox, club: address.value.clubAddress, channel: address.value.channelAddress }
+  if (!address.value.clubAddress) return;
   loadingHelper.show()
   metaMask.approveByContract({ ...data, abiApprove: abis.value.busd, approveAddress: CONTRACTS["busd"].address }).then(() => {
     disabled.value = true;
@@ -310,7 +333,7 @@ function nftApprove() {
 function nftSwap(event) {
   if (!metaMask.isAvailable()) return;
   if (isEmpty()) return;
-  let data = { from: store.state.metaMask?.account, address: CONTRACTS['blindbox'].address, amount: amount.value, abi: abis.value.blindbox, club: address.value.clubAddress, channel: address.value.channelAddress }
+  let data = { from: store.state.metaMask?.account, address: CONTRACTS['blindbox'].proxyAddress, amount: amount.value, abi: abis.value.blindbox, club: address.value.clubAddress, channel: address.value.channelAddress }
   loadingHelper.show()
   metaMask.nftBlindBoxByContract(data).then((res) => {
     visible1.value = false;
@@ -335,8 +358,8 @@ function nftSwap(event) {
     }
     let tokenid = res.events.DrawCardEvent.returnValues.cardId;
     let nftparam = {
-      from: store.state.metaMask?.account, 
-      address: CONTRACTS['nft'].address,
+      from: store.state.metaMask?.account,
+      address: CONTRACTS['nft'].proxyAddress,
       abi: abis.value.nft,
       tokenId: tokenid
     }
@@ -348,10 +371,10 @@ function nftSwap(event) {
     loadingHelper.hide();
   })
 }
-function addNFTToWallet(param){
-  metaMask.addNFTToWalletByContract(param).then(res=>{
+function addNFTToWallet(param) {
+  metaMask.addNFTToWalletByContract(param).then(res => {
     console.log("add to wallet")
-  }).catch((err)=>{
+  }).catch((err) => {
     console.log(err)
   })
 }
@@ -360,19 +383,19 @@ function getNFTnfoFromChain(id) {
   let param = {
     abi: abis.value.nft,
     from: store.state.metaMask?.account,
-    address: CONTRACTS['nft'].address,
+    address: CONTRACTS['nft'].proxyAddress,
     tokenId: id
   }
   metaMask.getNFTInfoByContract(param).then(res => {
     visible.value = true;
     let info = NFTTYPES[res.number + ''];
     rowData.value.src = `https://s3.ap-northeast-1.amazonaws.com/www.chessofstars.io/assets/img/card/` + info?.card_name;
-    rowData.value.NFT_type = info.type +' - '+ info.en_name;
+    rowData.value.NFT_type = info.type + ' - ' + info.en_name;
     rowData.value.game_chances = res.chances;
     rowData.value.status = 0;
     rowData.value.blockchain = blockChain.value;
     rowData.value.Token_ID = nftParam.value.nftVo.tokenId;
-    rowData.value.contract_address = CONTRACTS['blindbox'].address;
+    rowData.value.contract_address = CONTRACTS['blindbox'].proxyAddress;
     nftParam.value.nftVo.attr1 = res.number
     nftParam.value.nftVo.attr2 = res.chances
     isOnlyUpdateStatus.value = false;
@@ -403,8 +426,14 @@ async function handleSaveParamAfterTransfer(value) {
           rowData.value.status = 0;
         })
     }
+    let ret = await tryNFTTransfer()
+    if(!ret) return;
     await savaAfterTranscation(nftParam.value)
-    await query();
+    if (activeName.value == TYPES.value.active) {
+      await getActiveList()
+    } else {
+      await query();
+    }
     hasUpdated.value = true;
     isOnlyUpdateStatus.value = true;
   }
@@ -426,23 +455,43 @@ function useNFTForGame(row) {
       console.log('cancel')
     })
 }
-function updateNFTStatus(row) {
+async function updateNFTStatus(row) {
   let data = {
     "tokenId": row.Token_ID,
     "status": 1
   }
+  if (!metaMask.isAvailable()) return;
   loadingHelper.show()
-  nftApi.status(data).then(res => {
-    if (res.code == 0) {
-      ElNotification({
-        type: "success",
-        message: "use it successfully"
-      })
-      rowData.value.status = 1
-      loadingHelper.hide()
-      query();
-    }
+  let ret = await tryNFTTransfer();
+  if(!ret) return;
+  await nftApi.status(data).then(res1 => {
+      if (res1.code == 0) {
+        ElNotification({
+          type: "success",
+          message: "use it successfully"
+        })
+        rowData.value.status = 1
+        loadingHelper.hide()
+        getActiveList();
+      }
+    })
+
+}
+async function tryNFTTransfer(){
+  if (!metaMask.isAvailable()) return;
+  let param = {
+    from: store.state.metaMask?.account,
+    abi: abis.value.nft,
+    address: CONTRACTS['nft'].proxyAddress,
+    to: store.state.abi.nftReceiveAddress,
+    tokenId: parseInt(row.Token_ID)
+  }
+  let ret = false;
+  await metaMask.tryNFTTransferByContract(param).then(res => {
+    console.log(success)
+    ret = true
   })
+  return ret;
 }
 function animation(evt, hard) {
   let lastX = 0;
@@ -463,21 +512,21 @@ function animation(evt, hard) {
 function r(mi, ma) {
   return parseInt(Math.random() * (ma - mi) + mi);
 }
-function copy(val){
+function copy(val) {
   copyClick(val)
 }
 onMounted(() => {
-  query();
-  activeName.value = AppHelper.getURLParam('active')||0;
+  activeName.value = AppHelper.getURLParam('active') || 0;
   if (metaMask.isAvailable()) {
     getAllowance('blindbox')
+    getActiveList()
   }
 })
 
 </script>
 <style scoped>
-.fa-copy{
+.fa-copy {
   cursor: pointer;
-  color:rgb(121, 121, 158)
+  color: rgb(121, 121, 158);
 }
 </style>

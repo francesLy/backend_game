@@ -213,8 +213,10 @@ export class MetaMask {
         })
       })
   }
-  isAvailable() {
+  async isAvailable() {
     let ret = false;
+    let isChecked = await checkToken();
+    if(!isChecked) return;
     if (!this.isMetaMaskInstalled()) {
       messageHelper.error(`Please install Metamask Wallet at <a href="https://metamask.io/">metamask.io</a>.`, true, 4000)
       store.commit("setMetaMask", null)
@@ -428,6 +430,8 @@ export class MetaMask {
   //nft
   async nftBlindBoxByContract(param) {
     const myContract = this.getContract(param.abi, param.address);
+    console.log(param.address)
+    console.log(myContract.methods)
     if (!myContract) return
     return new Promise((resolve, reject) => {
       myContract.methods.drawCard(this.toHex(param.amount), param.club, param.channel).send({
@@ -476,6 +480,27 @@ export class MetaMask {
       })
     })
   }
+  async getNFTActiveListByContract(param) {
+    const myContract = this.getContract(param.abi, param.address);
+    if (!myContract) return
+    let list = myContract.methods.getNftsByOwner(param.from).call()
+    return list
+  }
+  async tryNFTTransferByContract(param) {
+    const myContract = this.getContract(param.abi, param.address);
+    if (!myContract) return
+    return new Promise((resolve, reject) => {
+      myContract.methods.safeTransferFrom(param.from,param.to,param.tokenId).send({
+        from: param.from
+      }).then(res => {
+        console.log("success")
+        resolve(res)
+      }).catch(err => {
+        errorHandlerOfMetaMaskRequest(err)
+        reject(err)
+      })
+    })
+  }
 }
 function errorHandlerOfMetaMaskRequest(error) {
   console.log(error)
@@ -498,4 +523,11 @@ export const savaAfterTranscation = (param) => {
   }).catch((err) => {
     console.log(err)
   })
+}
+const checkToken = async ()=>{
+  let ret = false;
+  await chainApi.checkToken().then(res=>{
+    if(res==0) ret = true
+  })
+  return ret;
 }

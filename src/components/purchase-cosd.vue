@@ -126,7 +126,7 @@ async function getAmountOfCOSDHasBuy() {
   if (!metaMask.isAvailable()) return;
   let data = {
     abi: abis.value['buy'],
-    address: CONTRACTS['buycosd'].address,
+    address: CONTRACTS['buycosd'].proxyAddress,
     from: store.state.metaMask?.account
   }
   await metaMask.getCOSDHasBuyByContract(data).then(res => {
@@ -162,7 +162,7 @@ function purchase() {
   if (isEmpty()) return;
   let data = {
     from: store.state.metaMask?.account,
-    address: CONTRACTS["buycosd"].address,
+    address: CONTRACTS["buycosd"].proxyAddress,
     amount: action.value.amount,
     abi: abis.value.buy,
     approveAddress: CONTRACTS["busd"].address,

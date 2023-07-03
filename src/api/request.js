@@ -33,6 +33,7 @@ export const chainApi = {
   getWalletUrl:(data)=> post("/user/queryBlockChainExplorer?blockChainType="+parseInt(data).toString(10)),
   list: (data) => post("/webTransaction/queryTransactionsList", data),
   eviclist: (data) => post("/webTransaction/queryBlurTransactionsList", data),
+  checkToken:()=>post("/webTransaction/checkToken")
 }
 export const evicsApi = {
   assets: (data) => post("/asset/queryUserAssets", data),

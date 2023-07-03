@@ -171,7 +171,6 @@ const min = ref(100)
 const activeName = ref("evic")
 const evicType = ref("[7,8]")
 const isrefresh = ref(false);
-console.log(new Date().getTime())
 function isEmpty() {
   if (!amount.value) {
     ElMessage.error("amount is required!")
@@ -322,8 +321,10 @@ Bus.$on('refresh',(isRefresh)=>{
   if(isRefresh) refresh();
 })
 onMounted(() => {
+  evicBalance()
   if (metaMask.isAvailable()) {
-    refresh();
+    getBalance('cosd')
+    getBalance('nft')
   }
 })
 onUnmounted(()=>{

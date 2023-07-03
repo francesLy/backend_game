@@ -78,7 +78,8 @@ axios.interceptors.request.use(
 //拦截服务端响应的信息
 axios.interceptors.response.use(
   (res) => {
-    removePending(res.config);
+    console.log(res)
+    //removePending(res.config);
     //HTTP响应码是200，后端自己定义了500
     if (res.data.code !== 0) {
       loadingHelper.hide();
@@ -94,8 +95,9 @@ axios.interceptors.response.use(
     return res.data;
   },
   (err) => {
-    if(err.code == "ECONNABORTED"){
-      console.log(err)
+    const { error, config, code, request, response } = err;
+    console.log(error, config, code, request, response)
+    if (code == "ECONNABORTED") {
       ElNotification.error({
         message: "Sorry, the server failed to respond in time, please try again later",
         type: "error",
@@ -103,63 +105,21 @@ axios.interceptors.response.use(
       });
       return Promise.reject(err);
     }
-    if (err && err.response) {
+    if (response) {
       loadingHelper.hide();
-      let response = err.response;
-      if (response.status == 504 || response.status == 404) {
-        ElNotification.error({
-          message: "Service Unavailable",
-          type: "error",
-          position: "bottom-right",
-        });
-      } else if (response.status == 403) {
-        //表示权限不足
-        ElNotification.error({
-          message: "Insufficient Permissions",
-          type: "error",
-          position: "bottom-right",
-        });
-        router.replace({
-          //跳转到登录页面
-          path: "/login",
-          query: {
-            redirect: router.currentRoute.value.fullPath,
-          }, // 将跳转的路由path作为参数，登录成功后跳转到该路由
-        });
-      } else if (response.status == 401) {
+      if ([500601, 500602, 500603, 500604].indexOf(response.data.code) > -1) {
         router.replace({
           //跳转到登录页面
           path: "/login"// 将跳转的路由path作为参数，登录成功后跳转到该路由
         });
-      } else if (response.data.code == 500) {
+      } else {
         ElNotification.error({
           message: response.data.msg,
           type: "error",
           position: "bottom-right",
         });
-      } else if (response.status == 500) {
-        if (response.data.code) {
-          ElNotification.error({
-            message: response.data.msg,
-            type: "error",
-            position: "bottom-right",
-          });
-        } else {
-          ElNotification.error({
-            message: response.request.responseText,
-            type: "error",
-            position: "bottom-right",
-          });
-        }
-      } else {
-        if (response.data.code) {
-          ElNotification.error({
-            message: response.data.msg,
-            type: "error",
-            position: "bottom-right",
-          });
-        }
       }
+
     }
     return Promise.reject(err);
   }

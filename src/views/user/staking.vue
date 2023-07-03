@@ -85,7 +85,7 @@
                         <div class="card-footer">
                           <div class="stats">
                             <i class="fa fa-cubes"></i>&nbsp;Staking pool contract address:&nbsp;&nbsp;
-                            <a :href="$store.state.metaMask?`${$store.state.metaMask?.url}address/${contracts.sl.address}`:'javascript:void(0);'" :target="$store.state.metaMask?'_blank':null">{{contracts.sl.address}}</a>
+                            <a :href="$store.state.metaMask?`${$store.state.metaMask?.url}address/${contracts.sl.proxyAddress}`:'javascript:void(0);'" :target="$store.state.metaMask?'_blank':null">{{contracts.sl.proxyAddress}}</a>
                           </div>
                         </div>
                       </div>
@@ -121,7 +121,7 @@
                         <div class="card-footer">
                           <div class="stats">
                             <i class="fa fa-cubes"></i>&nbsp;Staking pool contract address:&nbsp;&nbsp;
-                            <a :href="$store.state.metaMask?`${$store.state.metaMask?.url}address/${contracts.club.address}`:'javascript:void(0);'" :target="$store.state.metaMask?'_blank':null">{{contracts.club.address}}</a>
+                            <a :href="$store.state.metaMask?`${$store.state.metaMask?.url}address/${contracts.club.proxyAddress}`:'javascript:void(0);'" :target="$store.state.metaMask?'_blank':null">{{contracts.club.proxyAddress}}</a>
                           </div>
                         </div>
                       </div>
@@ -167,7 +167,7 @@
                         <div class="card-footer">
                           <div class="stats">
                             <i class="fa fa-cubes"></i>&nbsp;Staking pool contract address:&nbsp;&nbsp;
-                            <a :href="$store.state.metaMask?`${$store.state.metaMask?.url}address/${contracts.defi.address}`:'javascript:void(0);'" :target="$store.state.metaMask?'_blank':null">{{contracts.defi.address}}</a>
+                            <a :href="$store.state.metaMask?`${$store.state.metaMask?.url}address/${contracts.defi.proxyAddress}`:'javascript:void(0);'" :target="$store.state.metaMask?'_blank':null">{{contracts.defi.proxyAddress}}</a>
                           </div>
                         </div>
                       </div>
@@ -354,7 +354,7 @@ function getRewardBalance() {
   if (!metaMask.isAvailable()) return;
   let data = {
     abi: abis.value['defi'],
-    address: CONTRACTS['defi'].address,
+    address: CONTRACTS['defi'].proxyAddress,
     from: store.state.metaMask?.account
   }
   metaMask.getRewardByContract(data).then(res => {
@@ -365,7 +365,7 @@ function getRewardRate() {
   if (!metaMask.isAvailable()) return;
   let data = {
     abi: abis.value['defi'],
-    address: CONTRACTS['defi'].address,
+    address: CONTRACTS['defi'].proxyAddress,
     from: store.state.metaMask?.account
   }
   metaMask.getRewardRateByContract(data).then(res => {
@@ -376,7 +376,7 @@ function getClubStatus() {
   if (!metaMask.isAvailable()) return;
   let data = {
     abi: abis.value['club'],
-    address: CONTRACTS['club'].address,
+    address: CONTRACTS['club'].proxyAddress,
     from: store.state.metaMask?.account
   }
   metaMask.getClubStatusByContract(data).then(res => {
@@ -389,7 +389,7 @@ function getStakeStartTime(key) {
   if (!metaMask.isAvailable()) return;
   let data = {
     abi: abis.value[key],
-    address: CONTRACTS[key].address,
+    address: CONTRACTS[key].proxyAddress,
     from: store.state.metaMask?.account
   }
   metaMask.getStakeStartTimeByContract(data).then(res => {
@@ -535,7 +535,7 @@ async function isUnStakeTimeAvailable(key) {
 }
 async function stakingApprove(key) {
   if (!metaMask.isAvailable()) return;
-  let data = { from: store.state.metaMask?.account, address: CONTRACTS[key].address, amount: action.value.amount, abi: abis.value[key], abiApprove: abis.value["cosd"], approveAddress: CONTRACTS["cosd"].address }
+  let data = { from: store.state.metaMask?.account, address: CONTRACTS[key].proxyAddress, amount: action.value.amount, abi: abis.value[key], abiApprove: abis.value["cosd"], approveAddress: CONTRACTS["cosd"].address }
   if (!validatorAmount('cosd')) return;
   loadingHelper.show()
   metaMask.approveByContract(data).then(() => {
@@ -548,7 +548,7 @@ async function stakingApprove(key) {
 }
 function stakingTransfer(key) {
   if (!metaMask.isAvailable()) return;
-  let data = { from: store.state.metaMask?.account, address: CONTRACTS[key].address, amount: action.value.amount, abi: abis.value[key], abiApprove: abis.value["cosd"], approveAddress: CONTRACTS["cosd"].address }
+  let data = { from: store.state.metaMask?.account, address: CONTRACTS[key].proxyAddress, amount: action.value.amount, abi: abis.value[key], abiApprove: abis.value["cosd"], approveAddress: CONTRACTS["cosd"].address }
   loadingHelper.show()
   metaMask.stakingByContract(data).then((res) => {
     visible.value = false;
@@ -580,7 +580,7 @@ async function unstakingTransfer(key) {
   if (!metaMask.isAvailable()) return;
   if (!validatorAmount(key)) return;
   let account = store.state.metaMask?.account;
-  let data = { from: account, address: CONTRACTS[key].address, amount: action.value.amount, abi: abis.value[key] }
+  let data = { from: account, address: CONTRACTS[key].proxyAddress, amount: action.value.amount, abi: abis.value[key] }
   loadingHelper.show()
   metaMask.unStakingByContract(data).then((res) => {
     visible.value = false;
@@ -612,7 +612,7 @@ async function claimReward() {
   let isTimeAvailable = await isUnStakeTimeAvailable('defi');
   if (!isTimeAvailable) return;
   if (!metaMask.isAvailable()) return;
-  let data = { from: store.state.metaMask?.account, address: CONTRACTS['defi'].address, abi: abis.value['defi'] };
+  let data = { from: store.state.metaMask?.account, address: CONTRACTS['defi'].proxyAddress, abi: abis.value['defi'] };
   loadingHelper.show();
   metaMask.claimRewardByContract(data).then(() => {
     loadingHelper.hide();
