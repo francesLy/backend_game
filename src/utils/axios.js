@@ -78,7 +78,6 @@ axios.interceptors.request.use(
 //拦截服务端响应的信息
 axios.interceptors.response.use(
   (res) => {
-    console.log(res)
     //removePending(res.config);
     //HTTP响应码是200，后端自己定义了500
     if([500601, 500602, 500603, 500604].indexOf(res.data.code)>-1){
@@ -100,7 +99,6 @@ axios.interceptors.response.use(
   },
   (err) => {
     const { error, config, code, request, response } = err;
-    console.log(error, config, code, request, response)
     if (code == "ECONNABORTED") {
       ElNotification.error({
         message: "Sorry, the server failed to respond in time, please try again later",
