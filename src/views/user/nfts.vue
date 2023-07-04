@@ -172,7 +172,7 @@ let rowData = ref({});
 let pageNum = ref(1); let total = ref(1);
 let pageSize = ref(10);
 let blockChain = ref('Binance Smart Chain')
-let CONTRACTS = store.state.abi.contract;
+let CONTRACTS = store.state.abi?.contract;
 let abis = ref({ blindbox: JSON.parse(base64.decode(CONTRACTS.blindbox.abi)), busd: JSON.parse(base64.decode(CONTRACTS.busd.abi)), nft: JSON.parse(base64.decode(CONTRACTS.nft.abi)) })
 const allowance = ref({ sl: 0, club: 0, defi: 0, blindbox: 0, buycosd: 0 })
 const isOnlyUpdateStatus = ref(true);
@@ -483,7 +483,7 @@ async function tryNFTTransfer(){
     from: store.state.metaMask?.account,
     abi: abis.value.nft,
     address: CONTRACTS['nft'].proxyAddress,
-    to: store.state.abi.nftReceiveAddress,
+    to: store.state.abi?.nftReceiveAddress,
     tokenId: parseInt(row.Token_ID)
   }
   let ret = false;

@@ -68,13 +68,13 @@ export class MetaMask {
     this.provider = ethereum;
 
     try {
-      const CHAINID = toHex(store.state.abi.chainId)
+      const CHAINID = toHex(store.state.abi?.chainId)
       this.chainId = await ethereum.request({ method: 'eth_chainId' })
       if (this.chainId !== CHAINID) {
         let isChecked = await this.checkNetwork();
         console.log("checkednetwork", isChecked)
         if (!isChecked) return;
-        this.chainId = this.toHex(store.state.abi.chainId)
+        this.chainId = this.toHex(store.state.abi?.chainId)
       }
       const accounts = await ethereum.request({ method: 'eth_requestAccounts' })
       if (accounts && accounts.length) this.account = accounts[0];
@@ -116,7 +116,7 @@ export class MetaMask {
     return isSwitch === true ? true : false
   }
   async switchNetwork() {
-    const CHAINID = toHex(store.state.abi.chainId)
+    const CHAINID = toHex(store.state.abi?.chainId)
     try {
       await ethereum.request({
         method: "wallet_switchEthereumChain",
@@ -143,10 +143,10 @@ export class MetaMask {
         method: "wallet_addEthereumChain",
         params: [
           {
-            chainName: store.state.abi.networkName,
-            chainId: toHex(store.state.abi.chainId),
-            rpcUrls: [...store.state.abi.rpcUrls],
-            blockExplorerUrls: [store.state.abi.explorer],
+            chainName: store.state.abi?.networkName,
+            chainId: toHex(store.state.abi?.chainId),
+            rpcUrls: [...store.state.abi?.rpcUrls],
+            blockExplorerUrls: [store.state.abi?.explorer],
             nativeCurrency: {
               name: store.state.abi?.nativeCurrency,
               symbol: store.state.abi?.nativeCurrency,
@@ -167,7 +167,7 @@ export class MetaMask {
     }
   }
   async isCurrentChain(id) {
-    const CHAINID = toHex(store.state.abi.chainId)
+    const CHAINID = toHex(store.state.abi?.chainId)
     if (id != CHAINID) {
       let res = await this.checkNetwork();
       console.log("isbsc", res)
@@ -213,10 +213,13 @@ export class MetaMask {
         })
       })
   }
-  async isAvailable() {
+  async isCheckedToken(){
+    let checked = await checkToken();
+    return checked;
+  }
+  isAvailable() {
     let ret = false;
-    let isChecked = await checkToken();
-    if(!isChecked) return;
+    if(!this.isCheckedToken()) return false;
     if (!this.isMetaMaskInstalled()) {
       messageHelper.error(`Please install Metamask Wallet at <a href="https://metamask.io/">metamask.io</a>.`, true, 4000)
       store.commit("setMetaMask", null)
@@ -430,8 +433,6 @@ export class MetaMask {
   //nft
   async nftBlindBoxByContract(param) {
     const myContract = this.getContract(param.abi, param.address);
-    console.log(param.address)
-    console.log(myContract.methods)
     if (!myContract) return
     return new Promise((resolve, reject) => {
       myContract.methods.drawCard(this.toHex(param.amount), param.club, param.channel).send({
@@ -490,7 +491,7 @@ export class MetaMask {
     const myContract = this.getContract(param.abi, param.address);
     if (!myContract) return
     return new Promise((resolve, reject) => {
-      myContract.methods.safeTransferFrom(param.from,param.to,param.tokenId).send({
+      myContract.methods.safeTransferFrom(param.from, param.to, param.tokenId).send({
         from: param.from
       }).then(res => {
         console.log("success")
@@ -524,10 +525,10 @@ export const savaAfterTranscation = (param) => {
     console.log(err)
   })
 }
-const checkToken = async ()=>{
+const checkToken = async () => {
   let ret = false;
-  await chainApi.checkToken().then(res=>{
-    if(res==0) ret = true
+  await chainApi.checkToken().then(res => {
+    if (res.code == 0) ret = true
   })
-  return ret;
+  return ret
 }

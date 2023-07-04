@@ -42,7 +42,7 @@ import { useStore } from "vuex"
 import { copyClick } from '@/utils/copy';
 import { loadingHelper } from "@/utils/loading";
 const store = useStore()
-let CONTRACTS = store.state.abi.contract;
+let CONTRACTS = store.state.abi?.contract;
 const emit = defineEmits(['balance'])
 const { proxy } = getCurrentInstance();
 const metaMask = proxy.metaMask;

@@ -37,7 +37,7 @@ import { copyClick } from '@/utils/copy';
 import Bus from "@/utils/event-bus";
 const { proxy } = getCurrentInstance()
 const store = useStore()
-let CONTRACTS = store.state.abi.contract;
+let CONTRACTS = store.state.abi?.contract;
 const emit = defineEmits(['refresh'])
 const metaMask = proxy.metaMask;
 const provider = window.ethereum;

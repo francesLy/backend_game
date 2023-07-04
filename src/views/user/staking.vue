@@ -304,7 +304,7 @@ const action = ref({
   title: '',
   command: ''
 });
-let CONTRACTS = store.state.abi.contract;
+let CONTRACTS = store.state.abi?.contract;
 const contracts = ref(CONTRACTS);
 const abis = ref({ sl: JSON.parse(base64.decode(CONTRACTS.sl.abi)), club: JSON.parse(base64.decode(CONTRACTS.club.abi)), defi: JSON.parse(base64.decode(CONTRACTS.defi.abi)), buy: JSON.parse(base64.decode(CONTRACTS.buycosd.abi)), cosd: JSON.parse(base64.decode(CONTRACTS.cosd.abi)), busd: JSON.parse(base64.decode(CONTRACTS.busd.abi)) })
 const titles = ref({ buy: "Purchase COSD", "slstaking": "Staking for starlight league", "clubstaking": "Staking for club ownership", "defistaking": "Staking for earning COSD" })
