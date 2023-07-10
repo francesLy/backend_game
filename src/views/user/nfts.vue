@@ -241,7 +241,7 @@ function getActiveList() {
         tx_id: i.txId,
         NFT_type: info.type + ' - ' + info.en_name,
         blockchain: store.state.abi?.networkName,
-        minted_at: null,
+        minted_at: DateHelper.toString(i.time * 1000),
         run_out_time: null,
         game_chances: i.chances,
         src: `https://s3.ap-northeast-1.amazonaws.com/www.chessofstars.io/assets/img/card/` + info?.card_name
@@ -258,7 +258,7 @@ function setRowdata(data) {
       game_chances: i.game_chances,
       blockchain: i.blockchain,
       Token_ID: i.Token_ID,
-      contract_address: CONTRACTS['blindbox'].proxyAddress,
+      contract_address: CONTRACTS['blindbox'].address,
       minted_at: i.minted_at,
       src: i.src,
       status: activeName.value
@@ -362,6 +362,7 @@ function nftSwap(event) {
       "toUserId": store.state.user.id,
       "toAssetType": ASSETTYPE.nft,
       "toAmount": amount1.value,
+      time: res.time?res.time||null,
       "nftVo": {
         "tokenId": res.events.DrawCardEvent.returnValues.cardId,
         "attr1": "",
@@ -369,6 +370,7 @@ function nftSwap(event) {
       },
       "blockNumber": res.blockNumber
     }
+    rowData.value.minted_at = DateHelper.toString(res.time * 1000);
     let tokenid = res.events.DrawCardEvent.returnValues.cardId;
     let nftparam = {
       from: store.state.metaMask?.account,
@@ -420,7 +422,7 @@ async function handleSaveParamAfterTransfer(value) {
   if (!hasUpdated.value && !isOnlyUpdateStatus.value) {
     if (value) {
       nftParam.value.nftVo.status = value;
-      ElMessageBox.confirm(
+      await ElMessageBox.confirm(
         'Do you want to use this nft for game?',
         'Info',
         {
@@ -432,6 +434,8 @@ async function handleSaveParamAfterTransfer(value) {
         .then(() => {
           nftParam.value.nftVo.status = 1;
           rowData.value.status = 1;
+          let ret = tryNFTTransfer(rowData.value)
+          if (!ret) return;
         })
         .catch(() => {
           console.log('cancel')
@@ -439,11 +443,6 @@ async function handleSaveParamAfterTransfer(value) {
           rowData.value.status = 0;
         })
     }
-    if (nftParam.value.nftVo.status) {
-      let ret = await tryNFTTransfer(rowData.value)
-      if (!ret) return;
-    }
-
     await savaAfterTranscation(nftParam.value)
     if (activeName.value == TYPES.value.active) {
       await getActiveList()
