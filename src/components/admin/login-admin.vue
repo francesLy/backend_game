@@ -34,6 +34,7 @@ import { ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { userApi } from "@/api/request";
+import { encryptAES } from "@/utils/crypto";
 import PasswordCont from "@/components/admin/reset-password-admin.vue";
 import { loadingHelper } from "@/utils/loading";
 const visible = ref(false);
@@ -57,8 +58,8 @@ function doLogin() {
   formRef.value.validate((valid) => {
     if (valid) {
       let data = {
-        username: form.value.username,
-        passwd: form.value.password,
+        name: form.value.username,
+        passwd: encryptAES(form.value.password),
       };
       userApi.login(data).then((res) => {
         if (res.code == 0 && res.msg == "success") {

@@ -67,5 +67,6 @@ export const blogApi = {
   add: (data) => post("/blog/add", data)
 }
 export const dashboardApi = {
-  alldata: (data) => get("/dashboard/data", data),
+  alldata: (data) => get("/admin/sumEvicDay", data),
+  evicdata: (data) => get("/admin/sumEvicDay", data),
 }

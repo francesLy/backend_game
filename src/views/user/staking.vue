@@ -347,6 +347,7 @@ function getAllowance(key){
     to: CONTRACTS[key].address
   }
   metaMask.getAllowanceByContract(data).then(res=>{
+    console.log(key+ " allowance: "+res)
     allowance.value[key] = res
   })
 }

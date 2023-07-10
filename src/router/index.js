@@ -116,7 +116,7 @@ const routes = [
           permission: "admin",
           title: "home",
           name: "home",
-          requireAuth: true,
+          requireAuth: false,
         },
       }, {
         path: "staking-rewards",
@@ -127,7 +127,7 @@ const routes = [
           permission: "admin",
           title: "staking-rewards",
           name: "staking-rewards",
-          requireAuth: true,
+          requireAuth: false,
         },
       }, {
         path: "promotion-rewards",
@@ -138,7 +138,7 @@ const routes = [
           permission: "admin",
           title: "promotion-rewards",
           name: "promotion-rewards",
-          requireAuth: true,
+          requireAuth: false,
         },
       }, {
         path: "logs",
@@ -149,7 +149,7 @@ const routes = [
           permission: "admin",
           title: "logs",
           name: "logs",
-          requireAuth: true,
+          requireAuth: false,
         },
       }, {
         path: "blog",
@@ -160,7 +160,7 @@ const routes = [
           permission: "admin",
           title: "blog",
           name: "blog",
-          requireAuth: true,
+          requireAuth: false,
         },
       },
     ],
