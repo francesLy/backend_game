@@ -344,7 +344,7 @@ function getAllowance(key){
     abi: abis.value['cosd'],
     address: CONTRACTS['cosd'].address,
     from: store.state.metaMask?.account,
-    to: CONTRACTS[key].address
+    to: CONTRACTS[key].proxyAddress
   }
   metaMask.getAllowanceByContract(data).then(res=>{
     console.log(key+ " allowance: "+res)

@@ -363,9 +363,7 @@ export class MetaMask {
   //查询授权余额
   async getAllowanceByContract(param) {
     const myContract = this.getContract(param.abi, param.address);
-    if (!myContract) return
-    console.log("from", param.from)
-    console.log("to", param.to)
+    if (!myContract) return;
     let allowance = await myContract.methods.allowance(param.from, param.to).call()
     return allowance / Math.pow(10, 18);
   }
