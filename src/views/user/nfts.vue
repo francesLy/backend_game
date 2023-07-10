@@ -233,7 +233,20 @@ function getActiveList() {
   if (!metaMask.isAvailable()) return;
   let data = { from: store.state.metaMask?.account, abi: abis.value.nft, address: CONTRACTS['nft'].proxyAddress }
   metaMask.getNFTActiveListByContract(data).then(res => {
-    activeList.value = res
+    activeList.value = res.map(i => {
+      let info = NFTTYPES[i.number + ''];
+      return {
+        id: null,
+        Token_ID: i.tokenId,
+        tx_id: i.txId,
+        NFT_type: info.type + ' - ' + info.en_name,
+        blockchain: store.state.abi?.networkName,
+        minted_at: null,
+        run_out_time: null,
+        game_chances: i.chances,
+        src: `https://s3.ap-northeast-1.amazonaws.com/www.chessofstars.io/assets/img/card/` + info?.card_name
+      }
+    })
     total.value = res.length
     tableData.value = activeList.value.filter((item, index) => index < pageSize.value * pageNum.value && index >= pageSize.value * (pageNum.value - 1))
   })
@@ -426,8 +439,11 @@ async function handleSaveParamAfterTransfer(value) {
           rowData.value.status = 0;
         })
     }
-    let ret = await tryNFTTransfer()
-    if(!ret) return;
+    if (nftParam.value.nftVo.status) {
+      let ret = await tryNFTTransfer(rowData.value)
+      if (!ret) return;
+    }
+
     await savaAfterTranscation(nftParam.value)
     if (activeName.value == TYPES.value.active) {
       await getActiveList()
@@ -462,22 +478,22 @@ async function updateNFTStatus(row) {
   }
   if (!metaMask.isAvailable()) return;
   loadingHelper.show()
-  let ret = await tryNFTTransfer();
-  if(!ret) return;
+  let ret = await tryNFTTransfer(row);
+  if (!ret) return;
   await nftApi.status(data).then(res1 => {
-      if (res1.code == 0) {
-        ElNotification({
-          type: "success",
-          message: "use it successfully"
-        })
-        rowData.value.status = 1
-        loadingHelper.hide()
-        getActiveList();
-      }
-    })
+    if (res1.code == 0) {
+      ElNotification({
+        type: "success",
+        message: "use it successfully"
+      })
+      rowData.value.status = 1
+      loadingHelper.hide()
+      getActiveList();
+    }
+  })
 
 }
-async function tryNFTTransfer(){
+async function tryNFTTransfer(row) {
   if (!metaMask.isAvailable()) return;
   let param = {
     from: store.state.metaMask?.account,
@@ -488,7 +504,7 @@ async function tryNFTTransfer(){
   }
   let ret = false;
   await metaMask.tryNFTTransferByContract(param).then(res => {
-    console.log(success)
+    console.log("success")
     ret = true
   })
   return ret;
