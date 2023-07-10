@@ -364,6 +364,8 @@ export class MetaMask {
   async getAllowanceByContract(param) {
     const myContract = this.getContract(param.abi, param.address);
     if (!myContract) return
+    console.log("from", param.from)
+    console.log("to", param.to)
     let allowance = await myContract.methods.allowance(param.from, param.to).call()
     return allowance / Math.pow(10, 18);
   }
