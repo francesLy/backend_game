@@ -370,7 +370,7 @@ function nftSwap(event) {
       },
       "blockNumber": res.blockNumber
     }
-    rowData.value.minted_at = DateHelper.toString(res.time * 1000);
+    rowData.value.minted_at = DateHelper.toString(res.timestamp * 1000);
     let tokenid = res.events.DrawCardEvent.returnValues.cardId;
     let nftparam = {
       from: store.state.metaMask?.account,
