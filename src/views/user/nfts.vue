@@ -362,11 +362,11 @@ function nftSwap(event) {
       "toUserId": store.state.user.id,
       "toAssetType": ASSETTYPE.nft,
       "toAmount": amount1.value,
-      time: res.time?res.time||null,
       "nftVo": {
         "tokenId": res.events.DrawCardEvent.returnValues.cardId,
         "attr1": "",
-        "attr2": ""
+        "attr2": "",
+        time: res.time?res.time:null,
       },
       "blockNumber": res.blockNumber
     }
