@@ -198,7 +198,6 @@ function handlerActions(data) {
     useNFTForGame(data.data)
   }
 }
-
 function query() {
   let data = {
     pageSize: pageSize.value,
@@ -215,6 +214,7 @@ function query() {
           id: i.id,
           Token_ID: i.tokenId,
           tx_id: i.txId,
+          number: i.nftType,
           NFT_type: info.type + ' - ' + info.en_name,
           blockchain: i.blockChain,
           minted_at: DateHelper.toString(i.mintedAt * 1000),
@@ -239,6 +239,7 @@ function getActiveList() {
         id: null,
         Token_ID: i.tokenId,
         tx_id: i.txId,
+        number: i.number,
         NFT_type: info.type + ' - ' + info.en_name,
         blockchain: store.state.abi?.networkName,
         minted_at: DateHelper.toString(i.time * 1000),
@@ -255,10 +256,11 @@ function setRowdata(data) {
   let res = [data].map(i => {
     return {
       NFT_type: i.NFT_type,
+      number: i.number,
       game_chances: i.game_chances,
       blockchain: i.blockchain,
       Token_ID: i.Token_ID,
-      contract_address: CONTRACTS['blindbox'].address,
+      contract_address: CONTRACTS['nft'].address,
       minted_at: i.minted_at,
       src: i.src,
       status: activeName.value
@@ -366,7 +368,7 @@ function nftSwap(event) {
         "tokenId": res.events.DrawCardEvent.returnValues.cardId,
         "attr1": "",
         "attr2": "",
-        time: res.time?res.time:null,
+        time: res.time ? res.time : null,
       },
       "blockNumber": res.blockNumber
     }
@@ -405,12 +407,13 @@ function getNFTnfoFromChain(id) {
     visible.value = true;
     let info = NFTTYPES[res.number + ''];
     rowData.value.src = `https://s3.ap-northeast-1.amazonaws.com/www.chessofstars.io/assets/img/card/` + info?.card_name;
+    rowData.value.number = res.number;
     rowData.value.NFT_type = info.type + ' - ' + info.en_name;
     rowData.value.game_chances = res.chances;
     rowData.value.status = 0;
     rowData.value.blockchain = blockChain.value;
     rowData.value.Token_ID = nftParam.value.nftVo.tokenId;
-    rowData.value.contract_address = CONTRACTS['blindbox'].proxyAddress;
+    rowData.value.contract_address = CONTRACTS['nft'].address;
     nftParam.value.nftVo.attr1 = res.number
     nftParam.value.nftVo.attr2 = res.chances
     isOnlyUpdateStatus.value = false;
@@ -472,8 +475,14 @@ function useNFTForGame(row) {
 }
 async function updateNFTStatus(row) {
   let data = {
-    "tokenId": row.Token_ID,
-    "status": 1
+    nftVo: {
+      "tokenId": row.Token_ID,
+      "status": 1,
+      time: DateHelper.getTimestamp(row.minted_at),
+      attr1: row.number,
+      attr2: row.game_chances
+    },
+    userId: store.state.user.id
   }
   if (!metaMask.isAvailable()) return;
   loadingHelper.show()

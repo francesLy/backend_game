@@ -24,6 +24,12 @@ export const DateHelper = {
         for (let k in o) if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
         return fmt;
     },
+    getTimestamp:(date)=>{
+        if(!date) return;
+        let d = new Date(date);
+        let timestamp = d.getTime()
+        return timestamp;
+    },
     getDay: (day) => {
         let today = new Date();
         let targetday_milliseconds = today.getTime() + 1000 * 60 * 60 * 24 * day;

@@ -48,7 +48,7 @@ const props = defineProps({
   }
 })
 watch(() => props.data, (val) => {
-  tableData.value = val;
+  tableData.value = val
 }, { immediate: true })
 watch(() => props.header, (val) => {
   tableHeader.value = generateHeader(val);
