@@ -85,7 +85,7 @@
                         <div class="card-footer">
                           <div class="stats">
                             <i class="fa fa-cubes"></i>&nbsp;Staking pool contract address:&nbsp;&nbsp;
-                            <a :href="$store.state.metaMask?`${$store.state.metaMask?.url}address/${contracts.sl.proxyAddress}`:'javascript:void(0);'" :target="$store.state.metaMask?'_blank':null">{{contracts.sl.proxyAddress}}</a>
+                            <a :href="$store.state.metaMask?`${$store.state.metaMask?.url}address/${contracts.sl.address}`:'javascript:void(0);'" :target="$store.state.metaMask?'_blank':null">{{contracts.sl.proxyAddress}}</a>
                           </div>
                         </div>
                       </div>
@@ -121,7 +121,7 @@
                         <div class="card-footer">
                           <div class="stats">
                             <i class="fa fa-cubes"></i>&nbsp;Staking pool contract address:&nbsp;&nbsp;
-                            <a :href="$store.state.metaMask?`${$store.state.metaMask?.url}address/${contracts.club.proxyAddress}`:'javascript:void(0);'" :target="$store.state.metaMask?'_blank':null">{{contracts.club.proxyAddress}}</a>
+                            <a :href="$store.state.metaMask?`${$store.state.metaMask?.url}address/${contracts.club.address}`:'javascript:void(0);'" :target="$store.state.metaMask?'_blank':null">{{contracts.club.proxyAddress}}</a>
                           </div>
                         </div>
                       </div>
@@ -167,7 +167,7 @@
                         <div class="card-footer">
                           <div class="stats">
                             <i class="fa fa-cubes"></i>&nbsp;Staking pool contract address:&nbsp;&nbsp;
-                            <a :href="$store.state.metaMask?`${$store.state.metaMask?.url}address/${contracts.defi.proxyAddress}`:'javascript:void(0);'" :target="$store.state.metaMask?'_blank':null">{{contracts.defi.proxyAddress}}</a>
+                            <a :href="$store.state.metaMask?`${$store.state.metaMask?.url}address/${contracts.defi.address}`:'javascript:void(0);'" :target="$store.state.metaMask?'_blank':null">{{contracts.defi.proxyAddress}}</a>
                           </div>
                         </div>
                       </div>
