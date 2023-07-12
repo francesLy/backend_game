@@ -519,8 +519,7 @@ function errorHandlerOfMetaMaskRequest(error) {
 }
 export const savaAfterTranscation = (param) => {
   chainApi.save(param).then(res => {
-    console.log("success")
-    console.log("saved")
+    console.log("saved success")
   }).catch((err) => {
     console.log(err)
   })

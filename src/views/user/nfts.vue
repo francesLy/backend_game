@@ -422,11 +422,11 @@ function getNFTnfoFromChain(id) {
 
   })
 }
-async function handleSaveParamAfterTransfer(value) {
+function handleSaveParamAfterTransfer(value) {
   if (!hasUpdated.value && !isOnlyUpdateStatus.value) {
     if (value) {
       nftParam.value.nftVo.status = value;
-      await ElMessageBox.confirm(
+      ElMessageBox.confirm(
         'Do you want to use this nft for game?',
         'Info',
         {
@@ -435,23 +435,19 @@ async function handleSaveParamAfterTransfer(value) {
           type: 'info',
         }
       )
-        .then(() => {
+        .then(async() => {
           nftParam.value.nftVo.status = 1;
           rowData.value.status = 1;
-          let ret = tryNFTTransfer(rowData.value)
+          let ret = await tryNFTTransfer(rowData.value)
           if (!ret) return;
+          await savaAfterTranscation(nftParam.value)
         })
         .catch(() => {
           console.log('cancel')
           nftParam.value.nftVo.status = 0;
           rowData.value.status = 0;
+          savaAfterTranscation(nftParam.value)
         })
-    }
-    await savaAfterTranscation(nftParam.value)
-    if (activeName.value == TYPES.value.active) {
-      await getActiveList()
-    } else {
-      await query();
     }
     hasUpdated.value = true;
     isOnlyUpdateStatus.value = true;
@@ -513,7 +509,7 @@ async function tryNFTTransfer(row) {
   }
   let ret = false;
   await metaMask.tryNFTTransferByContract(param).then(res => {
-    console.log("success")
+    console.log(11111,"chain status success")
     ret = true
   })
   return ret;
