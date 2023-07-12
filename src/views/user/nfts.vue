@@ -519,6 +519,7 @@ async function tryNFTTransfer(row) {
   }).catch(err=>{
     ret = false
     rowData.value.status = 0;
+    nftParam.value.nftVo.status = 0;
   })
   return ret;
 }
