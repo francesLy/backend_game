@@ -422,11 +422,13 @@ function getNFTnfoFromChain(id) {
 
   })
 }
-function handleSaveParamAfterTransfer(value) {
+async function handleSaveParamAfterTransfer(value) {
+  let save = false;
   if (!hasUpdated.value && !isOnlyUpdateStatus.value) {
     if (value) {
       nftParam.value.nftVo.status = value;
-      ElMessageBox.confirm(
+      
+      await ElMessageBox.confirm(
         'Do you want to use this nft for game?',
         'Info',
         {
@@ -441,14 +443,17 @@ function handleSaveParamAfterTransfer(value) {
           let ret = await tryNFTTransfer(rowData.value)
           if (!ret) return;
           await savaAfterTranscation(nftParam.value)
+          save = true;
         })
         .catch(() => {
           console.log('cancel')
           nftParam.value.nftVo.status = 0;
           rowData.value.status = 0;
           savaAfterTranscation(nftParam.value)
+          save = true;
         })
     }
+    if(!save) await savaAfterTranscation(nftParam.value)
     hasUpdated.value = true;
     isOnlyUpdateStatus.value = true;
   }
@@ -511,6 +516,9 @@ async function tryNFTTransfer(row) {
   await metaMask.tryNFTTransferByContract(param).then(res => {
     console.log(11111,"chain status success")
     ret = true
+  }).catch(err=>{
+    ret = false
+    rowData.value.status = 0;
   })
   return ret;
 }
