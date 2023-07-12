@@ -83,10 +83,10 @@ if (provider) {
     }
   })
 }
-function getBalance(key) {
+function getBalance(key,isProxy) {
   let data = {
     abi: abis.value[key],
-    address: CONTRACTS[key].address,
+    address: isProxy?CONTRACTS[key].proxyAddress:CONTRACTS[key].address,
     from: store.state.metaMask?.account,
     key: key
   }

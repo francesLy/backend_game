@@ -194,10 +194,10 @@ function evicBalance() {
     if (res.code == 0) dashboard.value.evics = res.data.amount
   })
 }
-function getBalance(key) {
+function getBalance(key,isProxy) {
   let data = {
     abi: abis.value[key],
-    address: CONTRACTS[key].address,
+    address: isProxy?CONTRACTS[key].proxyAddress:CONTRACTS[key].address,
     from: store.state.metaMask?.account,
     key: key
   }
@@ -304,7 +304,7 @@ const evicHandler = {
 function refresh() {
   evicBalance()
   getBalance('cosd')
-  getBalance('nft')
+  getBalance('nft',true)
 }
 function getBalances(){
   getBalance('cosd')
@@ -324,7 +324,7 @@ onMounted(() => {
   evicBalance()
   if (metaMask.isAvailable()) {
     getBalance('cosd')
-    getBalance('nft')
+    getBalance('nft',true)
   }
 })
 onUnmounted(()=>{

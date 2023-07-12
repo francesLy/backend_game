@@ -329,10 +329,10 @@ function handleClick(tab) {
   active.value = tab;
 }
 
-function getBalance(key) {
+function getBalance(key,isProxy) {
   let data = {
     abi: abis.value[key],
-    address: CONTRACTS[key].address,
+    address: isProxy?CONTRACTS[key].proxyAddress:CONTRACTS[key].address,
     from: store.state.metaMask?.account
   }
   metaMask.getBalanceByContract(data).then(res => {
@@ -568,7 +568,7 @@ function stakingTransfer(key) {
       "blockNumber": res.blockNumber
     }
     savaAfterTranscation(param)
-    getBalance(key);
+    getBalance(key,true);
     getBalance('cosd');
     getAllowance(key)
     if (key == 'club') getClubStatus()
@@ -601,7 +601,7 @@ async function unstakingTransfer(key) {
     savaAfterTranscation(param)
     if (key == 'defi') { getRewardBalance() }
     loadingHelper.hide();
-    getBalance(key);
+    getBalance(key,true);
     getBalance('cosd');
     if (key == 'club') getClubStatus()
   }).catch(err => {
@@ -626,9 +626,9 @@ function refresh() {
   getAllowance('club')
   getAllowance('defi')
   getBalance('cosd')
-  getBalance('sl')
-  getBalance('club')
-  getBalance('defi')
+  getBalance('sl',true)
+  getBalance('club',true)
+  getBalance('defi',true)
   getStakeStartTime('club')
   getStakeStartTime('defi')
   getClubStatus()
