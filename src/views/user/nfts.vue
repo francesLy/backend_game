@@ -493,7 +493,7 @@ async function updateNFTStatus(row) {
     if (res1.code == 0) {
       ElNotification({
         type: "success",
-        message: "use it successfully"
+        message: "Successful. Please note that it will take a few minutes. Feel free to refresh the page later."
       })
       rowData.value.status = 1
       loadingHelper.hide()
