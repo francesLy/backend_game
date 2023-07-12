@@ -273,7 +273,7 @@
           </el-button>
         </el-col>
         <el-col :span="24" style="margin-top:15px">
-          <el-button type="success" @click="handleTransferOperate()" style="width:100%" :disabled="allowance[action.key] >= action.amount?false:true">
+          <el-button type="success" @click="handleTransferOperate()" style="width:100%" :disabled="needApprove?(allowance[action.key] >= action.amount?false:true):!disabled">
             <el-tag size="small" v-if="needApprove">2</el-tag>&nbsp;{{buttonText}}
           </el-button>
         </el-col>
