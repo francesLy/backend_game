@@ -368,11 +368,10 @@ function nftSwap(event) {
         "tokenId": res.events.DrawCardEvent.returnValues.cardId,
         "attr1": "",
         "attr2": "",
-        time: res.time ? res.time : null,
+        time: '',
       },
       "blockNumber": res.blockNumber
     }
-    rowData.value.minted_at = DateHelper.toString(res.timestamp * 1000);
     let tokenid = res.events.DrawCardEvent.returnValues.cardId;
     let nftparam = {
       from: store.state.metaMask?.account,
@@ -414,8 +413,10 @@ function getNFTnfoFromChain(id) {
     rowData.value.blockchain = blockChain.value;
     rowData.value.Token_ID = nftParam.value.nftVo.tokenId;
     rowData.value.contract_address = CONTRACTS['nft'].address;
+    rowData.value.minted_at = DateHelper.toString(res.time * 1000);
     nftParam.value.nftVo.attr1 = res.number
     nftParam.value.nftVo.attr2 = res.chances
+    nftParam.value.nftVo.time = res.time;
     isOnlyUpdateStatus.value = false;
     hasUpdated.value = false;
 
@@ -478,7 +479,7 @@ async function updateNFTStatus(row) {
     nftVo: {
       "tokenId": row.Token_ID,
       "status": 1,
-      time: DateHelper.getTimestamp(row.minted_at),
+      time: parseInt(DateHelper.getTimestamp(row.minted_at)/1000),
       attr1: row.number,
       attr2: row.game_chances
     },
