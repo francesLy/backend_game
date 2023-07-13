@@ -361,7 +361,7 @@ function nftSwap(event) {
       "fromUserId": store.state.user.id,
       "fromAssetType": ASSETTYPE.usdt,
       "fromAmount": amount.value,
-      "toUserId": 0,
+      "toUserId": store.state.user.id,
       "toAssetType": ASSETTYPE.nft,
       "toAmount": amount1.value,
       "blockNumber": res.blockNumber,
@@ -491,10 +491,10 @@ async function tryNFTTransfer(row) {
   await metaMask.tryNFTTransferByContract(param).then(res => {
     nftParam.value = {
       "txId": res.transactionHash,
-      "transType": TXTYPE.blindbox,
+      "transType": TXTYPE.nft,
       "fromUserId": store.state.user.id,
-      "fromAssetType": ASSETTYPE.usdt,
-      "fromAmount": amount.value,
+      "fromAssetType": ASSETTYPE.nft,
+      "fromAmount": amount1.value,
       "toUserId": 0,
       "toAssetType": ASSETTYPE.nft,
       "toAmount": amount1.value,
