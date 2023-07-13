@@ -361,16 +361,16 @@ function nftSwap(event) {
       "fromUserId": store.state.user.id,
       "fromAssetType": ASSETTYPE.usdt,
       "fromAmount": amount.value,
-      "toUserId": store.state.user.id,
+      "toUserId": 0,
       "toAssetType": ASSETTYPE.nft,
       "toAmount": amount1.value,
+      "blockNumber": res.blockNumber,
       "nftVo": {
         "tokenId": res.events.DrawCardEvent.returnValues.cardId,
         "attr1": "",
         "attr2": "",
         time: '',
-      },
-      "blockNumber": res.blockNumber
+      }
     }
     let tokenid = res.events.DrawCardEvent.returnValues.cardId;
     let nftparam = {
@@ -417,18 +417,19 @@ function getNFTnfoFromChain(id) {
     nftParam.value.nftVo.attr1 = res.number
     nftParam.value.nftVo.attr2 = res.chances
     nftParam.value.nftVo.time = res.time;
+    nftParam.value.nftVo.status = 0;
+    savaAfterTranscation(nftParam.value)
     isOnlyUpdateStatus.value = false;
     hasUpdated.value = false;
 
   })
 }
-async function handleSaveParamAfterTransfer(value) {
+function handleSaveParamAfterTransfer(value) {
   let save = false;
   if (!hasUpdated.value && !isOnlyUpdateStatus.value) {
     if (value) {
       nftParam.value.nftVo.status = value;
-      
-      await ElMessageBox.confirm(
+      ElMessageBox.confirm(
         'Do you want to use this nft for game?',
         'Info',
         {
@@ -437,23 +438,17 @@ async function handleSaveParamAfterTransfer(value) {
           type: 'info',
         }
       )
-        .then(async() => {
+        .then(() => {
           nftParam.value.nftVo.status = 1;
           rowData.value.status = 1;
-          let ret = await tryNFTTransfer(rowData.value)
-          if (!ret) return;
-          await savaAfterTranscation(nftParam.value)
-          save = true;
+          updateNFTStatus(rowData.value)
         })
         .catch(() => {
           console.log('cancel')
           nftParam.value.nftVo.status = 0;
           rowData.value.status = 0;
-          savaAfterTranscation(nftParam.value)
-          save = true;
         })
     }
-    if(!save) await savaAfterTranscation(nftParam.value)
     hasUpdated.value = true;
     isOnlyUpdateStatus.value = true;
   }
@@ -476,32 +471,12 @@ function useNFTForGame(row) {
     })
 }
 async function updateNFTStatus(row) {
-  let data = {
-    nftVo: {
-      "tokenId": row.Token_ID,
-      "status": 1,
-      time: parseInt(DateHelper.getTimestamp(row.minted_at)/1000),
-      attr1: row.number,
-      attr2: row.game_chances
-    },
-    userId: store.state.user.id
-  }
-  if (!metaMask.isAvailable()) return;
   loadingHelper.show()
   let ret = await tryNFTTransfer(row);
   if (!ret) return;
-  await nftApi.status(data).then(res1 => {
-    if (res1.code == 0) {
-      ElNotification({
-        type: "success",
-        message: "Successful. Please note that it will take a few minutes. Feel free to refresh the page later."
-      })
-      rowData.value.status = 1
-      loadingHelper.hide()
-      getActiveList();
-    }
-  })
-
+  rowData.value.status = 1
+  loadingHelper.hide()
+  await getActiveList();
 }
 async function tryNFTTransfer(row) {
   if (!metaMask.isAvailable()) return;
@@ -514,12 +489,31 @@ async function tryNFTTransfer(row) {
   }
   let ret = false;
   await metaMask.tryNFTTransferByContract(param).then(res => {
-    console.log(11111,"chain status success")
+    nftParam.value = {
+      "txId": res.transactionHash,
+      "transType": TXTYPE.blindbox,
+      "fromUserId": store.state.user.id,
+      "fromAssetType": ASSETTYPE.usdt,
+      "fromAmount": amount.value,
+      "toUserId": 0,
+      "toAssetType": ASSETTYPE.nft,
+      "toAmount": amount1.value,
+      "blockNumber": res.blockNumber,
+      nftVo: {
+        "tokenId": row.Token_ID,
+        "status": 1,
+        time: parseInt(DateHelper.getTimestamp(row.minted_at) / 1000),
+        attr1: row.number,
+        attr2: row.game_chances
+      }
+    }
+    savaAfterTranscation(nftParam.value)
     ret = true
-  }).catch(err=>{
+  }).catch(err => {
     ret = false
     rowData.value.status = 0;
     nftParam.value.nftVo.status = 0;
+    loadingHelper.hide()
   })
   return ret;
 }
