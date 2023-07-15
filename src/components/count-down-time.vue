@@ -60,12 +60,11 @@ async function getVerifyCode() {
       });
 
       btndisabled.value = true;
-      time.value = res.data;
       if (timer) clearInterval(timer);
-      gen = genTime(time.value);
+      gen = genTime(res.data);
       timer = setInterval(() => {
         time.value = gen.next().value;
-      })
+      },1000)
     } else {
       emit("send", false);
     }
