@@ -9,18 +9,18 @@
       <el-table-column label="Amount" min-width="20%">
         <template #default="scope">
           <div>
-            <h3 style="margin:0"><b>{{ scope.row.toAmount }}</b>&nbsp;<small style="font-size:14px;color:#999">{{ txtype[scope.row.transType].to }}</small></h3>
+            <span style="margin:0;font-size:28px;"><b>{{ scope.row.toAmount }}</b>&nbsp;<small style="font-size:14px;color:#999">{{ txtype[scope.row.transType].to }}</small></span>
             <span v-if="[0,7,8,9].indexOf(scope.row.transType) > -1">({{ scope.row.fromAmount }} <small>{{ txtype[scope.row.transType].from }}</small>)</span>
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="Transcation ID" min-width="30%">
+      <el-table-column label="Transcation ID" min-width="50%">
         <template #default="scope">
           <a :href="$store.state.metaMask?($store.state.metaMask?.url+'tx/'+scope.row.txId):'javascript:void(0);'" :target="$store.state.metaMask?'_blank':null">{{ scope.row.txId }}</a>
         </template>
       </el-table-column>
-      <el-table-column label="Create time" min-width="25%" prop="createTime"></el-table-column>
-      <el-table-column label="Update time" min-width="20%" prop="updateTime"></el-table-column>
+      <el-table-column label="Create time" min-width="15%" prop="createTime"></el-table-column>
+      <el-table-column label="Update time" min-width="15%" prop="updateTime"></el-table-column>
       <template #empty>
         <el-empty style="margin:0 auto"></el-empty>
       </template>
