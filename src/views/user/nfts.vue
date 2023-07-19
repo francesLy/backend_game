@@ -23,8 +23,8 @@
       </li>
     </ul>
     <div class="card">
-      <page-title :option="title" v-if="activeName ==TYPES.used ||activeName ==TYPES.using" @refresh="query()"></page-title>
-      <page-title :option="title" v-if="activeName ==TYPES.active" @refresh="getActiveList()"></page-title>
+      <page-title :option="title" v-show="activeName ==TYPES.used ||activeName ==TYPES.using" @refresh="query()"></page-title>
+      <page-title :option="title" v-show="activeName ==TYPES.active" @refresh="getActiveList()"></page-title>
       <div class="card-body" v-show="activeName == TYPES.active">
         <dynamic-table v-loading="loading" :data="tableData" :header="tableHeader" :preNum="pageNum * pageSize - pageSize" :operations="operations" @commands="handlerActions"></dynamic-table>
         <el-pagination background layout="total, sizes, prev, pager, next" :total="total" :current-page="pageNum" @current-change="handlePageChange" @size-change="handleSizeChange" :page-size="pageSize" />

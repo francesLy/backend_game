@@ -114,13 +114,13 @@
               <el-option label="purchase" :value="7"></el-option>
               <el-option label="withdraw" :value="8"></el-option>
             </el-select>
-            <buy-list v-model:refresh="isrefresh" v-if="activeName =='evic'" :txtype="evicType"></buy-list>
+            <buy-list v-model:refresh="isrefresh" v-show="activeName =='evic'" :txtype="evicType"></buy-list>
           </el-tab-pane>
           <el-tab-pane label="COSD" name="cosd">
-            <buy-list v-model:refresh="isrefresh" v-if="activeName =='cosd'" :txtype="transTypes.buy"></buy-list>
+            <buy-list v-model:refresh="isrefresh" v-show="activeName =='cosd'" :txtype="transTypes.buy"></buy-list>
           </el-tab-pane>
           <el-tab-pane label="Blindbox" name="blindbox">
-            <buy-list v-model:refresh="isrefresh" v-if="activeName =='blindbox'" :txtype="transTypes.blindbox"></buy-list>
+            <buy-list v-model:refresh="isrefresh" v-show="activeName =='blindbox'" :txtype="transTypes.blindbox"></buy-list>
           </el-tab-pane>
         </el-tabs>
       </div>

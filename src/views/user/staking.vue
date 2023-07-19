@@ -46,7 +46,7 @@
             
           </div>
           <div class="card-body">
-            <div v-if="activeNameb =='trans'">
+            <div v-show="activeNameb =='trans'">
               <el-alert type="warning" style="margin-bottom:20px" title="Reminder: BSC(Binance smart chain) chain supported only, we'll support various chains soon."></el-alert>
               <div class="row">
                 <div class="col-md-3">
@@ -237,9 +237,9 @@
                   </el-select>
                 </el-col>
               </el-row>
-              <buy-list v-model:refresh="isrefresh" v-if="activeNameb =='list'" :txtype="stakeListType"></buy-list>
+              <buy-list v-model:refresh="isrefresh" v-show="activeNameb =='list'" :txtype="stakeListType"></buy-list>
             </div>
-            <div v-if="activeNameb =='unstakelist'">
+            <div v-show="activeNameb =='unstakelist'">
               <el-row :gutter="10">
                 <el-col :span="6">
                   <el-select v-model="unstakeListType">
@@ -249,7 +249,7 @@
                   </el-select>
                 </el-col>
               </el-row>
-              <buy-list v-model:refresh="isrefresh" v-if="activeNameb =='unstakelist'" :txtype="unstakeListType"></buy-list>
+              <buy-list v-model:refresh="isrefresh" v-show="activeNameb =='unstakelist'" :txtype="unstakeListType"></buy-list>
             </div>
           </div>
         </div>
