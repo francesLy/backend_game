@@ -51,7 +51,7 @@
               <div style="margin-top:5px;margin-right:10px;display:inline-block" v-if="$store.state.role !== 3">
                 <metamask-connect></metamask-connect>
                 <!---->
-                <el-tooltip placement="bottom" content="Invite to be channel Leader" v-if="$store.state.role == 1">
+                <el-tooltip placement="bottom" content="Invite to be channel Leader">
                   <el-button type="success" @click="inviteHandler()" round>
                     <i class="fa fa-link"></i>&nbsp;Invite
                   </el-button>

@@ -115,8 +115,8 @@
                           </div>
                           <p class="card-category">Current staking COSD</p>
                           <h3 class="card-title">{{ balance.club }}</h3>
-                          <span class="badge badge-pill badge-success" v-if="isClubBoss">Club ownership Qqualified</span>
-                          <span class="badge badge-pill badge-default" v-if="!isClubBoss">Club ownership Unqualified</span>
+                          <!--<span class="badge badge-pill badge-success" v-if="isClubBoss">Club ownership Qqualified</span>
+                          <span class="badge badge-pill badge-default" v-if="!isClubBoss">Club ownership Unqualified</span>-->
                         </div>
                         <div class="card-footer">
                           <div class="stats">
@@ -149,8 +149,8 @@
                               <p> Users can only stake after the event starts. The staking period of each user is 90 days, and the user can only unstake after the staking reaches 90 days. The staking period starts once the staking operation is completed.</p>
                             </div>
                           </el-popover>
-                          <a href="javascript:void(0);" class="btn btn-rose btn-round" @click="open('clubstaking')">Stake</a>
-                          <button class="btn btn-warning btn-round" v-if="balance.club" @click="open('clubunstaking')">Stop staking</button>
+                          <!--<a href="javascript:void(0);" class="btn btn-rose btn-round" @click="open('clubstaking')">Stake</a>
+                          <button class="btn btn-warning btn-round" v-if="balance.club" @click="open('clubunstaking')">Stop staking</button>-->
                         </div>
                       </div>
                     </div>
