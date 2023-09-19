@@ -56,11 +56,11 @@
                         <i class="fa fa-connectdevelop"></i> Staking for <br />starlight league
                       </a>
                     </li>
-                    <li class="nav-item">
+                    <!--<li class="nav-item">
                       <a class="nav-link" :class="active=='club'?' active show':''" data-toggle="tab" @click="handleClick('club')" role="tablist">
                         <i class="fa fa-group"></i> Staking for <br />club ownership
                       </a>
-                    </li>
+                    </li>-->
                     <li class="nav-item">
                       <a class="nav-link" :class="active=='cosd'?' active show':''" data-toggle="tab" @click="handleClick('cosd')" role="tablist">
                         <i class="fa fa-btc"></i> Staking for <br />earning COSD
@@ -107,7 +107,7 @@
                       </div>
                     </div>
                     <!--Club ownership-->
-                    <div class="tab-pane" :class="active=='club'?' active show':''" id="tab-staking-club">
+                    <!--<div class="tab-pane" :class="active=='club'?' active show':''" id="tab-staking-club">
                       <div class="card card-stats for-unqualified">
                         <div class="card-header card-header-warning card-header-icon">
                           <div class="card-icon">
@@ -115,8 +115,8 @@
                           </div>
                           <p class="card-category">Current staking COSD</p>
                           <h3 class="card-title">{{ balance.club }}</h3>
-                          <!--<span class="badge badge-pill badge-success" v-if="isClubBoss">Club ownership Qqualified</span>
-                          <span class="badge badge-pill badge-default" v-if="!isClubBoss">Club ownership Unqualified</span>-->
+                          <span class="badge badge-pill badge-success" v-if="isClubBoss">Club ownership Qqualified</span>
+                          <span class="badge badge-pill badge-default" v-if="!isClubBoss">Club ownership Unqualified</span>
                         </div>
                         <div class="card-footer">
                           <div class="stats">
@@ -149,11 +149,11 @@
                               <p> Users can only stake after the event starts. The staking period of each user is 90 days, and the user can only unstake after the staking reaches 90 days. The staking period starts once the staking operation is completed.</p>
                             </div>
                           </el-popover>
-                          <!--<a href="javascript:void(0);" class="btn btn-rose btn-round" @click="open('clubstaking')">Stake</a>
-                          <button class="btn btn-warning btn-round" v-if="balance.club" @click="open('clubunstaking')">Stop staking</button>-->
+                          <a href="javascript:void(0);" class="btn btn-rose btn-round" @click="open('clubstaking')">Stake</a>
+                          <button class="btn btn-warning btn-round" v-if="balance.club" @click="open('clubunstaking')">Stop staking</button>
                         </div>
                       </div>
-                    </div>
+                    </div>-->
                     <!--COSD Earning-->
                     <div class="tab-pane" :class="active=='cosd'?' active show':''" id="tab-staking-cosd">
                       <div class="card card-stats">
