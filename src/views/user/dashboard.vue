@@ -1,96 +1,103 @@
 <template>
   <div class="content">
-      <div class="row">
-        <div class="col-lg-3 col-md-6 col-sm-6">
-          <div class="card card-stats">
-            <div class="card-header card-header-warning card-header-icon">
-              <div class="card-icon">
-                <i class="fa fa-btc"></i>
-              </div>
-              <p class="card-category">COSD</p>
-              <h3 class="card-title">{{ dashboard.cosd }}</h3>
+    <div class="row">
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-header card-header-warning card-header-icon">
+            <div class="card-icon">
+              <i class="fa fa-btc"></i>
             </div>
-            <div class="card-footer">
-              <div class="stats">
-                <i class="fa fa-btc"></i>&nbsp;All COSD in your wallet
-                <!-- <a href="#pablo">Get More COSD...</a> -->
-              </div>
-            </div>
+            <p class="card-category">COSD</p>
+            <h3 class="card-title">{{ dashboard.cosd }}</h3>
           </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6">
-          <div class="card card-stats">
-            <div class="card-header card-header-warning card-header-icon">
-              <div class="card-icon">
-                <i class="fa fa-money"></i>
-              </div>
-              <p class="card-category">Evics</p>
-              <h3 class="card-title">{{ dashboard.evics }}</h3>
-            </div>
-            <div class="card-footer">
-              <div class="stats">
-                <i class="fa fa-money"></i>&nbsp;All Evics  in the game
-                <!-- <a href="#pablo">Exchange to USDT</a> -->
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6">
-          <div class="card card-stats">
-            <div class="card-header card-header-info card-header-icon">
-              <div class="card-icon">
-                <i class="fa fa-ticket"></i>
-              </div>
-              <p class="card-category">NFTs</p>
-              <h3 class="card-title">{{ dashboard.nft }}</h3>
-            </div>
-            <div class="card-footer">
-              <div class="stats">
-                <i class="fa fa-ticket"></i>&nbsp;
-                <a href="/plat/nfts?active=3">Get More NFTs</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6">
-          <div class="card card-stats">
-            <div class="card-header card-header-info card-header-icon">
-              <div class="card-icon">
-                <i class="fa fa-gamepad"></i>
-              </div>
-              <p class="card-category">Games played</p>
-              <h3 class="card-title">{{ dashboard.nft? dashboard.games:0 }}</h3>
-            </div>
-            <div class="card-footer">
-              <div class="stats">
-                <i class="fa fa-gamepad"></i>&nbsp;
-                <a href="/plat/nfts?active=0">View games remaining</a>
-              </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="fa fa-btc"></i>&nbsp;All COSD in your wallet
+              <!-- <a href="#pablo">Get More COSD...</a> -->
             </div>
           </div>
         </div>
       </div>
-      <div class="card">
-        <div style="display:flex;align-items: center;justify-content: space-between;padding:10px;">
-          <div>Current Evics: <b>{{ dashboard.evics }}</b></div>
-          <div>
-            <el-button type="primary" @click="open('buy')" round>Purchase</el-button>
-            <el-tooltip placement="top" content="At least 1000 evic" effect="customized">
-            <el-button type='success' style="margin-left:10px;" :disabled="!dashboard.evics" @click="open('withdraw')" round>Withdraw</el-button>
-          </el-tooltip>
-        </div>
-        </div>
-      </div>
-      <div class="card">
-        <div style="display:flex;align-items: center;justify-content: space-between;padding:10px;">
-          <div>Current COSD: <b>{{ dashboard.cosd }}</b></div>
-          <div>
-            <add-token style="display:inline-block;" @balance="getBalances()"></add-token>
-            &nbsp;
-            <purchase-cosd style="display:inline-block" @balance="refreshCosd()"></purchase-cosd>
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-header card-header-warning card-header-icon">
+            <div class="card-icon">
+              <i class="fa fa-money"></i>
+            </div>
+            <p class="card-category">Evics</p>
+            <h3 class="card-title">{{ dashboard.evics }}</h3>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="fa fa-money"></i>&nbsp;All Evics in the game
+              <!-- <a href="#pablo">Exchange to USDT</a> -->
+            </div>
           </div>
         </div>
       </div>
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-header card-header-info card-header-icon">
+            <div class="card-icon">
+              <i class="fa fa-ticket"></i>
+            </div>
+            <p class="card-category">NFTs</p>
+            <h3 class="card-title">{{ dashboard.nft }}</h3>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="fa fa-ticket"></i>&nbsp;
+              <a href="/plat/nfts?active=3">Get More NFTs</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-header card-header-info card-header-icon">
+            <div class="card-icon">
+              <i class="fa fa-gamepad"></i>
+            </div>
+            <p class="card-category">Games played</p>
+            <h3 class="card-title">{{ dashboard.nft? dashboard.games:0 }}</h3>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="fa fa-gamepad"></i>&nbsp;
+              <a href="/plat/nfts?active=0">View games remaining</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="card">
+          <div style="text-align:center;padding:10px 10px 20px;">
+            <h3><b>{{ dashboard.evics }}</b></h3>
+            <p>Current Evics</p>
+            <div>
+              <el-button type="primary" @click="open('buy')" round>Purchase</el-button>
+              <el-tooltip placement="top" content="At least 1000 evic" effect="customized">
+                <el-button type='success' style="margin-left:10px;" :disabled="!dashboard.evics" @click="open('withdraw')" round>Withdraw</el-button>
+              </el-tooltip>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="card" style="margin-top:10px">
+          <div style="text-align:center;padding:10px 10px 20px;"> 
+            <h3><b>{{ dashboard.cosd }}</b></h3>
+            <p>Current COSD</p>
+            <div>
+              <add-token style="display:inline-block;" @balance="getBalances()"></add-token>
+              &nbsp;
+              <purchase-cosd style="display:inline-block" @balance="refreshCosd()"></purchase-cosd>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="card" style="margin-top:50px;">
       <div class="card-header card-header-text card-header-warning">
         <div class="card-text" style="display:block">
@@ -103,7 +110,7 @@
               <i class="fa fa-refresh page-refresh" @click="listRefresh"></i>
             </el-col>
           </el-row>
-          
+
         </div>
       </div>
       <div class="card-body">
@@ -125,7 +132,7 @@
         </el-tabs>
       </div>
     </div>
-    <el-dialog v-model="visible" :title="action.title" width="400px" destroy-on-close>
+    <el-dialog v-model="visible" :title="action.title" width="360px" destroy-on-close>
       <el-alert title="TIP: 1 USDT = 100 EVIC" type="info" style="margin-bottom:20px"></el-alert>
       <el-row :gutter="10">
         <el-col :span="6">EVIC</el-col>
@@ -145,10 +152,10 @@
 
 </template>
  <script setup>
-import { ref, onMounted, getCurrentInstance,onUnmounted } from 'vue'
+import { ref, onMounted, getCurrentInstance, onUnmounted } from 'vue'
 import { useStore } from "vuex";
 import { ASSETTYPE, TXTYPE, savaAfterTranscation } from "@/utils/meta-mask";
-import { evicsApi,} from '@/api/request';
+import { evicsApi, } from '@/api/request';
 import { base64 } from "@/utils/base64";
 import { loadingHelper } from "@/utils/loading";
 import PurchaseCosd from "@/components/purchase-cosd.vue";
@@ -194,10 +201,10 @@ function evicBalance() {
     if (res.code == 0) dashboard.value.evics = res.data.amount
   })
 }
-function getBalance(key,isProxy) {
+function getBalance(key, isProxy) {
   let data = {
     abi: abis.value[key],
-    address: isProxy?CONTRACTS[key].proxyAddress:CONTRACTS[key].address,
+    address: isProxy ? CONTRACTS[key].proxyAddress : CONTRACTS[key].address,
     from: store.state.metaMask?.account,
     key: key
   }
@@ -214,7 +221,7 @@ function open(command) {
     command: command
   }
   let res = openHandler[command]();
-  if(res) visible.value = true;
+  if (res) visible.value = true;
 }
 function handleOperate() {
   evicHandler[action.value.command]()
@@ -304,43 +311,43 @@ const evicHandler = {
 function refresh() {
   evicBalance()
   getBalance('cosd')
-  getBalance('nft',true)
+  getBalance('nft', true)
 }
-function getBalances(){
+function getBalances() {
   getBalance('cosd')
   getBalance('busd')
 }
-function listRefresh(){
+function listRefresh() {
   isrefresh.value = true
 }
-function refreshCosd(){
+function refreshCosd() {
   getBalance('cosd')
-  if(activeName.value == "cosd") listRefresh()
+  if (activeName.value == "cosd") listRefresh()
 }
-Bus.$on('refresh',(isRefresh)=>{
-  if(isRefresh) refresh();
+Bus.$on('refresh', (isRefresh) => {
+  if (isRefresh) refresh();
 })
 onMounted(() => {
   evicBalance()
   if (metaMask.isAvailable()) {
     getBalance('cosd')
-    getBalance('nft',true)
+    getBalance('nft', true)
   }
 })
-onUnmounted(()=>{
+onUnmounted(() => {
   Bus.$off('refresh')
 })
  </script>
  <style>
- .el-popper.is-customized {
-   /* Set padding to ensure the height is 32px */
-   padding: 6px 12px;
-   color:rgba(255,152,0);
-   background: #fff9f1;
- }
- 
- .el-popper.is-customized .el-popper__arrow::before {
-    background: #fff9f1;
-   right: 0;
- }
- </style>
+.el-popper.is-customized {
+  /* Set padding to ensure the height is 32px */
+  padding: 6px 12px;
+  color: rgba(255, 152, 0);
+  background: #fff9f1;
+}
+
+.el-popper.is-customized .el-popper__arrow::before {
+  background: #fff9f1;
+  right: 0;
+}
+</style>

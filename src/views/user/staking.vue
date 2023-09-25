@@ -50,7 +50,7 @@
               <el-alert type="warning" style="margin-bottom:20px" title="Reminder: BSC(Binance smart chain) chain supported only, we'll support various chains soon."></el-alert>
               <div class="row">
                 <div class="col-md-3">
-                  <ul class="nav nav-pills nav-pills-warning nav-pills-icons flex-column" role="tablist">
+                  <ul class="staking-nav nav nav-pills nav-pills-warning nav-pills-icons flex-column" role="tablist">
                     <li class="nav-item">
                       <a class="nav-link" :class="active=='sl'?' active show':''" data-toggle="tab" @click="handleClick('sl')" role="tablist">
                         <i class="fa fa-connectdevelop"></i> Staking for <br />starlight league
@@ -256,7 +256,7 @@
       </div>
     </div>
     <!--Staking && UnStaking-->
-    <el-dialog v-model="visible" :title="action.title" width="400px" destroy-on-close>
+    <el-dialog v-model="visible" :title="action.title" width="360px" destroy-on-close>
       <el-row :gutter="5">
         <el-col :span="4">
           COSD

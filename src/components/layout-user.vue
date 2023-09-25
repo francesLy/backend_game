@@ -44,10 +44,10 @@
       <el-container>
         <el-header class="header">
           <el-row justify="space-between" style="height: 40px">
-            <el-col :span="4">
+            <el-col :span="2">
               <i class="el-icon--right header-icon fa fa-navicon" @click="change()"></i>
             </el-col>
-            <el-col :span="20" style="text-align: right;">
+            <el-col :span="22" style="text-align: right;">
               <div style="margin-top:5px;margin-right:10px;display:inline-block" v-if="$store.state.role !== 3">
                 <metamask-connect></metamask-connect>
                 <!---->
@@ -61,7 +61,6 @@
                 <span class="el-dropdown-link">
                   <el-avatar :size="32" :src="require('@/assets/img/avatar.webp')" />
                   <span class="text-container">
-                    {{ "&nbsp;&nbsp;" + ($store.state.user?$store.state.user.name:'user') }}
                     <i class="el-icon--right fa fa-caret-down"></i>
                   </span>
                 </span>
@@ -85,20 +84,62 @@
         </el-footer>
       </el-container>
     </el-container>
-    <el-dialog v-model="visible" title="Change Password" width="480px" destroy-on-close>
+    <el-dialog v-model="visible" title="Change Password" :width="dialogWidth" destroy-on-close>
       <password-cont @close="()=>{visible = false}"></password-cont>
     </el-dialog>
-    <el-dialog v-model="visible1" title="Change Email" width="480px" destroy-on-close>
+    <el-dialog v-model="visible1" title="Change Email" :width="dialogWidth" destroy-on-close>
       <email-cont @close="closeemail"></email-cont>
     </el-dialog>
-    <el-dialog v-model="inviteVisible" title="Welcome to Chess of stars" width="440px">
+    <el-dialog v-model="inviteVisible" title="Welcome to Chess of stars" :width="dialogWidth">
       <qcode-cont :id="inviterId" style="width:100%;text-align: center;"></qcode-cont>
     </el-dialog>
+    <el-drawer class="menu-container open" v-model="isCollapse" direction="ltr" :with-header="false" :size="240">
+      <div>
+        <div class="logo" style="position: relative; z-index: 9; padding-left: 20px; text-align: left">
+          <img :src="require('@/assets/img/logo.webp')" />
+          <span class="wtext-l">Chess Of Stars</span>
+        </div>
+        <el-menu class="menu" :default-active="$route.meta.route" router>
+          <el-menu-item index="/plat/assets" v-if="$store.state.role != 3">
+            <i class="fa fa-dashboard"></i>
+            <span>Assets</span>
+          </el-menu-item>
+          <el-menu-item index="/admin/home" v-if="$store.state.role == 3">
+            <i class="fa fa-dashboard"></i>
+            <span>Dashboard</span>
+          </el-menu-item>
+          <el-menu-item index="/admin/staking-rewards" v-if="$store.state.role == 3">
+            <i class="fa fa-hdd-o"></i>
+            <span>Staking Rewards</span>
+          </el-menu-item>
+          <el-menu-item index="/admin/promotion-rewards" v-if="$store.state.role == 3">
+            <i class="fa fa-share-alt"></i>
+            <span>Promotion Rewards</span>
+          </el-menu-item>
+          <el-menu-item index="/admin/blog" v-if="$store.state.role == 3">
+            <i class="fa fa-file-image-o"></i>
+            <span>Blog</span>
+          </el-menu-item>
+          <el-menu-item index="/admin/logs" v-if="$store.state.role == 3">
+            <i class="fa fa-file-text-o"></i>
+            <span>Logs</span>
+          </el-menu-item>
+          <el-menu-item index="/plat/nfts" v-if="$store.state.role == 2||$store.state.role == 1">
+            <i class="fa fa-ticket"></i>
+            <span>NFTs</span>
+          </el-menu-item>
+          <el-menu-item index="/plat/staking" v-if="$store.state.role == 2||$store.state.role == 1">
+            <i class="fa fa-hdd-o"></i>
+            <span>Staking</span>
+          </el-menu-item>
+        </el-menu>
+      </div>
+    </el-drawer>
   </div>
 </template>
 <script setup>
-import { ref, getCurrentInstance } from "vue";
-import {useStore} from "vuex";
+import { ref, getCurrentInstance, onMounted } from "vue";
+import { useStore } from "vuex";
 import { useRouter } from "vue-router"
 import LayoutFooter from "@/components/footer.vue"
 import PasswordCont from "@/components/userAdmin/password.vue";
@@ -111,17 +152,23 @@ const store = useStore()
 const { proxy } = getCurrentInstance();
 const metaMask = proxy.metaMask;
 const isCollapse = ref(false);
-const width = ref("240px");
+const width = ref("0");
 const visible = ref(false);
 const visible1 = ref(false);
 const inviteVisible = ref(false)
 const inviterId = ref();
+const dialogWidth = ref("90%");
 function change() {
   isCollapse.value = !isCollapse.value;
+  let twidth = window.innerWidth;
+  if(twidth > 768){
   if (isCollapse.value) {
     width.value = "70px";
   } else {
     width.value = "240px";
+  }
+}else{
+    width.value = "0";
   }
 }
 function handleCommand(command) {
@@ -151,6 +198,13 @@ function inviteHandler() {
     }
   })
 }
+onMounted(()=>{
+  let twidth = window.innerWidth;
+  if(twidth>768){ 
+    width.value = "240px"
+    dialogWidth.value = "440px"
+  }
+})
 </script>
 <style scoped>
 :deep(.el-avatar) {

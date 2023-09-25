@@ -5,7 +5,7 @@
       <template #reference>
         <span>
           <i class="fa fa-bullseye"></i>
-          <b style="display:inline-block;vertical-align: top;font-weight:400">&nbsp;&nbsp;{{$store.state.metaMask?.account.substring(0,12)+'...'}}</b>
+          <b style="display:inline-block;vertical-align: top;font-weight:400">&nbsp;&nbsp;{{$store.state.metaMask?.account.substring(0,6)+'...'}}</b>
         </span>
       </template>
       <template #default>

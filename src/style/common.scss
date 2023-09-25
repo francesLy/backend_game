@@ -2,11 +2,16 @@
   padding: 0;
   margin: 0;
 }
+html,
+body,
+#app {
+  height: 100%;
+}
 a {
   text-decoration: none;
   cursor: pointer;
   user-select: none;
-  color:#af2ef1;
+  color: #af2ef1;
 }
 $white: #fff;
 $black: #000;
@@ -156,7 +161,7 @@ $weight-xl: bold;
 }
 .login-bg {
   position: relative;
-  height: 100vh;
+  height: 100%;
   background-image: url("~@/assets/img/download.webp");
   background-position: center;
   background-size: cover;
@@ -177,14 +182,19 @@ $weight-xl: bold;
   color: var(--el-text-color-regular);
 }
 .login-box {
+  height: calc(100% - 70px);
+  overflow-y: auto;
   text-align: center;
-  width: 320px;
-  margin: 160px auto 0;
   padding: 20px;
   position: relative;
+  margin: 160px auto 0;
   z-index: 9;
   background-color: rgba($black, 0.2);
   backdrop-filter: blur(6px);
+}
+.login-box form {
+  width: 320px;
+  margin: 0 auto;
 }
 .menu-h.el-menu--horizontal {
   border-bottom: none;
@@ -299,4 +309,80 @@ $weight-xl: bold;
 .page-refresh:active {
   transform: rotate(180deg);
   transition: all 0.5s;
+}
+
+@media screen and (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+  .header.el-header,
+  .header-h.el-header {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    height: 48px;
+  }
+  .el-main{
+    padding: 10px;
+  }
+  .el-button,
+  .el-button.is-round {
+    padding: 4px 10px !important;
+  }
+  .row{
+    margin-right: -5px;
+    margin-left: -5px;
+  }
+  .col, .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12, .col-auto, .col-lg, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-auto, .col-md, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-md-auto, .col-sm, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-auto{
+    padding-left:5px;
+    padding-right:5px;
+  }
+  .card{
+    margin-bottom:10px
+  }
+  .nav-pills{
+    padding:0;
+  }
+  .nav-pills .nav-item .nav-link{
+    padding: 8px 10px;
+    line-height: 15px;
+  }
+  .nft-nav.nav-pills .nav-item .nav-link{
+    padding:0 0 10px;
+    min-width: 80px;
+  }
+  .el-dialog__body{
+    max-height: 480px;
+    overflow-y: auto;
+  }
+  .login-box {
+    margin-top: 0 !important;
+    .title-des {
+      margin-bottom: 0;
+      margin-top: 0;
+    }
+    .text-muted {
+      margin-bottom: 0;
+    }
+    .el-form-item__label {
+      //padding-bottom:8px;
+    }
+    .el-form-item {
+      margin-bottom: 0.675rem;
+    }
+  }
+  .staking-nav.flex-column {
+    flex-direction: row !important;
+    padding: 0;
+  }
+  .stats {
+    word-break: break-all;
+  }
+  .menu-container .el-menu.menu {
+    height: auto;
+  }
+  .el-drawer__body {
+    padding: 0;
+  }
 }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button type="danger" @click="open()" round>Add token to wallet</el-button>
+    <el-button type="danger" @click="open()" round>Add token</el-button>
     <el-dialog v-model="visible" title="Add to wallet" style="word-break: break-all;" width="480px" destroy-on-close append-to-body>
       <div style="padding:10px;margin:10px 0;border:1px solid #eee;border-radius:12px">
       <el-row :gutter="10">

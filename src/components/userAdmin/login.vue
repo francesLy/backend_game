@@ -7,7 +7,7 @@
     <div class="login-box">
       <h3 class="title-des wtext-xl">Play & Earn</h3>
       <p class="text-muted"><small>Enjoy the GameFi^^</small></p>
-      <el-form ref="formRef" :rules="rules" label-position="top" label-width="100px" :model="form" style="padding-top: 40px">
+      <el-form ref="formRef" :rules="rules" label-position="top" label-width="100px" :model="form" style="padding-top: 2.5rem">
         <el-form-item label="Email" prop="email">
           <el-input v-model="form.email" placeholder="enter your email" clearable />
         </el-form-item>
@@ -22,7 +22,7 @@
         <el-col :span="24" style="text-align: left;">
           <span @click="visible=true" style="color:#fff;font-size: 13px;cursor: pointer;">Forgot Password?</span>
         </el-col>
-        <el-col :span="24" style="margin-top:40px;font-weight:500">
+        <el-col :span="24" style="margin-top:2.5rem;font-weight:500">
           <span class="text-muted">No account？</span><a href="/register">Sign Up</a>
         </el-col>
       </el-row>

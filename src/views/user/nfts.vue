@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ul class="nav nav-pills nav-pills-warning nav-pills-icons justify-content-center" role="tablist">
+    <ul class="nft-nav nav nav-pills nav-pills-warning nav-pills-icons justify-content-center" role="tablist">
       <li class="nav-item" @click="handleTabClick(TYPES.active)">
         <a class="nav-link" :class="activeName==TYPES.active?' active':''" href="javascript:void(0);" role="tablist">
           <i class="fa fa-fire"></i> Active
@@ -55,7 +55,7 @@
       </div>
     </div>
     <!--View NFT on Blockchain-->
-    <el-dialog v-model="visible" title="View NFT" width="800px" @close="handleSaveParamAfterTransfer(0)" :open-delay="delay" destroy-on-close>
+    <el-dialog v-model="visible" title="View NFT" width="90%" @close="handleSaveParamAfterTransfer(0)" :open-delay="delay" destroy-on-close>
       <div class="card ">
         <div class="card-header card-header-info card-header-icon">
           <div class="card-icon">
@@ -101,7 +101,7 @@
                     </tr>
                     <tr title="You can add this NFT to your wallet manually. For example, go to NFTs tab in MetaMask, click Import NFTs, copy and paste the NFT contract address and token ID to the right fields to add NFT to your wallet.">
                       <td>Contract Address</td>
-                      <td>{{ rowData?.contract_address }}&nbsp;&nbsp;<i class="fa fa-copy" @click="copy(rowData?.contract_address)"></i></td>
+                      <td style="word-break: break-all;">{{ rowData?.contract_address }}&nbsp;&nbsp;<i class="fa fa-copy" @click="copy(rowData?.contract_address)"></i></td>
                     </tr>
                     <tr>
                       <td>Minted At</td>
@@ -116,7 +116,7 @@
       </div>
     </el-dialog>
     <!--blind box-->
-    <el-dialog v-model="visible1" title="Get a NFT in the blind box" width="400px" destroy-on-close>
+    <el-dialog v-model="visible1" title="Get a NFT in the blind box" width="360px" destroy-on-close>
       <el-row>
         <el-col :span="4">USDT</el-col>
         <el-col :span="20">
