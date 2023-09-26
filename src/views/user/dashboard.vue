@@ -95,7 +95,7 @@
             <p>Current Assets</p>
             <div>
               <el-tooltip placement="top" content="Withdraw Assets" effect="customized">
-                <el-button type='success' style="margin-left:10px;" :disabled="!dashboard.evics" @click="open('withdrawAssets')" round>Withdraw</el-button>
+                <el-button type='success' style="margin-left:10px;" @click="open('withdrawAssets')" round>Withdraw</el-button>
               </el-tooltip>
             </div>
           </div>
