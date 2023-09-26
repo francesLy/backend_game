@@ -301,9 +301,9 @@ const openHandler = {
     return true;
   },
   withdrawAssets:()=>{
-    max.value = dashboard.value.evics;
-    min.value = 1000;
-    if (dashboard.value.evics < min.value) {
+    max.value = dashboard.value.assets;
+    min.value = 100;
+    if (dashboard.value.assets < min.value) {
       ElMessage.warning(`Sorry, you need to have at least ${min.value} BUSD to exchange!`);
       return false;
     }
