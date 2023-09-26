@@ -407,7 +407,7 @@ function queryInvited() {
     userId: store.state.user.id
   }
   dashboardApi.getInvite(data).then((res) => {
-    dashboard.value = { ...dashboard.value, ...res.data }
+    if(res.data) dashboard.value = { ...dashboard.value, ...res.data }
   })
 }
 function getAssets() {
@@ -416,8 +416,7 @@ function getAssets() {
     assetType: 0
   }
   dashboardApi.queryAssets(data).then((res) => {
-    console.log(res.data,res.data.amount)
-    dashboard.value.assets = res.data.amount
+    if(res.data) dashboard.value.assets = res.data.amount || 0;
   })
 }
 function refresh() {
