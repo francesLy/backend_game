@@ -416,7 +416,7 @@ function getAssets() {
     assetType: 0
   }
   dashboardApi.queryAssets(data).then((res) => {
-    if(res.data) dashboard.value.assets = res.data.amount || 0;
+    if(res.data) dashboard.value.assets = parseInt(res.data.amount*100) / 100 || 0;
   })
 }
 function refresh() {
