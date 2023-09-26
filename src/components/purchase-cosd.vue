@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-button type="primary" @click="open()" round>Purchase</el-button>
-    <el-dialog v-model="visible" :title="action.title" width="400px" destroy-on-close append-to-body>
+    <el-dialog v-model="visible" :title="action.title" width="360px" destroy-on-close append-to-body>
       <el-alert title="TIP: Accumulated expenses of usdt cannot exceed 100,000" type="info" style="margin-bottom:20px"></el-alert>
       <el-row :gutter="5" style="margin-bottom:20px">
         <el-col :span="4">
