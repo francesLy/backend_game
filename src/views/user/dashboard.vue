@@ -1,58 +1,24 @@
 <template>
   <div class="content">
     <div class="row">
-      <div class="col-lg-3 col-md-6 col-sm-6">
+      <div class="col-lg-6 col-md-12 col-sm-12">
         <div class="card card-stats">
           <div class="card-header card-header-warning card-header-icon">
             <div class="card-icon">
-              <i class="fa fa-btc"></i>
+              <i class="fa fa-user"></i>
             </div>
-            <p class="card-category">COSD</p>
-            <h3 class="card-title">{{ dashboard.cosd }}</h3>
+            <p class="card-category">Invited</p>
+            <h3 class="card-title">{{dashboard.level1}}<small class="text-muted">&nbsp;-level1&nbsp;&nbsp;</small>{{dashboard.level2}}<small class="text-muted">&nbsp;-level2&nbsp;&nbsp;</small>{{dashboard.level3}}<small class="text-muted">&nbsp;-level3</small></h3>
           </div>
           <div class="card-footer">
             <div class="stats">
-              <i class="fa fa-btc"></i>&nbsp;All COSD in your wallet
+              <i class="fa fa-btc"></i>&nbsp;The people that you invited is display by level
               <!-- <a href="#pablo">Get More COSD...</a> -->
             </div>
           </div>
         </div>
       </div>
-      <div class="col-lg-3 col-md-6 col-sm-6">
-        <div class="card card-stats">
-          <div class="card-header card-header-warning card-header-icon">
-            <div class="card-icon">
-              <i class="fa fa-money"></i>
-            </div>
-            <p class="card-category">Evics</p>
-            <h3 class="card-title">{{ dashboard.evics }}</h3>
-          </div>
-          <div class="card-footer">
-            <div class="stats">
-              <i class="fa fa-money"></i>&nbsp;All Evics in the game
-              <!-- <a href="#pablo">Exchange to USDT</a> -->
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-6 col-sm-6">
-        <div class="card card-stats">
-          <div class="card-header card-header-info card-header-icon">
-            <div class="card-icon">
-              <i class="fa fa-ticket"></i>
-            </div>
-            <p class="card-category">NFTs</p>
-            <h3 class="card-title">{{ dashboard.nft }}</h3>
-          </div>
-          <div class="card-footer">
-            <div class="stats">
-              <i class="fa fa-ticket"></i>&nbsp;
-              <a href="/plat/nfts?active=3">Get More NFTs</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-6 col-sm-6">
+      <div class="col-lg-6 col-md-6 col-sm-6">
         <div class="card card-stats">
           <div class="card-header card-header-info card-header-icon">
             <div class="card-icon">
@@ -69,8 +35,74 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-        <div class="card">
+      <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-header card-header-warning card-header-icon">
+            <div class="card-icon">
+              <i class="fa fa-btc"></i>
+            </div>
+            <p class="card-category">COSD</p>
+            <h3 class="card-title">{{ dashboard.cosd }}</h3>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="fa fa-btc"></i>&nbsp;All COSD in your wallet
+              <!-- <a href="#pablo">Get More COSD...</a> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-header card-header-warning card-header-icon">
+            <div class="card-icon">
+              <i class="fa fa-money"></i>
+            </div>
+            <p class="card-category">Evics</p>
+            <h3 class="card-title">{{ dashboard.evics }}</h3>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="fa fa-money"></i>&nbsp;All Evics in the game
+              <!-- <a href="#pablo">Exchange to USDT</a> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-header card-header-info card-header-icon">
+            <div class="card-icon">
+              <i class="fa fa-ticket"></i>
+            </div>
+            <p class="card-category">NFTs</p>
+            <h3 class="card-title">{{ dashboard.nft }}</h3>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="fa fa-ticket"></i>&nbsp;
+              <a href="/plat/nfts?active=3">Get More NFTs</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      <div class="row">
+      <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+        <div class="card" style="margin-top:10px">
+          <div style="text-align:center;padding:10px 10px 20px;">
+            <h3><b>{{ dashboard.assets }}</b></h3>
+            <p>Current Assets</p>
+            <div>
+              <el-tooltip placement="top" content="Withdraw Assets" effect="customized">
+                <el-button type='success' style="margin-left:10px;" :disabled="!dashboard.evics" @click="open('withdrawAssets')" round>Withdraw</el-button>
+              </el-tooltip>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6">
+        <div class="card" style="margin-top:10px">
           <div style="text-align:center;padding:10px 10px 20px;">
             <h3><b>{{ dashboard.evics }}</b></h3>
             <p>Current Evics</p>
@@ -83,9 +115,9 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+      <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6">
         <div class="card" style="margin-top:10px">
-          <div style="text-align:center;padding:10px 10px 20px;"> 
+          <div style="text-align:center;padding:10px 10px 20px;">
             <h3><b>{{ dashboard.cosd }}</b></h3>
             <p>Current COSD</p>
             <div>
@@ -148,6 +180,17 @@
         </el-col>
       </el-row>
     </el-dialog>
+    <el-dialog v-model="visibleAssets" :title="action.title" width="360px" destroy-on-close>
+      <el-row :gutter="10">
+        <el-col :span="6">Assets</el-col>
+        <el-col :span="18">
+          <el-input-number v-model.number="amount1" controls-position="right" :step="100" :min="min" :max="max" style="width:100%" clearable></el-input-number>
+        </el-col>
+        <el-col :span="24" style="margin-top:30px;">
+          <el-button type="success" style="width:100%" @click="handleOperate">{{ action.btn }}</el-button>
+        </el-col>
+      </el-row>
+    </el-dialog>
   </div>
 
 </template>
@@ -155,7 +198,7 @@
 import { ref, onMounted, getCurrentInstance, onUnmounted } from 'vue'
 import { useStore } from "vuex";
 import { ASSETTYPE, TXTYPE, savaAfterTranscation } from "@/utils/meta-mask";
-import { evicsApi, } from '@/api/request';
+import { dashboardApi, evicsApi, } from '@/api/request';
 import { base64 } from "@/utils/base64";
 import { loadingHelper } from "@/utils/loading";
 import PurchaseCosd from "@/components/purchase-cosd.vue";
@@ -163,7 +206,7 @@ import AddToken from "@/components/user/add-token.vue";
 import BuyList from "@/components/user/trans-table.vue";
 import Bus from "@/utils/event-bus";
 const store = useStore();
-const dashboard = ref({ cosd: 0, nft: 0, games: 1, evics: 0 })
+const dashboard = ref({ cosd: 0, nft: 0, games: 1, evics: 0, level1: 0, level2: 0, level3: 0, assets: 0 })
 const { proxy } = getCurrentInstance();
 let CONTRACTS = store.state.abi?.contract;
 const metaMask = proxy.metaMask;
@@ -172,6 +215,7 @@ const abis = ref({ cosd: JSON.parse(base64.decode(CONTRACTS.cosd.abi)), nft: JSO
 const amount = ref(0)
 const amount1 = ref(0)
 const visible = ref(false)
+const visibleAssets = ref(false)
 const action = ref({ title: "", btn: "" })
 const max = ref(Infinity)
 const min = ref(100)
@@ -215,13 +259,24 @@ function getBalance(key, isProxy) {
 function open(command) {
   metaMask.isAvailable()
   if (!metaMask.isAvailable()) return;
-  action.value = {
-    btn: command == 'buy' ? 'Buy' : "Withdraw",
-    title: "Evics Transcation",
-    command: command
-  }
   let res = openHandler[command]();
-  if (res) visible.value = true;
+  if (command == "withdrawAssets") {
+    action.value = {
+      btn: "Withdraw",
+      title: "Assets Transcation",
+      command: command
+    }
+    if (res) visibleAssets.value = true;
+  } else {
+    action.value = {
+      btn: command == 'buy' ? 'Buy' : "Withdraw",
+      title: "Evics Transcation",
+      command: command
+    }
+    if (res) visible.value = true;
+  }
+  
+  
 }
 function handleOperate() {
   evicHandler[action.value.command]()
@@ -230,8 +285,8 @@ const openHandler = {
   withdraw: () => {
     max.value = dashboard.value.evics;
     min.value = 1000;
-    if (dashboard.value.evics < 1000) {
-      ElMessage.warning("Sorry, you need to have at least 1000 EVICS to exchange!");
+    if (dashboard.value.evics < min.value) {
+      ElMessage.warning(`Sorry, you need to have at least ${min.value} EVICS to exchange!`);
       return false;
     }
     amount.value = 10;
@@ -243,6 +298,17 @@ const openHandler = {
     min.value = 100
     amount.value = 1;
     amount1.value = 100;
+    return true;
+  },
+  withdrawAssets:()=>{
+    max.value = dashboard.value.evics;
+    min.value = 1000;
+    if (dashboard.value.evics < min.value) {
+      ElMessage.warning(`Sorry, you need to have at least ${min.value} BUSD to exchange!`);
+      return false;
+    }
+    amount.value = 10;
+    amount1.value = 1000;
     return true;
   }
 }
@@ -306,12 +372,60 @@ const evicHandler = {
     }).catch(err => {
       loadingHelper.hide();
     })
+  },
+  withdrawAssets:()=>{
+    if (!amount1.value) return;
+    if (amount1.value > dashboard.value.assets) {
+      ElMessage.warning("Sorry,the amount cannot exceed the balance!")
+      return
+    }
+    let param = {
+      "transType": 12,
+      "fromUserId": store.state.user.id,
+      "fromAssetType": 0,
+      "fromAmount": 0 - amount1.value,
+      "toUserId": store.state.user.id,
+      "toAssetType": 0,
+      "toAmount": 0 - amount1.value,
+      "nftVo": {}
+    }
+    loadingHelper.show()
+    dashboardApi.withdraw(param).then((res) => {
+      visible.value = false;
+      loadingHelper.hide();
+      if (res.code == 0) {
+        ElNotification({ type: "success", message: "it will take a few minutes,please refresh later" })
+        getAssets()
+      }
+    }).catch(err => {
+      loadingHelper.hide();
+    })
   }
+}
+function queryInvited() {
+  let data = {
+    userId: store.state.user.id
+  }
+  dashboardApi.getInvite(data).then((res) => {
+    dashboard.value = { ...dashboard.value, ...res.data }
+  })
+}
+function getAssets() {
+  let data = {
+    userId: store.state.user.id,
+    assetType: 0
+  }
+  dashboardApi.queryAssets(data).then((res) => {
+    console.log(res.data,res.data.amount)
+    dashboard.value.assets = res.data.amount
+  })
 }
 function refresh() {
   evicBalance()
   getBalance('cosd')
   getBalance('nft', true)
+  queryInvited()
+  getAssets()
 }
 function getBalances() {
   getBalance('cosd')
@@ -329,6 +443,8 @@ Bus.$on('refresh', (isRefresh) => {
 })
 onMounted(() => {
   evicBalance()
+  queryInvited()
+  getAssets()
   if (metaMask.isAvailable()) {
     getBalance('cosd')
     getBalance('nft', true)

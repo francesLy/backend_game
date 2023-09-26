@@ -310,7 +310,11 @@ $weight-xl: bold;
   transform: rotate(180deg);
   transition: all 0.5s;
 }
-
+.card-title small.text-muted{
+  font-weight: 300;
+  font-size:12px;
+  color:#999 !important;
+}
 @media screen and (max-width: 768px) {
   html {
     font-size: 14px;

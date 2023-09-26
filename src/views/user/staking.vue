@@ -229,7 +229,7 @@
             </div>
             <div v-if="activeNameb =='list'">
               <el-row :gutter="10">
-                <el-col :span="6">
+                <el-col  :md="6" :sm="24">
                   <el-select v-model="stakeListType">
                     <el-option label="starlight" :value="2"></el-option>
                     <el-option label="club" :value="3"></el-option>
@@ -241,7 +241,7 @@
             </div>
             <div v-show="activeNameb =='unstakelist'">
               <el-row :gutter="10">
-                <el-col :span="6">
+                <el-col :md="6" :sm="24">
                   <el-select v-model="unstakeListType">
                     <el-option label="starlight" :value="5"></el-option>
                     <el-option label="club" :value="6"></el-option>

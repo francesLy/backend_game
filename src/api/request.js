@@ -69,4 +69,7 @@ export const blogApi = {
 export const dashboardApi = {
   alldata: (data) => uploadFile("/admin/sumEvicDay", data),
   evicdata: (data) => uploadFile("/admin/sumEvicDay", data),
+  getInvite:(data)=> uploadFile("/user/getInvitedCount",data),
+  queryAssets:(data)=> post("/asset/queryUserAssets",data),
+  withdraw:(data)=> post("/webTranscation/withdrawBusd",data)
 }
