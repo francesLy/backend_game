@@ -307,8 +307,7 @@ const openHandler = {
       ElMessage.warning(`Sorry, you need to have at least ${min.value} BUSD to exchange!`);
       return false;
     }
-    amount.value = 10;
-    amount1.value = 1000;
+    amount1.value = min.value;
     return true;
   }
 }
@@ -391,7 +390,7 @@ const evicHandler = {
     }
     loadingHelper.show()
     dashboardApi.withdraw(param).then((res) => {
-      visible.value = false;
+      visibleAssets.value = false;
       loadingHelper.hide();
       if (res.code == 0) {
         ElNotification({ type: "success", message: "it will take a few minutes,please refresh later" })
