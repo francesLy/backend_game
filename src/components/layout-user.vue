@@ -51,7 +51,7 @@
               <div style="margin-top:5px;margin-right:10px;display:inline-block" v-if="$store.state.role !== 3">
                 <metamask-connect></metamask-connect>
                 <!---->
-                <el-tooltip placement="bottom" content="Invite to be channel Leader">
+                <el-tooltip placement="bottom" content="Invite users to help you earn revenue">
                   <el-button type="success" @click="inviteHandler()" round>
                     <i class="fa fa-link"></i>&nbsp;Invite
                   </el-button>
@@ -200,7 +200,7 @@ function inviteHandler() {
 }
 onMounted(()=>{
   let twidth = window.innerWidth;
-  if(twidth>768){ 
+  if(twidth>768){
     width.value = "240px"
     dialogWidth.value = "440px"
   }
