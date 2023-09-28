@@ -275,8 +275,8 @@ function open(command) {
     }
     if (res) visible.value = true;
   }
-  
-  
+
+
 }
 function handleOperate() {
   evicHandler[action.value.command]()
@@ -286,7 +286,7 @@ const openHandler = {
     max.value = dashboard.value.evics;
     min.value = 1000;
     if (dashboard.value.evics < min.value) {
-      ElMessage.warning(`Sorry, you need to have at least ${min.value} EVICS to exchange!`);
+      ElMessage.warning(`Sorry, you need to have at least ${min.value} EVICS to withdraw!`);
       return false;
     }
     amount.value = 10;
@@ -304,7 +304,7 @@ const openHandler = {
     max.value = dashboard.value.assets;
     min.value = 100;
     if (dashboard.value.assets < min.value) {
-      ElMessage.warning(`Sorry, you need to have at least ${min.value} BUSD to exchange!`);
+      ElMessage.warning(`Sorry, you need to have at least ${min.value} BUSD to withdraw!`);
       return false;
     }
     amount1.value = min.value;
