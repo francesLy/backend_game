@@ -47,6 +47,8 @@ let isConnected = computed(() => {
   return store.state.metaMask ? true : false
 })
 if (provider) {
+  metaMask.setValue();
+  store.commit("setMetaMask", { chainID: provider.chainId, url: store.state.metaMask?.url, account: provider.selectedAddress });
   provider.on('connect', (account) => {
     console.log('connect', account)
     if (!store.state.metaMask) metaMask.connectMetaMask()

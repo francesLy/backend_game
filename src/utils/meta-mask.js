@@ -30,6 +30,11 @@ export class MetaMask {
     this.chainId = null;
     this.url = null;
   }
+  setValue(){
+    this.provider = ethereum;
+    this.account = ethereum.selectedAddress;
+    this.chainId = ethereum.chainId
+  }
   async getProvider() {
     try {
       let provider = await detectEthereumProvider()
