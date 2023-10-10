@@ -30,10 +30,10 @@ export class MetaMask {
     this.chainId = null;
     this.url = null;
   }
-  setValue(){
+  setValue(chainId,account){
     this.provider = ethereum;
-    this.account = ethereum.selectedAddress;
-    this.chainId = ethereum.chainId
+    this.account = account;
+    this.chainId = chainId; 
   }
   async getProvider() {
     try {

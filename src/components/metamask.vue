@@ -47,8 +47,18 @@ let isConnected = computed(() => {
   return store.state.metaMask ? true : false
 })
 if (provider) {
-  metaMask.setValue();
-  store.commit("setMetaMask", { chainID: provider.chainId, url: store.state.metaMask?.url, account: provider.selectedAddress });
+  if (store.state.metaMask) {
+    let account;
+    ethereum.request({ method: 'eth_requestAccounts' }).then(async(accounts) => {
+      console.log(accounts);
+      let chainId = await ethereum.request({ method: 'eth_chainId' })
+      if (accounts && accounts.length) account = accounts[0];
+      metaMask.setValue(chainId,account);
+      if (account != store.state.metaMask.account) {
+        store.commit("setMetaMask", { chainID: chainId, url: store.state.metaMask?.url, account: account });
+      }
+    });
+  }
   provider.on('connect', (account) => {
     console.log('connect', account)
     if (!store.state.metaMask) metaMask.connectMetaMask()
