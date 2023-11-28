@@ -92,7 +92,8 @@
         <div class="card" style="margin-top:10px">
           <div style="text-align:center;padding:10px 10px 20px;">
             <h3><b>{{ dashboard.assets }}</b></h3>
-            <p>Current Assets</p>
+            <!--原本指busd现使用evic-->
+            <p>Invited Reward</p>
             <div>
               <el-tooltip placement="top" content="Withdraw Assets" effect="customized">
                 <el-button type='success' style="margin-left:10px;" @click="open('withdrawAssets')" round>Withdraw</el-button>
@@ -107,7 +108,7 @@
             <h3><b>{{ dashboard.evics }}</b></h3>
             <p>Current Evics</p>
             <div>
-              <el-button type="primary" @click="open('buy')" round>Purchase</el-button>
+              <!--<el-button type="primary" @click="open('buy')" round>Purchase</el-button>-->
               <el-tooltip placement="top" content="At least 1000 evic" effect="customized">
                 <el-button type='success' style="margin-left:10px;" :disabled="!dashboard.evics" @click="open('withdraw')" round>Withdraw</el-button>
               </el-tooltip>
@@ -384,7 +385,7 @@ const evicHandler = {
       "fromAssetType": 0,
       "fromAmount": 0 - amount1.value,
       "toUserId": store.state.user.id,
-      "toAssetType": 0,
+      "toAssetType": 3,//0-3
       "toAmount": 0 - amount1.value,
       "nftVo": {}
     }
