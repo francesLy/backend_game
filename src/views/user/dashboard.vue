@@ -88,11 +88,10 @@
       </div>
     </div>
       <div class="row">
-      <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+      <!--<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
         <div class="card" style="margin-top:10px">
           <div style="text-align:center;padding:10px 10px 20px;">
             <h3><b>{{ dashboard.assets }}</b></h3>
-            <!--原本指busd现使用evic-->
             <p>Invited Reward</p>
             <div>
               <el-tooltip placement="top" content="Withdraw Assets" effect="customized">
@@ -101,7 +100,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div>-->
       <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6">
         <div class="card" style="margin-top:10px">
           <div style="text-align:center;padding:10px 10px 20px;">
@@ -356,8 +355,8 @@ const evicHandler = {
       "fromAssetType": ASSETTYPE.evic,
       "fromAmount": 0 - amount1.value,
       "toUserId": store.state.user.id,
-      "toAssetType": ASSETTYPE.usdt,
-      "toAmount": 0 - amount.value,
+      "toAssetType": 3,//ASSETTYPE.usdt
+      "toAmount": 0 - amount1.value,
       "nftVo": {}
     }
     loadingHelper.show()
@@ -385,7 +384,7 @@ const evicHandler = {
       "fromAssetType": 0,
       "fromAmount": 0 - amount1.value,
       "toUserId": store.state.user.id,
-      "toAssetType": 3,//0-3
+      "toAssetType": 0,//0-3
       "toAmount": 0 - amount1.value,
       "nftVo": {}
     }
