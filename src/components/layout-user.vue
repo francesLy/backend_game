@@ -31,13 +31,17 @@
             <i class="fa fa-file-text-o"></i>
             <span>Logs</span>
           </el-menu-item>
-          <el-menu-item index="/plat/nfts" v-if="$store.state.role == 2||$store.state.role == 1">
+          <!--/plat/nfts-->
+          <el-menu-item index="#1" v-if="$store.state.role == 2||$store.state.role == 1">
             <i class="fa fa-ticket"></i>
-            <span>NFTs</span>
+            <span>NFTs </span>
+            <small> coming soon</small>
           </el-menu-item>
-          <el-menu-item index="/plat/staking" v-if="$store.state.role == 2||$store.state.role == 1">
+          <!--/plat/staking-->
+          <el-menu-item index="#2" v-if="$store.state.role == 2||$store.state.role == 1">
             <i class="fa fa-hdd-o"></i>
-            <span>Staking</span>
+            <span>Staking </span>
+            <small> coming soon</small>
           </el-menu-item>
         </el-menu>
       </el-aside>

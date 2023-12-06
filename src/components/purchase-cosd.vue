@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button type="primary" @click="open()" round>Purchase</el-button>
+    <el-button type="primary" @click="open()" round>Buy</el-button>
     <el-dialog v-model="visible" :title="action.title" width="360px" destroy-on-close append-to-body>
       <el-alert title="TIP: Accumulated expenses of usdt cannot exceed 100,000" type="info" style="margin-bottom:20px"></el-alert>
       <el-row :gutter="5" style="margin-bottom:20px">
@@ -26,6 +26,9 @@
           <el-button type="primary" @click="purchaseApprove()" style="width:100%" :disabled="disabled">
             <el-tag size="small">1</el-tag>&nbsp;Approve Spending
           </el-button>
+        </el-col>
+        <el-col :span="24">
+          <p style="text-align: right;"><small>1BUSD = 0.05tBNB</small></p>
         </el-col>
         <el-col :span="24" style="margin-top:15px">
           <el-button type="success" @click="purchase()" style="width:100%" :disabled="allowance['buycosd'] >= action.amount?false:true">
