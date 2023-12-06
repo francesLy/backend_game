@@ -220,7 +220,7 @@ const action = ref({ title: "", btn: "" })
 const max = ref(Infinity)
 const min = ref(100)
 const activeName = ref("evic")
-const evicType = ref("[7,8]")
+const evicType = ref("7")
 const isrefresh = ref(false);
 function isEmpty() {
   if (!amount.value) {
