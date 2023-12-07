@@ -153,7 +153,7 @@ import { loadingHelper } from "@/utils/loading";
 import { DateHelper, AppHelper } from "@/utils/helper";
 import { base64 } from "@/utils/base64";
 import { copyClick } from '@/utils/copy';
-import { ASSETTYPE, TXTYPE, savaAfterTranscation } from "@/utils/meta-mask";
+import { ASSETTYPE, TXTYPE, savaAfterTransaction } from "@/utils/meta-mask";
 import confetti from 'canvas-confetti';
 import NFTTYPES from "@/data/nft-img-name.json";
 const store = useStore()
@@ -418,7 +418,7 @@ function getNFTnfoFromChain(id) {
     nftParam.value.nftVo.attr2 = res.chances
     nftParam.value.nftVo.time = res.time;
     nftParam.value.nftVo.status = 0;
-    savaAfterTranscation(nftParam.value)
+    savaAfterTransaction(nftParam.value)
     isOnlyUpdateStatus.value = false;
     hasUpdated.value = false;
 
@@ -507,7 +507,7 @@ async function tryNFTTransfer(row) {
         attr2: row.game_chances
       }
     }
-    savaAfterTranscation(nftParam.value)
+    savaAfterTransaction(nftParam.value)
     ret = true
   }).catch(err => {
     ret = false

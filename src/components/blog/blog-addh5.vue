@@ -79,7 +79,7 @@ function handleImageSrc(url) {
 //base64图片转成文件流格式
 function base64ToFile(data, fileName) {
   const dataArr = data.split(",");
-  const byteString = atob(dataArr[1]);
+  const byteString = window.atob(dataArr[1]);
   const options = {
     type: "image/jpeg",
     endings: "native"

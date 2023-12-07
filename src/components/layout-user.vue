@@ -49,14 +49,14 @@
         <el-header class="header">
           <el-row justify="space-between" style="height: 40px">
             <el-col :span="2">
-              <i class="el-icon--right header-icon fa fa-navicon" @click="change()"></i>
+              <i class="el-icon--right header-icon fa fa-navicon" @click="change"></i>
             </el-col>
             <el-col :span="22" style="text-align: right;">
               <div style="margin-top:5px;margin-right:10px;display:inline-block" v-if="$store.state.role !== 3">
                 <metamask-connect></metamask-connect>
                 <!---->
                 <el-tooltip placement="bottom" content="Invite users to help you earn revenue">
-                  <el-button type="success" @click="inviteHandler()" round>
+                  <el-button type="success" @click="inviteHandler" round>
                     <i class="fa fa-link"></i>&nbsp;Invite
                   </el-button>
                 </el-tooltip>

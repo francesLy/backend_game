@@ -135,7 +135,7 @@
         <div class="card-text" style="display:block">
           <el-row>
             <el-col :span="22">
-              <h4 class="card-title">Transcations</h4>
+              <h4 class="card-title">Transactions</h4>
               <p class="card-category"></p>
             </el-col>
             <el-col :span="2" style="text-align:right">
@@ -153,10 +153,10 @@
               <el-option label="purchase" :value="7"></el-option>
               <el-option label="withdraw" :value="8"></el-option>
             </el-select>-->
-            <buy-list v-model:refresh="isrefresh" v-show="activeName =='evic'" :txtype="evicType"></buy-list>
+            <buy-list v-model:refresh="isrefresh" v-if="activeName =='evic'" :txtype="evicType"></buy-list>
           </el-tab-pane>
           <el-tab-pane label="COSD" name="cosd">
-            <buy-list v-model:refresh="isrefresh" v-show="activeName =='cosd'" :txtype="transTypes.buy"></buy-list>
+            <buy-list v-model:refresh="isrefresh" v-if="activeName =='cosd'" :txtype="transTypes.buy"></buy-list>
           </el-tab-pane>
           <!--<el-tab-pane label="Blindbox" name="blindbox">
             <buy-list v-model:refresh="isrefresh" v-show="activeName =='blindbox'" :txtype="transTypes.blindbox"></buy-list>
@@ -171,8 +171,8 @@
         <el-col :span="18">
           <el-input-number v-model.number="amount1" controls-position="right" :step="100" :min="min" :max="max" style="width:100%" @change="translate('evic')" clearable></el-input-number>
         </el-col>
-        <el-col :span="6" style="margin-top:10px">USDT</el-col>
-        <el-col :span="18" style="margin-top:10px">
+        <el-col :span="6" v-if="action.command != 'Withdraw'" style="margin-top:10px">USDT</el-col>
+        <el-col :span="18" v-if="action.command != 'Withdraw'" style="margin-top:10px">
           <el-input-number v-model.number="amount" controls-position="right" :step="1" :min="min/100" :max="max/100" style="width:100%" @change="translate('usdt')" clearable></el-input-number>
         </el-col>
         <el-col :span="24" style="margin-top:30px;">
@@ -197,7 +197,7 @@
  <script setup>
 import { ref, onMounted, getCurrentInstance, onUnmounted } from 'vue'
 import { useStore } from "vuex";
-import { ASSETTYPE, TXTYPE, savaAfterTranscation } from "@/utils/meta-mask";
+import { ASSETTYPE, TXTYPE, savaAfterTransaction } from "@/utils/meta-mask";
 import { dashboardApi, evicsApi, } from '@/api/request';
 import { base64 } from "@/utils/base64";
 import { loadingHelper } from "@/utils/loading";
@@ -257,20 +257,19 @@ function getBalance(key, isProxy) {
   });
 }
 function open(command) {
-  metaMask.isAvailable()
   if (!metaMask.isAvailable()) return;
   let res = openHandler[command]();
   if (command == "withdrawAssets") {
     action.value = {
       btn: "Withdraw",
-      title: "Assets Transcation",
+      title: "Assets Transaction",
       command: command
     }
     if (res) visibleAssets.value = true;
   } else {
     action.value = {
       btn: command == 'buy' ? 'Buy' : "Withdraw",
-      title: "Evics Transcation",
+      title: "Evics Transaction",
       command: command
     }
     if (res) visible.value = true;
@@ -336,7 +335,7 @@ const evicHandler = {
         "toAmount": amount1.value,
         "nftVo": {},
       }
-      savaAfterTranscation(param)
+      savaAfterTransaction(param)
       evicBalance()
       listRefresh()
     }).catch(err => {

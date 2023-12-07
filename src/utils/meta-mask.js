@@ -312,7 +312,7 @@ export class MetaMask {
         from: param.from
       }).then(res => {
         console.log("success")
-        ElNotification({ type: "success", message: "transcation successfully\nIf the balance is not refreshed, manually refresh later" })
+        ElNotification({ type: "success", message: "transaction successfully\nIf the balance is not refreshed, manually refresh later" })
         resolve(res)
       }).catch(err => {
         reject(err)
@@ -522,7 +522,7 @@ function errorHandlerOfMetaMaskRequest(error) {
     messageHelper.error(error?.message)
   }
 }
-export const savaAfterTranscation = (param) => {
+export const savaAfterTransaction = (param) => {
   chainApi.save(param).then(res => {
     console.log("saved success")
   }).catch((err) => {

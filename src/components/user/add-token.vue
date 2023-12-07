@@ -65,7 +65,7 @@ const infos = ref({
 })
 const visible = ref(false)
 
-async function open() {
+function open() {
   //if (!metaMask.isAvailable()) return;
   visible.value = true
 }

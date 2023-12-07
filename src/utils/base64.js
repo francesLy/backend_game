@@ -1,8 +1,10 @@
+
+let Base64 = require('js-base64').Base64;
 export const base64 = {
     decode: (str) => {
-        return decodeURIComponent(atob(str));
+        return Base64.decode(str);
     },
-    enncode: (str) => {
-        return btoa(encodeURIComponent(str));
+    encode: (str) => {
+        return Base64.encode(str);
     }
 }

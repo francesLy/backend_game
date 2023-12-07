@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button type="primary" @click="open()" round>Buy</el-button>
+    <el-button type="primary" @click="open" round>Buy</el-button>
     <el-dialog v-model="visible" title="Purchase COSD" width="360px" destroy-on-close append-to-body>
       <el-alert title="TIP: Accumulated expenses of usdt cannot exceed 100,000" type="info" style="margin-bottom:20px"></el-alert>
       <el-row :gutter="5" style="margin-bottom:20px">
@@ -11,7 +11,7 @@
           <el-input-number v-model.number="action.amount1" controls-position="right" :step="1" :min="20" :max="max" placeholder="`set amount" style="width:100%" @change="translate('usdt')" clearable></el-input-number>
         </el-col>
         <el-col :span="24" style="text-align: right;">
-          <el-button type="success" link @click="toMax()">Max</el-button>
+          <el-button type="success" link @click="toMax">Max</el-button>
         </el-col>
       </el-row>
       <el-row :gutter="5">
@@ -23,7 +23,7 @@
           <div style="text-align: right;">
             <b style="display:inline-block;padding:0 10px;background: #fef1db;color:#ff9800;">Current approved allowance: {{ allowance['buycosd'] }}</b>
           </div>
-          <el-button type="primary" @click="purchaseApprove()" style="width:100%" :disabled="disabled">
+          <el-button type="primary" @click="purchaseApprove" style="width:100%" :disabled="disabled">
             <el-tag size="small">1</el-tag>&nbsp;Approve Spending
           </el-button>
         </el-col>
@@ -31,7 +31,7 @@
           <p style="text-align: right;"><small>1COSD = 0.05USDT</small></p>
         </el-col>
         <el-col :span="24" style="margin-top:15px">
-          <el-button type="success" @click="purchase()" style="width:100%" :disabled="allowance['buycosd'] >= action.amount?false:true">
+          <el-button type="success" @click="purchase" style="width:100%" :disabled="allowance['buycosd'] >= action.amount?false:true">
             <el-tag size="small">2</el-tag>&nbsp;Buy
           </el-button>
         </el-col>
@@ -43,7 +43,7 @@
 import { ref,getCurrentInstance, onMounted } from "vue";
 import {useStore} from "vuex"
 import { loadingHelper } from "@/utils/loading";
-import { ASSETTYPE, TXTYPE, savaAfterTranscation } from "@/utils/meta-mask";
+import { ASSETTYPE, TXTYPE, savaAfterTransaction } from "@/utils/meta-mask";
 import {base64} from "@/utils/base64"
 const store = useStore()
 let CONTRACTS = store.state.abi?.contract;
@@ -52,7 +52,7 @@ const action = ref({
   amount1: 20,
   amount: 1,
   title: 'Purchase COSD',
-  command: ''
+  command: 'buy'
 });
 const allowance = ref({sl:0,club:0,defi:0,blindbox:0,buycosd:0})
 const {proxy} = getCurrentInstance();
@@ -70,7 +70,7 @@ function isEmpty() {
   }
   return action.value.amount ? false : true;
 }
-async function open() {
+function open() {
   if (!metaMask.isAvailable()) return;
   action.value = {
     amount1: 20,
@@ -147,7 +147,7 @@ function purchaseApprove() {
     approveAddress: CONTRACTS["busd"].address,
     abiApprove: abis.value['busd']
   }
-  if(allowance.buycosd > 100000){
+  if(allowance.value.buycosd > 100000){
     ElMessage.error("Accumulated expenses of usdt cannot exceed 100,000")
     return;
   }
@@ -188,7 +188,7 @@ function purchase() {
       "nftVo": {},
       "blockNumber": res.blockNumber
     }
-    savaAfterTranscation(param)
+    savaAfterTransaction(param)
     emit("balance");
     getAllowance('buycosd')
   }).catch(err => {

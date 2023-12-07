@@ -286,7 +286,7 @@ import { ref, onMounted, getCurrentInstance, onUnmounted } from "vue"
 import { useStore } from "vuex"
 import { DateHelper } from "@/utils/helper";
 import { loadingHelper } from "@/utils/loading";
-import { ASSETTYPE, TXTYPE, POOL, savaAfterTranscation } from "@/utils/meta-mask";
+import { ASSETTYPE, TXTYPE, POOL, savaAfterTransaction } from "@/utils/meta-mask";
 import { base64 } from "@/utils/base64";
 import { cosdApi } from "@/api/request";
 import PurchaseCosd from "@/components/purchase-cosd.vue";
@@ -567,7 +567,7 @@ function stakingTransfer(key) {
       "poolId": POOL[key],
       "blockNumber": res.blockNumber
     }
-    savaAfterTranscation(param)
+    savaAfterTransaction(param)
     getBalance(key,true);
     getBalance('cosd');
     getAllowance(key)
@@ -598,7 +598,7 @@ async function unstakingTransfer(key) {
       "poolId": POOL[key],
       "blockNumber": res.blockNumber
     }
-    savaAfterTranscation(param)
+    savaAfterTransaction(param)
     if (key == 'defi') { getRewardBalance() }
     loadingHelper.hide();
     getBalance(key,true);

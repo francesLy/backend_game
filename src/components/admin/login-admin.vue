@@ -15,7 +15,7 @@
           <el-input v-model="form.password" type="password" placeholder="enter your password" show-password clearable />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" class="w-100 shadow" @click="doLogin()">Sign In</el-button>
+          <el-button type="primary" class="w-100 shadow" @click="doLogin">Sign In</el-button>
         </el-form-item>
       </el-form>
       <el-row style="margin-top: 10px; font-size: 14px">

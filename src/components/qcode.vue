@@ -3,7 +3,7 @@
     <qrcode-vue :value='url' :size='size' id="qcode"></qrcode-vue>
     <br />
     <p>share the image to invite user</p>
-    <el-button type="primary" @click="download()" id="download" round>Download</el-button>
+    <el-button type="primary" @click="download" id="download" round>Download</el-button>
     <div style="width:80%;margin:20px auto;">
       <el-input v-model="url">
         <template #append>
