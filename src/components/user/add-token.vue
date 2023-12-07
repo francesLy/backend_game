@@ -48,7 +48,7 @@ const { proxy } = getCurrentInstance();
 const metaMask = proxy.metaMask;
 const infos = ref({
   cosd:{
-    symbol:"COSD1",
+    symbol:"COSD",
     address:CONTRACTS.cosd.address,
     image:CONTRACTS.cosd.image||"https://s3.ap-northeast-1.amazonaws.com/www.chessofstars.io/assets/img/crypto/cosd.png"
   },
@@ -58,7 +58,7 @@ const infos = ref({
     image:"https://s3.ap-northeast-1.amazonaws.com/www.chessofstars.io/assets/img/favicon.ico"
   },
   busd:{
-    symbol:"BUSD",
+    symbol:"USDT",
     address:CONTRACTS.busd.address,
     image:CONTRACTS.busd.image||"https://s3.ap-northeast-1.amazonaws.com/www.chessofstars.io/assets/img/favicon.ico"
   }

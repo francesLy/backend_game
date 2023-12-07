@@ -32,13 +32,13 @@
             <span>Logs</span>
           </el-menu-item>
           <!--/plat/nfts-->
-          <el-menu-item index="#1" v-if="$store.state.role == 2||$store.state.role == 1">
+          <el-menu-item index="#1" style="cursor:not-allowed" v-if="$store.state.role == 2||$store.state.role == 1">
             <i class="fa fa-ticket"></i>
             <span>NFTs </span>
             <small>&nbsp;(coming soon)</small>
           </el-menu-item>
           <!--/plat/staking-->
-          <el-menu-item index="#2" v-if="$store.state.role == 2||$store.state.role == 1">
+          <el-menu-item index="#2" style="cursor:not-allowed" v-if="$store.state.role == 2||$store.state.role == 1">
             <i class="fa fa-hdd-o"></i>
             <span>Staking </span>
             <small>&nbsp;(coming soon)</small>

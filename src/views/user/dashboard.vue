@@ -304,7 +304,7 @@ const openHandler = {
     max.value = dashboard.value.assets;
     min.value = 100;
     if (dashboard.value.assets < min.value) {
-      ElMessage.warning(`Sorry, you need to have at least ${min.value} BUSD to withdraw!`);
+      ElMessage.warning(`Sorry, you need to have at least ${min.value} USDT to withdraw!`);
       return false;
     }
     amount1.value = min.value;
