@@ -28,7 +28,7 @@
           </el-button>
         </el-col>
         <el-col :span="24">
-          <p style="text-align: right;"><small>1BUSD = 0.05tBNB</small></p>
+          <p style="text-align: right;"><small>1COSD = 0.05USDT</small></p>
         </el-col>
         <el-col :span="24" style="margin-top:15px">
           <el-button type="success" @click="purchase()" style="width:100%" :disabled="allowance['buycosd'] >= action.amount?false:true">

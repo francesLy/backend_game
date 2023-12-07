@@ -148,11 +148,11 @@
       <div class="card-body">
         <el-tabs v-model="activeName">
           <el-tab-pane label="Evic" name="evic">
-            <el-select v-model="evicType">
-              <!--<el-option label="all" value="[7,8]"></el-option>-->
+            <!--<el-select v-model="evicType">
+              <el-option label="all" value="[7,8]"></el-option>
               <el-option label="purchase" :value="7"></el-option>
               <el-option label="withdraw" :value="8"></el-option>
-            </el-select>
+            </el-select>-->
             <buy-list v-model:refresh="isrefresh" v-show="activeName =='evic'" :txtype="evicType"></buy-list>
           </el-tab-pane>
           <el-tab-pane label="COSD" name="cosd">
@@ -220,7 +220,7 @@ const action = ref({ title: "", btn: "" })
 const max = ref(Infinity)
 const min = ref(100)
 const activeName = ref("evic")
-const evicType = ref("7")
+const evicType = ref(8)
 const isrefresh = ref(false);
 function isEmpty() {
   if (!amount.value) {
