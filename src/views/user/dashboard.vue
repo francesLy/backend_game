@@ -171,8 +171,8 @@
         <el-col :span="18">
           <el-input-number v-model.number="amount1" controls-position="right" :step="100" :min="min" :max="max" style="width:100%" @change="translate('evic')" clearable></el-input-number>
         </el-col>
-        <el-col :span="6" v-if="action.command != 'Withdraw'" style="margin-top:10px">USDT</el-col>
-        <el-col :span="18" v-if="action.command != 'Withdraw'" style="margin-top:10px">
+        <el-col :span="6" v-if="action.command != 'withdraw'" style="margin-top:10px">USDT</el-col>
+        <el-col :span="18" v-if="action.command != 'withdraw'" style="margin-top:10px">
           <el-input-number v-model.number="amount" controls-position="right" :step="1" :min="min/100" :max="max/100" style="width:100%" @change="translate('usdt')" clearable></el-input-number>
         </el-col>
         <el-col :span="24" style="margin-top:30px;">

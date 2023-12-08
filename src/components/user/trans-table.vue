@@ -9,7 +9,7 @@
       <el-table-column label="Amount" min-width="20%">
         <template #default="scope">
           <div>
-            <span style="margin:0;font-size:28px;"><b>{{ scope.row.toAmount }}</b>&nbsp;<small style="font-size:14px;color:#999">{{ txtype[scope.row.transType].to }}</small></span>
+            <!--<span style="margin:0;font-size:28px;"><b>{{ scope.row.toAmount }}</b>&nbsp;<small style="font-size:14px;color:#999">{{ txtype[scope.row.transType].to }}</small></span>-->
             <span v-show="[0,7,8,9].indexOf(scope.row.transType) > -1">({{ scope.row.fromAmount }} <small>{{ txtype[scope.row.transType].from }}</small>)</span>
           </div>
         </template>
