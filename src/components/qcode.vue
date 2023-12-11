@@ -35,9 +35,10 @@ watch(() => props.id, (val) => {
 url.value = window.location.protocol +"//"+ window.location.host + '/register?id=' + encodeURIComponent(inviterId.value)
 const size = ref(240)
 function download() {
-  let canvas = document.getElementById('qcode').getElementsByTagName('canvas')
+  let canvas = document.getElementById('qcode');
   let a = document.createElement('a')
-  a.href = canvas[0].toDataURL('img/png')
+  console.log(canvas)
+  a.href = canvas.toDataURL('img/png');
   a.download = 'chessofstars_invite'
   a.click()
   ElMessage.warning('loading...')
