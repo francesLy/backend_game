@@ -42,11 +42,11 @@ async function emailVaild() {
     if (res.data){
        ret = true
        if(props.mode != "signup") ElMessage.error("this email is absent");
-    }
-    else {
-      console.log(props.mode)
-      if(props.mode == "signup") ElMessage.error("this email has been used,please use another one");
-      ret = false;
+    }else {
+      ret = false;//已存在
+      if(props.mode == "signup"){
+        ElMessage.error("this email has been used,please use another one"); 
+      } 
     }
   })
   return ret
@@ -57,8 +57,8 @@ async function getVerifyCode() {
     return;
   }
   let isEmailAvaliable = await emailVaild()
-  if(!isEmailAvaliable && props.type == "signup") return;
-  if(isEmailAvaliable && props.type != "signup") return;
+  if(!isEmailAvaliable && props.mode == "signup") return;
+  if(isEmailAvaliable && props.mode != "signup") return;
   emit("send", true);
   sendBtnText.value = "Sending..."
   userApi.code({ email: emailValue.value }).then(res => {
