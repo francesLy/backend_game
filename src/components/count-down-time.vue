@@ -12,7 +12,8 @@ const sendBtnText = ref("Send");
 const btndisabled = ref(false);
 const emailValue = ref()
 const props = defineProps({
-  email: { type: String }
+  email: { type: String },
+  mode: {type:String}
 })
 const emit = defineEmits(['send'])
 const time = ref(0);
@@ -38,8 +39,15 @@ function* genTime(num) {
 async function emailVaild() {
   let ret = false;
   await userApi.checkEmail(emailValue.value).then(res => {
-    if (res.data) ret = true
-    else ElMessage.error("this email has been used,please use another one");
+    if (res.data){
+       ret = true
+       if(props.mode != "signup") ElMessage.error("this email is absent");
+    }
+    else {
+      console.log(props.mode)
+      if(props.mode == "signup") ElMessage.error("this email has been used,please use another one");
+      ret = false;
+    }
   })
   return ret
 }
@@ -49,7 +57,8 @@ async function getVerifyCode() {
     return;
   }
   let isEmailAvaliable = await emailVaild()
-  if(!isEmailAvaliable) return;
+  if(!isEmailAvaliable && props.type == "signup") return;
+  if(isEmailAvaliable && props.type != "signup") return;
   emit("send", true);
   sendBtnText.value = "Sending..."
   userApi.code({ email: emailValue.value }).then(res => {

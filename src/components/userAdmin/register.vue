@@ -17,7 +17,7 @@
               <el-input v-model="form.code" type="text" placeholder="enter your verify code" clearable />
             </el-col>
             <el-col :span="8">
-              <count-down-time :email="form.email" @send="setDisabled"></count-down-time>
+              <count-down-time :email="form.email" mode="signup" @send="setDisabled"></count-down-time>
             </el-col>
           </el-row>
         </el-form-item>

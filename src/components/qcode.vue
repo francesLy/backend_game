@@ -36,12 +36,11 @@ url.value = window.location.protocol +"//"+ window.location.host + '/register?id
 const size = ref(240)
 function download() {
   let canvas = document.getElementById('qcode');
-  let a = document.createElement('a')
-  console.log(canvas)
+  let a = document.createElement('a');
   a.href = canvas.toDataURL('img/png');
-  a.download = 'chessofstars_invite'
+  a.download = 'chessofstars_invite';
   a.click()
-  ElMessage.warning('loading...')
+  ElMessage.success('loading...')
 }
 function copy(val) {
   copyClick(val)
