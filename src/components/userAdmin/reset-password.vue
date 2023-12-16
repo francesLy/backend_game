@@ -1,38 +1,39 @@
 <template>
   <div>
     <el-form ref="formRef" :rules="rules" label-position="top" label-width="100px" :model="form">
-      <el-form-item label="Email" prop="email">
-        <el-input v-model="form.email" placeholder="enter your email" clearable :disabled="btndisabled"/>
+      <el-form-item :label="$t('text.email')" prop="email">
+        <el-input v-model="form.email" :placeholder="`${$t('text.enter')}${$t('text.email').toLowerCase()}`" clearable :disabled="btndisabled"/>
       </el-form-item>
-      <el-form-item label="Verify code" prop="code">
+      <el-form-item :label="$t('text.verifyCode')" prop="code">
         <el-row :gutter="10" style="width:100%">
           <el-col :span="18">
-            <el-input v-model="form.code" type="text" placeholder="enter your verify code" clearable />
+            <el-input v-model="form.code" type="text" :placeholder="`${$t('text.enter')}${$t('text.verifyCode').toLowerCase()}`" clearable />
           </el-col>
           <el-col :span="6">
-            <count-down-time :email="form.email" type="password" @send="setDisabled"></count-down-time>
+            <count-down-time :email="form.email" mode="password" @send="setDisabled"></count-down-time>
           </el-col>
         </el-row>
       </el-form-item>
-      <el-form-item label="New Password" prop="password">
-        <el-input v-model="form.password" type="password" placeholder="enter your password" show-password clearable />
+      <el-form-item :label="$t('text.newpassword')" prop="password">
+        <el-input v-model="form.password" type="password" :placeholder="`${$t('text.enter')}${$t('text.newpassword').toLowerCase()}`" show-password clearable />
       </el-form-item>
-      <el-form-item label="New Password again" prop="rpassword">
-        <el-input v-model="form.rpassword" type="password" placeholder="enter your password again" show-password clearable />
+      <el-form-item :label="$t('text.passwordagain')" prop="rpassword">
+        <el-input v-model="form.rpassword" type="password" :placeholder="`${$t('text.enter')}${$t('text.newpassword').toLowerCase()}`" show-password clearable />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" class="w-100" @click="submit()">Save</el-button>
+        <el-button type="primary" class="w-100" @click="submit()">{{$t('btn.save')}}</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 <script setup>
-import { ref } from "vue";
+import { ref,getCurrentInstance, computed } from "vue";
 import { useRouter } from "vue-router";
 import { userApi } from "@/api/request";
 import { loadingHelper } from "@/utils/loading";
 import { encryptAES } from "@/utils/crypto";
-import CountDownTime from "@/components/count-down-time.vue"
+import CountDownTime from "@/components/userAdmin/count-down-time.vue"
+const { proxy } = getCurrentInstance();
 const emit = defineEmits(['close'])
 const router = useRouter();
 const formRef = ref(null);
@@ -46,46 +47,46 @@ const rules = ref({});
 const time = ref(0)
 const btndisabled = ref(false)
 rules.value.email = [
-  { required: true, message: "email is required", trigger: "blur" },
+  { required: true, message: computed(()=> proxy.$t('require.email')), trigger: "blur" },
   {
     type: 'email',
-    message: 'Please input correct email address',
+    message: computed(()=> proxy.$t('message.email.rule')),
     trigger: ['blur', 'change'],
   },{
   validator: function (rule, value, callback) {
     if (value) {
       userApi.checkEmail(value).then(res => {
         if (res.code == 0 && !res.data) callback();
-        else callback(new Error("this email is not registed"));
+        else callback(new Error(proxy.$t('message.send.noexist')));
       })
     }
   },
   trigger: "blur",
 }];
 rules.value.password = [
-  { required: true, message: "Password is required", trigger: "blur" },
-  { min: 8, max: 64, message: "The length between 8 and 64 character", trigger: "blur" }, 
+  { required: true, message: computed(()=> proxy.$t('require.password')), trigger: "blur" },
+  { min: 8, max: 64, message: computed(()=> proxy.$t('message.password.length')), trigger: "blur" }, 
   {
     required: true,
     pattern: /^(?!^\d+$)(?!^[a-z]+$)(?!^[A-Z]+$)(?!^[^a-z0-9]+$)(?!^[^A-Z0-9]+$)(?!^.*[\u4E00-\u9FA5].*$)^\S*$/,
-    message: "Contains at least two types of numbers, uppercase and lowercase letters, and special characters",
+    message: computed(()=> proxy.$t('message.password.rule')),
     trigger: "blur",
   }
 ];
-rules.value.code = [{ required: true, message: "Verify code is required", trigger: "blur" }];
+rules.value.code = [{ required: true, message: computed(()=> proxy.$t('require.verifyCode')), trigger: "blur" }];
 rules.value.rpassword = [
-  { required: true, message: "password is required", trigger: "blur" },
-  { min: 8, max: 64, message: "The length between 8 and 64 character", trigger: "blur" }, 
+  { required: true, message: computed(()=> proxy.$t('require.password')), trigger: "blur" },
+  { min: 8, max: 64, message: computed(()=> proxy.$t('message.password.length')), trigger: "blur" }, 
   {
     required: true,
     pattern: /^(?!^\d+$)(?!^[a-z]+$)(?!^[A-Z]+$)(?!^[^a-z0-9]+$)(?!^[^A-Z0-9]+$)(?!^.*[\u4E00-\u9FA5].*$)^\S*$/,
-    message: "Contains at least two types of numbers, uppercase and lowercase letters, and special characters",
+    message: computed(()=> proxy.$t('message.password.rule')),
     trigger: "blur",
   },
   {
     validator: function (rule, value, callback) {
       if (value != form.value.password) {
-        callback(new Error("The passwords are inconsistent, please re-enter "));
+        callback(new Error(proxy.$t('message.password.nosame')));
       } else {
         //校验通过
         callback();

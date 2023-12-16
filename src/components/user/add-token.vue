@@ -1,19 +1,19 @@
 <template>
   <div>
-    <el-button type="danger" @click="open()" round>Add token</el-button>
-    <el-dialog v-model="visible" title="Add to wallet" style="word-break: break-all;" width="480px" destroy-on-close append-to-body>
+    <el-button type="danger" @click="open()" round>{{$t('btn.addToken')}}</el-button>
+    <el-dialog v-model="visible" :title="$t('text.addToWallet')" style="word-break: break-all;" width="360px" destroy-on-close append-to-body>
       <div style="padding:10px;margin:10px 0;border:1px solid #eee;border-radius:12px">
       <el-row :gutter="10">
         <el-col :span="14">
           <el-avatar :src="infos.cosd.image"></el-avatar>
         </el-col>
         <el-col :span="10">
-          <el-button v-if="$store.state.metaMask" type="primary" style="width:100%" @click="addToken(infos.cosd)" :disabled="$store.state.metaMask?false:true" round>Add to Wallet</el-button>
+          <el-button v-if="$store.state.metaMask" type="primary" style="width:100%" @click="addToken(infos.cosd)" :disabled="$store.state.metaMask?false:true" round>{{$t('text.addToWallet')}}</el-button>
         </el-col>
         <el-col :span="24">
-          <span><b>Symbol:&nbsp;&nbsp;</b> {{ infos.cosd.symbol }}&nbsp;&nbsp;<i class="fa fa-copy" @click="copy(infos.cosd.symbol)"></i></span><br />
-          <span><b>Address:&nbsp;</b> {{ infos.cosd.address }}&nbsp;&nbsp;<i class="fa fa-copy" @click="copy(infos.cosd.address)"></i></span><br />
-          <span><b>Image:&nbsp;&nbsp;&nbsp;&nbsp;</b> {{ infos.cosd.image }}&nbsp;&nbsp;<i class="fa fa-copy" @click="copy(infos.cosd.image)"></i></span><br />
+          <span><b>{{ $t('text.symbol') }}:&nbsp;&nbsp;</b> {{ infos.cosd.symbol }}&nbsp;&nbsp;<i class="fa fa-copy" @click="copy(infos.cosd.symbol)"></i></span><br />
+          <span><b>{{ $t('text.address') }}:&nbsp;</b> {{ infos.cosd.address }}&nbsp;&nbsp;<i class="fa fa-copy" @click="copy(infos.cosd.address)"></i></span><br />
+          <span><b>{{ $t('text.image') }}:&nbsp;&nbsp;&nbsp;&nbsp;</b> {{ infos.cosd.image }}&nbsp;&nbsp;<i class="fa fa-copy" @click="copy(infos.cosd.image)"></i></span><br />
         </el-col>
       </el-row>
     </div>
@@ -23,12 +23,12 @@
           <el-avatar :src="infos.busd.image"></el-avatar>
         </el-col>
         <el-col :span="10">
-          <el-button v-if="$store.state.metaMask" type="primary" style="width:100%" @click="addToken(infos.busd)" :disabled="$store.state.metaMask?false:true" round>Add to Wallet</el-button>
+          <el-button v-if="$store.state.metaMask" type="primary" style="width:100%" @click="addToken(infos.busd)" :disabled="$store.state.metaMask?false:true" round>{{$t('text.addToWallet')}}</el-button>
         </el-col>
         <el-col :span="24">
-          <span><b>Symbol:&nbsp;&nbsp;</b> {{ infos.busd.symbol }}&nbsp;&nbsp;<i class="fa fa-copy" @click="copy(infos.busd.symbol)"></i></span><br />
-          <span><b>Address:&nbsp;</b> {{ infos.busd.address }}&nbsp;&nbsp;<i class="fa fa-copy" @click="copy(infos.busd.address)"></i></span><br />
-          <span><b>Image:&nbsp;&nbsp;&nbsp;&nbsp;</b> {{ infos.busd.image }}&nbsp;&nbsp;<i class="fa fa-copy" @click="copy(infos.busd.image)"></i></span><br />
+          <span><b>{{ $t('text.symbol') }}:&nbsp;&nbsp;</b> {{ infos.busd.symbol }}&nbsp;&nbsp;<i class="fa fa-copy" @click="copy(infos.busd.symbol)"></i></span><br />
+          <span><b>{{ $t('text.address') }}:&nbsp;</b> {{ infos.busd.address }}&nbsp;&nbsp;<i class="fa fa-copy" @click="copy(infos.busd.address)"></i></span><br />
+          <span><b>{{ $t('text.image') }}:&nbsp;&nbsp;&nbsp;&nbsp;</b> {{ infos.busd.image }}&nbsp;&nbsp;<i class="fa fa-copy" @click="copy(infos.busd.image)"></i></span><br />
         </el-col>
         
       </el-row>

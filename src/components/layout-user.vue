@@ -9,7 +9,7 @@
         <el-menu class="menu" :default-active="$route.meta.route" :collapse="isCollapse" router>
           <el-menu-item index="/plat/assets" v-if="$store.state.role != 3">
             <i class="fa fa-dashboard"></i>
-            <span>Assets</span>
+            <span>{{$t('text.assets')}}</span>
           </el-menu-item>
           <el-menu-item index="/admin/home" v-if="$store.state.role == 3">
             <i class="fa fa-dashboard"></i>
@@ -35,13 +35,13 @@
           <el-menu-item index="#1" style="cursor:not-allowed" v-if="$store.state.role == 2||$store.state.role == 1">
             <i class="fa fa-ticket"></i>
             <span>NFTs </span>
-            <small>&nbsp;(coming soon)</small>
+            <small>&nbsp;({{ $t('text.coming') }})</small>
           </el-menu-item>
           <!--/plat/staking-->
           <el-menu-item index="#2" style="cursor:not-allowed" v-if="$store.state.role == 2||$store.state.role == 1">
             <i class="fa fa-hdd-o"></i>
-            <span>Staking </span>
-            <small>&nbsp;(coming soon)</small>
+            <span>{{ $t('text.staking') }} </span>
+            <small>&nbsp;({{ $t('text.coming') }})</small>
           </el-menu-item>
         </el-menu>
       </el-aside>
@@ -52,14 +52,15 @@
               <i class="el-icon--right header-icon fa fa-navicon" @click="change"></i>
             </el-col>
             <el-col :span="22" style="text-align: right;">
-              <div style="margin-top:5px;margin-right:10px;display:inline-block" v-if="$store.state.role !== 3">
+              <div style="margin-top:5px;margin-right:5px;display:inline-block" v-if="$store.state.role !== 3">
                 <metamask-connect></metamask-connect>
                 <!---->
-                <el-tooltip placement="bottom" content="Invite users to help you earn revenue">
+                <el-tooltip placement="bottom" :content="$t('message.invite.ad')">
                   <el-button type="success" @click="inviteHandler" round>
-                    <i class="fa fa-link"></i>&nbsp;Invite
+                    <i class="fa fa-link"></i>&nbsp;{{$t('text.invite')}}
                   </el-button>
                 </el-tooltip>
+                <lang></lang>
               </div>
               <el-dropdown @command="handleCommand">
                 <span class="el-dropdown-link">
@@ -70,10 +71,10 @@
                 </span>
                 <template #dropdown>
                   <el-dropdown-menu>
-                    <el-dropdown-item command="profile">Profile</el-dropdown-item>
-                    <el-dropdown-item command="password">Change Password</el-dropdown-item>
-                    <el-dropdown-item command="email">Change Email</el-dropdown-item>
-                    <el-dropdown-item divided command="logout">Sign Out</el-dropdown-item>
+                    <el-dropdown-item command="profile">{{ $t('text.profile') }}</el-dropdown-item>
+                    <el-dropdown-item command="password">{{ $t('text.changePassword') }}</el-dropdown-item>
+                    <el-dropdown-item command="email">{{ $t('text.changeEmail') }}</el-dropdown-item>
+                    <el-dropdown-item divided command="logout">{{ $t('text.logout') }}</el-dropdown-item>
                   </el-dropdown-menu>
                 </template>
               </el-dropdown>
@@ -88,13 +89,13 @@
         </el-footer>
       </el-container>
     </el-container>
-    <el-dialog v-model="visible" title="Change Password" :width="dialogWidth" destroy-on-close>
+    <el-dialog v-model="visible" :title="$t('text.changePassword')" :width="dialogWidth" destroy-on-close>
       <password-cont @close="()=>{visible = false}"></password-cont>
     </el-dialog>
-    <el-dialog v-model="visible1" title="Change Email" :width="dialogWidth" destroy-on-close>
+    <el-dialog v-model="visible1" :title="$t('text.changeEmail')" :width="dialogWidth" destroy-on-close>
       <email-cont @close="closeemail"></email-cont>
     </el-dialog>
-    <el-dialog v-model="inviteVisible" title="Welcome to Chess of stars" :width="dialogWidth">
+    <el-dialog v-model="inviteVisible" :title="$t('text.welcome')" :width="dialogWidth">
       <qcode-cont :id="inviterId" style="width:100%;text-align: center;"></qcode-cont>
     </el-dialog>
     <el-drawer class="menu-container open" v-model="isCollapse" direction="ltr" :with-header="false" :size="240">
@@ -106,7 +107,7 @@
         <el-menu class="menu" :default-active="$route.meta.route" router>
           <el-menu-item index="/plat/assets" v-if="$store.state.role != 3">
             <i class="fa fa-dashboard"></i>
-            <span>Assets</span>
+            <span>{{$t('text.assets')}}</span>
           </el-menu-item>
           <el-menu-item index="/admin/home" v-if="$store.state.role == 3">
             <i class="fa fa-dashboard"></i>
@@ -128,13 +129,15 @@
             <i class="fa fa-file-text-o"></i>
             <span>Logs</span>
           </el-menu-item>
-          <el-menu-item index="/plat/nfts" v-if="$store.state.role == 2||$store.state.role == 1">
+          <el-menu-item index="#" v-if="$store.state.role == 2||$store.state.role == 1">
             <i class="fa fa-ticket"></i>
             <span>NFTs</span>
+            <small>&nbsp;({{ $t('text.coming') }})</small>
           </el-menu-item>
-          <el-menu-item index="/plat/staking" v-if="$store.state.role == 2||$store.state.role == 1">
+          <el-menu-item index="#" v-if="$store.state.role == 2||$store.state.role == 1">
             <i class="fa fa-hdd-o"></i>
-            <span>Staking</span>
+            <span>{{$t('text.staking')}}</span>
+            <small>&nbsp;({{ $t('text.coming') }})</small>
           </el-menu-item>
         </el-menu>
       </div>
@@ -150,6 +153,7 @@ import PasswordCont from "@/components/userAdmin/password.vue";
 import EmailCont from "@/components/userAdmin/reset-email.vue";
 import QcodeCont from "@/components/qcode.vue";
 import MetamaskConnect from "@/components/metamask.vue";
+import Lang from "@/components/user/lang.vue"
 import { userApi } from "@/api/request"
 const router = useRouter()
 const store = useStore()

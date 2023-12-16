@@ -1,30 +1,30 @@
 <template>
   <div>
-    <el-button type="primary" @click="open" round>Buy</el-button>
-    <el-dialog v-model="visible" title="Purchase COSD" width="360px" destroy-on-close append-to-body>
-      <el-alert title="TIP: Accumulated expenses of usdt cannot exceed 100,000" type="info" style="margin-bottom:20px"></el-alert>
+    <el-button type="primary" @click="open" round>{{$t('btn.buy')}}</el-button>
+    <el-dialog v-model="visible" :title="$t('btn.buy')+' COSD'" width="360px" destroy-on-close append-to-body>
+      <el-alert :title="$t('message.buy.tip')+' 100,000'" type="info" style="margin-bottom:20px"></el-alert>
       <el-row :gutter="5" style="margin-bottom:20px">
         <el-col :span="4">
           COSD
         </el-col>
         <el-col :span="20">
-          <el-input-number v-model.number="action.amount1" controls-position="right" :step="1" :min="20" :max="max" placeholder="`set amount" style="width:100%" @change="translate('usdt')" clearable></el-input-number>
+          <el-input-number v-model.number="action.amount1" controls-position="right" :step="1" :min="20" :max="max" :placeholder="$t('text.setAmount')" style="width:100%" @change="translate('usdt')" clearable></el-input-number>
         </el-col>
         <el-col :span="24" style="text-align: right;">
-          <el-button type="success" link @click="toMax">Max</el-button>
+          <el-button type="success" link @click="toMax">{{ $t("text.max") }}</el-button>
         </el-col>
       </el-row>
       <el-row :gutter="5">
         <el-col :span="4">USDT</el-col>
         <el-col :span="20">
-          <el-input-number v-model.number="action.amount" controls-position="right" :step="1" :min="min" :max="max/20" placeholder="`set amount" style="width:100%" @change="translate('cosd')" clearable></el-input-number>
+          <el-input-number v-model.number="action.amount" controls-position="right" :step="1" :min="min" :max="max/20" :placeholder="$t('text.setAmount')" style="width:100%" @change="translate('cosd')" clearable></el-input-number>
         </el-col>
         <el-col :span="24" style="margin-top:15px">
           <div style="text-align: right;">
-            <b style="display:inline-block;padding:0 10px;background: #fef1db;color:#ff9800;">Current approved allowance: {{ allowance['buycosd'] }}</b>
+            <b style="display:inline-block;padding:0 10px;background: #fef1db;color:#ff9800;">{{ $t('text.currentallowance') }}: {{ allowance['buycosd'] }}</b>
           </div>
           <el-button type="primary" @click="purchaseApprove" style="width:100%" :disabled="disabled">
-            <el-tag size="small">1</el-tag>&nbsp;Approve Spending
+            <el-tag size="small">1</el-tag>&nbsp;{{$t('btn.approve')}}
           </el-button>
         </el-col>
         <el-col :span="24">
@@ -32,7 +32,7 @@
         </el-col>
         <el-col :span="24" style="margin-top:15px">
           <el-button type="success" @click="purchase" style="width:100%" :disabled="allowance['buycosd'] >= action.amount?false:true">
-            <el-tag size="small">2</el-tag>&nbsp;Buy
+            <el-tag size="small">2</el-tag>&nbsp;{{$t('btn.buy')}}
           </el-button>
         </el-col>
       </el-row>
@@ -45,17 +45,17 @@ import {useStore} from "vuex"
 import { loadingHelper } from "@/utils/loading";
 import { ASSETTYPE, TXTYPE, savaAfterTransaction } from "@/utils/meta-mask";
 import {base64} from "@/utils/base64"
-const store = useStore()
+const store = useStore();
+const {proxy} = getCurrentInstance();
 let CONTRACTS = store.state.abi?.contract;
 const emit = defineEmits(['balance'])
 const action = ref({
   amount1: 20,
   amount: 1,
-  title: 'Purchase COSD',
+  title: proxy.$t('btn.buy')+' COSD',
   command: 'buy'
 });
 const allowance = ref({sl:0,club:0,defi:0,blindbox:0,buycosd:0})
-const {proxy} = getCurrentInstance();
 const metaMask = proxy.metaMask;
 const min = ref(1)
 const allowPurchace = ref(2000000)
@@ -66,7 +66,7 @@ const disabled = ref(false)
 const abis = ref({ buy: JSON.parse(base64.decode(CONTRACTS.buycosd.abi)), cosd: JSON.parse(base64.decode(CONTRACTS.cosd.abi)), busd: JSON.parse(base64.decode(CONTRACTS.busd.abi)) })
 function isEmpty() {
   if (!action.value.amount) {
-    ElMessage.error("amount is required!")
+    ElMessage.error(proxy.$t('require.amount'))
   }
   return action.value.amount ? false : true;
 }
@@ -75,7 +75,7 @@ function open() {
   action.value = {
     amount1: 20,
     amount: 1,
-    title: 'Purchase COSD',
+    title: proxy.$t('btn.buy')+' COSD',
     command: 'buy'
   }
   disabled.value = false;
@@ -148,7 +148,7 @@ function purchaseApprove() {
     abiApprove: abis.value['busd']
   }
   if(allowance.value.buycosd > 100000){
-    ElMessage.error("Accumulated expenses of usdt cannot exceed 100,000")
+    ElMessage.error(proxy.$t('message.buy.tip')+' 100,000')
     return;
   }
   if (isEmpty()) return;

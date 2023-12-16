@@ -2,8 +2,8 @@
   <div class="container-fluid" style="padding-top:22px">
     <div class="copyright float-right">
       &copy;
-      {{ date }}, made with <i class="fa fa-heart"></i> by
-      <a href="https://www.chessofstars.io" target="_blank">COSD</a> for a better GameFi.
+      {{ date }}, {{ $t('text.goforgame') }}
+      <a href="https://www.chessofstars.io" target="_blank">Game</a>.
     </div>
   </div>
 </template>

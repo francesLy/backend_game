@@ -1,3 +1,4 @@
+import {globals} from '../main.js'
 export function copyClick(val) {
     if(!val) return;
     const input = document.createElement('input') // 创建input对象
@@ -6,5 +7,5 @@ export function copyClick(val) {
     input.select() // 选择实例内容
     document.execCommand('Copy') // 执行复制
     document.body.removeChild(input) // 删除临时实例
-    ElMessage.success('Copyed！')
+    ElMessage.success(globals.$t('text.copy'))
 }

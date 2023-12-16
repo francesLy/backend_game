@@ -4,6 +4,7 @@ import detectEthereumProvider from '@metamask/detect-provider';
 import Web3 from 'web3'
 import store from "../store/index";
 import router from "../router/index";
+import { globals } from '../main.js'
 import { messageHelper } from "@/utils/message-box";
 import { chainApi, userApi } from '@/api/request';
 import { ElMessage, ElNotification } from 'element-plus';
@@ -52,7 +53,7 @@ export class MetaMask {
   }
   async connectMetaMask() {
     if (!this.isMetaMaskInstalled()) {
-      messageHelper.error(`Please install Metamask Wallet at <a href="https://metamask.io/">metamask.io</a>.`, true, 4000);
+      messageHelper.error(`${globals.$t('message.wallet.install')} <a href="https://metamask.io/">metamask.io</a>.`, true, 4000);
       // 判断是否安装MetaMask扩展工具
       const forwarderOrigin = window.location.origin
       const onboarding = new MetaMaskOnboarding({
@@ -79,11 +80,12 @@ export class MetaMask {
         let isChecked = await this.checkNetwork();
         console.log("checkednetwork", isChecked)
         if (!isChecked) return;
-        this.chainId = this.toHex(store.state.abi?.chainId)
+        this.chainId = toHex(store.state.abi?.chainId)
       }
       const accounts = await ethereum.request({ method: 'eth_requestAccounts' })
       if (accounts && accounts.length) this.account = accounts[0];
       if (this.account) {
+        console.log(store.state.metaMask)
         await chainApi.getWalletUrl(this.chainId).then(res => {
           if (res.code == 0) {
             this.url = res.data;
@@ -135,7 +137,7 @@ export class MetaMask {
         console.log("no network")
         return 4902
       } else if (error.code === 4001) {
-        messageHelper.error('Sorry you need to switch to the right network, please try again!');
+        messageHelper.error(globals.$t('message.chain.tip'));
         return false
       } else {
         return false
@@ -193,13 +195,13 @@ export class MetaMask {
     return store.state.user.account.toLowerCase() == store.state.metaMask?.account.toLowerCase();
   }
   currentAccountTips() {
-    messageHelper.show('The wallet address you connected is inconsistent with the wallet address bounded to user,would you like to update the wallet address?',
+    messageHelper.show(globals.$t('error.nosameuser'),
       'Warning', () => {
         router.push("/setting/profile")
       })
   }
   noBoundAddressTips() {
-    messageHelper.show('Would you like to bind the current wallet address to your account?',
+    messageHelper.show(globals.$t('error.isbinding'),
       'Warning', () => {
         let data = {
           name: store.state.user.name,
@@ -212,7 +214,7 @@ export class MetaMask {
             store.commit("setUser", { ...user, account: store.state.metaMask?.account });
             ElNotification({
               type: 'success',
-              message: "Bind successfully!"
+              message: globals.$t('success.bind')
             })
           }
         })
@@ -226,12 +228,12 @@ export class MetaMask {
     let ret = false;
     if(!this.isCheckedToken()) return false;
     if (!this.isMetaMaskInstalled()) {
-      messageHelper.error(`Please install Metamask Wallet at <a href="https://metamask.io/">metamask.io</a>.`, true, 4000)
+      messageHelper.error(`${globals.$t('message.wallet.install')} <a href="https://metamask.io/">metamask.io</a>.`, true, 4000)
       store.commit("setMetaMask", null)
       return false;
     }
     if (!store.state.metaMask) {
-      messageHelper.error("please connect wallet")
+      messageHelper.error(`${globals.$t("message.wallet.connect")}`)
       return false;
     } else {
       ret = true;
@@ -283,7 +285,7 @@ export class MetaMask {
           console.log(success)
           console.log(param.symbol + ' successfully added to wallet!');
         } else {
-          throw new Error('Something went wrong.');
+          throw new Error(`${globals.$t('error.wentWrong')}`);
         }
       })
       .catch((error) => console.error(error));
@@ -511,13 +513,13 @@ export class MetaMask {
 function errorHandlerOfMetaMaskRequest(error) {
   console.log(error)
   if (error.code == 4001) {
-    messageHelper.error("You have rejected this operation.")
+    messageHelper.error(`${globals.$t('error.reject')}`)
   } else if (error.code == 4100) {
-    messageHelper.error("The requested account and/or method has not been authorized.")
+    messageHelper.error(`${globals.$t('error.authorized')}`)
   } else if (error.code == -32603) {
-    messageHelper.error("It seems that something wrong happens in your wallet, please check and solve it first.")
+    messageHelper.error(`${globals.$t('error.wrong')}`)
   } else if (error.code == -32002) {
-    messageHelper.error("The wallet is processing your request, please finish the operation in the wallet.")
+    messageHelper.error(`${globals.$t('error.wait')}`)
   } else {
     messageHelper.error(error?.message)
   }

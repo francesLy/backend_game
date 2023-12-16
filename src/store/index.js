@@ -12,7 +12,8 @@ const store = createStore({
             balance: { busd: 0, cosd: 0 },
             time: null,
             abi: null,
-            cancelTokenArr: []
+            cancelTokenArr: [],
+            language:"en"
         }
     },
     mutations: {
@@ -55,7 +56,11 @@ const store = createStore({
                 if(item) item(499)
             })
             cancelTokenArr = []
+        },
+        setLanguage(state,language){
+            state.language = language
         }
+
     },
     plugins: [
         createPersistedstate({

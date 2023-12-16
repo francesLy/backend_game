@@ -1,5 +1,5 @@
 <template>
-  <el-config-provider>
+  <el-config-provider :locale="locale">
     <div id="app">
       <router-view></router-view>
     </div>
@@ -10,9 +10,16 @@
 @import "@/style/common.scss";
 </style>
 <script>
+import zhTW from "element-plus/dist/locale/zh-tw.mjs"; // 中文包
+import enUS from "element-plus/dist/locale/en.mjs";
+import {ref} from "vue";
+import {useStore} from "vuex"
 export default {
   name: "App",
   setup() {
+    const store = useStore();
+    let language = store.state.language=="en"?enUS:zhTW
+    const locale = ref(language);
     const debounce = (fn, delay) => {
       let timer = null;
       return function () {
@@ -31,6 +38,9 @@ export default {
         callback = debounce(callback, 16);
         super(callback);
       }
+    }
+    return {
+      locale
     }
   }
 };

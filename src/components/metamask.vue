@@ -1,6 +1,6 @@
 <template>
   <el-button :type="isConnected?'success':'primary'" @click="connectWallet" :disabled="isConnected?true:false" round>
-    <span v-if="!isConnected"><i class="fa fa-btc"></i>&nbsp;&nbsp;Connect Wallet</span>
+    <span v-if="!isConnected"><i class="fa fa-btc"></i>&nbsp;&nbsp;{{$t('btn.connect')}}</span>
     <el-popover v-if="isConnected" placement="bottom" :width="300" trigger="hover">
       <template #reference>
         <span>
@@ -14,7 +14,7 @@
           <p style="width:60%;margin:5px auto"><small>{{ $store.state.metaMask?.account }} <i class="fa fa-copy" @click="copy($store.state.metaMask?.account)"></i></small></p>
           <el-row :gutter="10" style="margin-top:10px">
             <el-col :span="10">
-              <el-tag type="success" round><i class="fa fa-bullseye" style="font-size:12px;"></i> &nbsp;connected</el-tag>
+              <el-tag type="success" round><i class="fa fa-bullseye" style="font-size:12px;"></i> &nbsp;{{$t('text.connected')}}</el-tag>
             </el-col>
             <el-col :span="14" style="text-align: right;">
               <el-tooltip effect="light" :content="$store.state.abi?.networkName" placement="bottom">

@@ -6,9 +6,10 @@
 </template>
 <script setup>
 import { ElMessage } from 'element-plus';
-import { ref, onBeforeUnmount, watch } from 'vue';
+import { ref, onBeforeUnmount, watch,getCurrentInstance,computed } from 'vue';
 import { userApi } from "@/api/request";
-const sendBtnText = ref("Send");
+const { proxy } = getCurrentInstance();
+const sendBtnText = ref(computed(()=> proxy.$t('btn.send')));
 const btndisabled = ref(false);
 const emailValue = ref()
 const props = defineProps({
@@ -41,11 +42,11 @@ async function emailVaild() {
   await userApi.checkEmail(emailValue.value).then(res => {
     if (res.data){
        ret = true
-       if(props.mode != "signup") ElMessage.error("this email is absent");
+       if(props.mode != "signup") ElMessage.error(proxy.$t('message.send.noexist'));
     }else {
       ret = false;//已存在
       if(props.mode == "signup"){
-        ElMessage.error("this email has been used,please use another one"); 
+        ElMessage.error(proxy.$t('message.send.exist')); 
       } 
     }
   })
@@ -53,19 +54,19 @@ async function emailVaild() {
 }
 async function getVerifyCode() {
   if (!emailValue.value) {
-    ElMessage.error("Email is required")
+    ElMessage.error(proxy.$t('message.send.required'))
     return;
   }
   let isEmailAvaliable = await emailVaild()
   if(!isEmailAvaliable && props.mode == "signup") return;
   if(isEmailAvaliable && props.mode != "signup") return;
   emit("send", true);
-  sendBtnText.value = "Sending..."
+  sendBtnText.value = computed(()=> (proxy.$t('btn.sending')+'...'))
   userApi.code({ email: emailValue.value }).then(res => {
     if (res.code == 0) {
       ElNotification({
         type: "success",
-        message: "The verification code has been sent to your email!",
+        message: proxy.$t('message.send.success'),
       });
 
       btndisabled.value = true;
@@ -77,7 +78,7 @@ async function getVerifyCode() {
     } else {
       emit("send", false);
     }
-    sendBtnText.value = "Send"
+    sendBtnText.value = computed(()=> proxy.$t('btn.send'))
   })
 }
 function clear() {

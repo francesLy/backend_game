@@ -37,6 +37,7 @@ import { userApi } from "@/api/request";
 import { encryptAES } from "@/utils/crypto";
 import PasswordCont from "@/components/admin/reset-password-admin.vue";
 import { loadingHelper } from "@/utils/loading";
+import Bus from "@/utils/event-bus";
 const visible = ref(false);
 const store = useStore();
 const router = useRouter();

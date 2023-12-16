@@ -7,10 +7,10 @@
             <div class="card">
               <div class="card-header card-header-icon card-header-warning">
                 <div class="card-icon">
-                  <i class="fa fa-user"></i>My Profile
+                  <i class="fa fa-user"></i>{{$t('text.profile')}}
                 </div>
                 <h4 class="card-title"> -
-                  <small class="category">View or edit your profile</small>
+                  <small class="category">{{$t('text.profilesub')}}</small>
                 </h4>
               </div>
               <div class="card-body">
@@ -18,7 +18,7 @@
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group">
-                        <label class="bmd-label-floating">Nick Name</label>
+                        <label class="bmd-label-floating">{{$t('text.nickname')}}</label>
                         <input type="text" class="form-control" v-model="userData.name" readonly>
                       </div>
                     </div>
@@ -26,20 +26,20 @@
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group">
-                        <label class="bmd-label-floating">Wallet Adress</label>
+                        <label class="bmd-label-floating">{{$t('text.wallet')+$t('text.address')}}</label>
                         <div class="input-group no-border">
                           <input type="text" class="form-control" v-model="userData.wallet_address" readonly>
-                          <button class="btn btn-sm btn-warning btn-round btn-just-icon" @click="getAddress" title="get current wallet address">
+                          <button class="btn btn-sm btn-warning btn-round btn-just-icon" @click="getAddress" :title="$t('message.profile.getwallet')">
                             <i class="fa fa-level-down"></i>
                           </button>
-                          <a class="btn btn-sm btn-info btn-round btn-just-icon" :href="url?`${url}address/${userData.wallet_address}`:'javascript:void(0);'" :target="url?'_blank':null" title="View address on blockchain">
+                          <a class="btn btn-sm btn-info btn-round btn-just-icon" :href="url?`${url}address/${userData.wallet_address}`:'javascript:void(0);'" :target="url?'_blank':null" :title="$t('message.profile.view')">
                             <i class="fa fa-external-link"></i>
                           </a>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <button class="btn btn-warning pull-right" @click="updateInfo()"><i class="fa fa-edit"></i>&nbsp;&nbsp;Update</button>
+                  <button class="btn btn-warning pull-right" @click="updateInfo()"><i class="fa fa-edit"></i>&nbsp;&nbsp;{{$t('btn.update')}}</button>
                   <div class="clearfix"></div>
                 </div>
               </div>

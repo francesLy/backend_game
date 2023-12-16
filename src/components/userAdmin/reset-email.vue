@@ -1,32 +1,33 @@
 <template>
   <div>
     <el-form ref="formRef" :rules="rules" label-position="top" label-width="100px" :model="form">
-      <el-form-item label="Email" prop="email">
-        <el-input v-model="form.email" placeholder="enter your email" clearable :disabled="btndisabled"/>
+      <el-form-item :label="$t('text.email')" prop="email">
+        <el-input v-model="form.email" :placeholder="`${$t('text.enter')}${$t('text.email').toLowerCase()}`" clearable :disabled="btndisabled"/>
       </el-form-item>
-      <el-form-item label="Verify code" prop="code">
+      <el-form-item :label="$t('text.verifyCode')" prop="code">
         <el-row :gutter="10" style="width:100%">
           <el-col :span="18">
-            <el-input v-model="form.code" placeholder="enter your verify code" clearable />
+            <el-input v-model="form.code" :placeholder="`${$t('text.enter')}${$t('text.verifyCode').toLowerCase()}`" clearable />
           </el-col>
           <el-col :span="6">
-            <count-down-time :email="form.email" mode="email" @send="setDisabled"></count-down-time>
+            <count-down-time :email="form.email" mode="signup" @send="setDisabled"></count-down-time>
           </el-col>
         </el-row>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" class="w-100" @click="submit()">Save</el-button>
+        <el-button type="primary" class="w-100" @click="submit()">{{$t('btn.save')}}</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 <script setup>
-import { ref } from "vue";
+import { ref,getCurrentInstance,cpmputed } from "vue";
 import { useStore } from "vuex"
 import { useRouter } from "vue-router";
 import { userApi } from "@/api/request";
 import { loadingHelper } from "@/utils/loading";
-import CountDownTime from "@/components/count-down-time.vue"
+import CountDownTime from "@/components/userAdmin/count-down-time.vue";
+const { proxy } = getCurrentInstance();
 const emit = defineEmits(['close'])
 const store = useStore();
 const router = useRouter();
@@ -38,10 +39,10 @@ const form = ref({
 const rules = ref({});
 const time = ref(0)
 const btndisabled = ref(false)
-rules.value.email = [{ required: true, message: "email is required", trigger: "blur" },
+rules.value.email = [{ required: true, message: computed(()=> proxy.$t('require.email')), trigger: "blur" },
 {
   type: 'email',
-  message: 'Please input correct email address',
+  message: computed(()=> proxy.$t('message.email.rule')),
   trigger: ['blur', 'change'],
 },
 {
@@ -49,13 +50,13 @@ rules.value.email = [{ required: true, message: "email is required", trigger: "b
     if (value) {
       userApi.checkEmail(value).then(res => {
         if (res.data) callback();
-        else callback(new Error("this email has been used,please use another one"));
+        else callback(new Error(proxy.$t('message.send.exist')));
       })
     }
   },
   trigger: "blur",
 }];
-rules.value.code = [{ required: true, message: "Verify code is required", trigger: "blur" }];
+rules.value.code = [{ required: true, message: computed(()=> proxy.$t('require.verifyCode')), trigger: "blur" }];
 function submit() {
   loadingHelper.show();
   formRef.value.validate((valid) => {
@@ -69,7 +70,7 @@ function submit() {
         if (res.code == 0 && res.msg == "success") {
           ElNotification({
             type: "success",
-            message: "The email has been changed successfully!"
+            message: proxy.$t('message.email.success')
           })
           emit("close")
           router.push({

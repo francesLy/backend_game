@@ -7,12 +7,12 @@
             <div class="card-icon">
               <i class="fa fa-user"></i>
             </div>
-            <p class="card-category">Invited</p>
-            <h3 class="card-title">{{dashboard.level1}}<small class="text-muted">&nbsp;-level1&nbsp;&nbsp;</small>{{dashboard.level2}}<small class="text-muted">&nbsp;-level2&nbsp;&nbsp;</small>{{dashboard.level3}}<small class="text-muted">&nbsp;-level3</small></h3>
+            <p class="card-category">{{$t('text.invited')}}</p>
+            <h3 class="card-title">{{dashboard.level1}}<small class="text-muted">&nbsp;-<span>{{$t('text.level')}}</span>1&nbsp;&nbsp;</small>{{dashboard.level2}}<small class="text-muted">&nbsp;-<span>{{$t('text.level')}}</span>2&nbsp;&nbsp;</small>{{dashboard.level3}}<small class="text-muted">&nbsp;-<span>{{$t('text.level')}}</span>3</small></h3>
           </div>
           <div class="card-footer">
             <div class="stats">
-              <i class="fa fa-btc"></i>&nbsp;The people that you invited is display by level
+              <i class="fa fa-btc"></i>&nbsp;{{ $t('message.dashboard.level') }}
               <!-- <a href="#pablo">Get More COSD...</a> -->
             </div>
           </div>
@@ -24,13 +24,14 @@
             <div class="card-icon">
               <i class="fa fa-gamepad"></i>
             </div>
-            <p class="card-category">Games played</p>
+            <p class="card-category">{{ $t('text.gamePlayed') }}</p>
             <h3 class="card-title">{{ dashboard.nft? dashboard.games:0 }}</h3>
           </div>
           <div class="card-footer">
             <div class="stats">
               <i class="fa fa-gamepad"></i>&nbsp;
-              <a href="/plat/nfts?active=0">View games remaining</a>
+              <!--/plat/nfts?active=0-->
+              <a href="javascript:void(0)">{{ $t('message.dashboard.game') }}</a>
             </div>
           </div>
         </div>
@@ -46,7 +47,7 @@
           </div>
           <div class="card-footer">
             <div class="stats">
-              <i class="fa fa-btc"></i>&nbsp;All COSD in your wallet
+              <i class="fa fa-btc"></i>&nbsp;{{ $t('message.dashboard.cosd') }}
               <!-- <a href="#pablo">Get More COSD...</a> -->
             </div>
           </div>
@@ -63,7 +64,7 @@
           </div>
           <div class="card-footer">
             <div class="stats">
-              <i class="fa fa-money"></i>&nbsp;All Evics in the game
+              <i class="fa fa-money"></i>&nbsp;{{ $t('message.dashboard.evic') }}
               <!-- <a href="#pablo">Exchange to USDT</a> -->
             </div>
           </div>
@@ -81,7 +82,8 @@
           <div class="card-footer">
             <div class="stats">
               <i class="fa fa-ticket"></i>&nbsp;
-              <a href="/plat/nfts?active=3">Get More NFTs</a>
+              <!--/plat/nfts?active=3-->
+              <a href="javascript:void(0)">{{ $t('message.dashboard.nft') }}</a>
             </div>
           </div>
         </div>
@@ -105,11 +107,11 @@
         <div class="card" style="margin-top:10px">
           <div style="text-align:center;padding:10px 10px 20px;">
             <h3><b>{{ dashboard.evics }}</b></h3>
-            <p>Current Evics</p>
+            <p>Evics {{ $t('text.balance') }}</p>
             <div>
               <!--<el-button type="primary" @click="open('buy')" round>Purchase</el-button>-->
               <el-tooltip placement="top" content="At least 1000 evic" effect="customized">
-                <el-button type='success' style="margin-left:10px;" :disabled="!dashboard.evics" @click="open('withdraw')" round>Withdraw</el-button>
+                <el-button type='success' style="margin-left:10px;" :disabled="!dashboard.evics" @click="open('withdraw')" round>{{ $t('btn.withdraw') }}</el-button>
               </el-tooltip>
             </div>
           </div>
@@ -119,7 +121,7 @@
         <div class="card" style="margin-top:10px">
           <div style="text-align:center;padding:10px 10px 20px;">
             <h3><b>{{ dashboard.cosd }}</b></h3>
-            <p>Current COSD</p>
+            <p>COSD {{ $t('text.balance') }}</p>
             <div>
               <add-token style="display:inline-block;" @balance="getBalances()"></add-token>
               &nbsp;
@@ -135,7 +137,7 @@
         <div class="card-text" style="display:block">
           <el-row>
             <el-col :span="22">
-              <h4 class="card-title">Transactions</h4>
+              <h4 class="card-title">{{ $t('text.transaction') }}</h4>
               <p class="card-category"></p>
             </el-col>
             <el-col :span="2" style="text-align:right">
@@ -182,7 +184,7 @@
     </el-dialog>
     <el-dialog v-model="visibleAssets" :title="action.title" width="360px" destroy-on-close>
       <el-row :gutter="10">
-        <el-col :span="6">Assets</el-col>
+        <el-col :span="6">{{$t('text.assets')}}</el-col>
         <el-col :span="18">
           <el-input-number v-model.number="amount1" controls-position="right" :step="100" :min="min" :max="max" style="width:100%" clearable></el-input-number>
         </el-col>

@@ -1,12 +1,12 @@
 <template>
   <div>
     <el-table :data="listData" style="width:100%;min-height:360px" v-loading="loading">
-      <el-table-column label="No." min-width="5%">
+      <el-table-column label="#" width="40">
         <template #default="scope">
           {{ scope.$index + 1 + (pageNum - 1) * pageSize }}
         </template>
       </el-table-column>
-      <el-table-column label="Amount" min-width="20%">
+      <el-table-column :label="$t('text.amount')" min-width="20%">
         <template #default="scope">
           <div>
             <!--<span style="margin:0;font-size:28px;"><b>{{ scope.row.toAmount }}</b>&nbsp;<small style="font-size:14px;color:#999">{{ txtype[scope.row.transType].to }}</small></span>-->
@@ -14,13 +14,13 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="Transaction ID" min-width="50%">
+      <el-table-column label="Tx ID" min-width="50%">
         <template #default="scope">
           <a :href="$store.state.metaMask?($store.state.metaMask?.url+'tx/'+scope.row.txId):'javascript:void(0);'" :target="$store.state.metaMask?'_blank':null">{{ scope.row.txId }}</a>
         </template>
       </el-table-column>
-      <el-table-column label="Create time" min-width="15%" prop="createTime"></el-table-column>
-      <el-table-column label="Update time" min-width="15%" prop="updateTime"></el-table-column>
+      <el-table-column v-if="screen > 768" :label="$t('text.createTime')" min-width="15%" prop="createTime"></el-table-column>
+      <el-table-column :label="$t('text.updateTime')" :min-width="screen > 768?'15%':'30%'" prop="updateTime"></el-table-column>
       <template #empty>
         <el-empty style="margin:0 auto"></el-empty>
       </template>
@@ -48,6 +48,7 @@ const props = defineProps({
   txtype: { type: [Number, String] },
   refresh: { type: Boolean, default: false }
 })
+const screen = ref(window.innerWidth)
 const loading = ref(false)
 watch(() => props.txtype, (val) => {
   if (val != undefined) {
