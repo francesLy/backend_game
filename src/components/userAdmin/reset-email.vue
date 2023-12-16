@@ -21,7 +21,7 @@
   </div>
 </template>
 <script setup>
-import { ref,getCurrentInstance,cpmputed } from "vue";
+import { ref,getCurrentInstance,computed } from "vue";
 import { useStore } from "vuex"
 import { useRouter } from "vue-router";
 import { userApi } from "@/api/request";
@@ -38,7 +38,7 @@ const form = ref({
 });
 const rules = ref({});
 const time = ref(0)
-const btndisabled = ref(false)
+const btndisabled = ref(false);
 rules.value.email = [{ required: true, message: computed(()=> proxy.$t('require.email')), trigger: "blur" },
 {
   type: 'email',
