@@ -110,7 +110,7 @@
             <p>Evics {{ $t('text.balance') }}</p>
             <div>
               <!--<el-button type="primary" @click="open('buy')" round>Purchase</el-button>-->
-              <el-tooltip placement="top" content="At least 1000 evic" effect="customized">
+              <el-tooltip placement="top" :content="`${$t('text.atleast')} 1000 evic`" effect="customized">
                 <el-button type='success' style="margin-left:10px;" :disabled="!dashboard.evics" @click="open('withdraw')" round>{{ $t('btn.withdraw') }}</el-button>
               </el-tooltip>
             </div>
@@ -167,7 +167,7 @@
       </div>
     </div>
     <el-dialog v-model="visible" :title="action.title" width="360px" destroy-on-close>
-      <el-alert title="TIP: 1 USDT = 100 EVIC" type="info" style="margin-bottom:20px"></el-alert>
+      <el-alert :title="`${$t('text.tip')}: 1 USDT = 100 EVIC`" type="info" style="margin-bottom:20px"></el-alert>
       <el-row :gutter="10">
         <el-col :span="6">EVIC</el-col>
         <el-col :span="18">
@@ -197,7 +197,7 @@
 
 </template>
  <script setup>
-import { ref, onMounted, getCurrentInstance, onUnmounted } from 'vue'
+import { ref, onMounted, getCurrentInstance, onUnmounted,computed } from 'vue'
 import { useStore } from "vuex";
 import { ASSETTYPE, TXTYPE, savaAfterTransaction } from "@/utils/meta-mask";
 import { dashboardApi, evicsApi, } from '@/api/request';
@@ -263,15 +263,15 @@ function open(command) {
   let res = openHandler[command]();
   if (command == "withdrawAssets") {
     action.value = {
-      btn: "Withdraw",
+      btn: computed(()=>proxy.$t('btn.withdraw')),
       title: "Assets Transaction",
       command: command
     }
     if (res) visibleAssets.value = true;
   } else {
     action.value = {
-      btn: command == 'buy' ? 'Buy' : "Withdraw",
-      title: "Evics Transaction",
+      btn: command == 'buy' ? computed(()=>proxy.$t('btn.buy')) : computed(()=>proxy.$t('btn.withdraw')),
+      title: computed(()=>proxy.$t('text.evictitle')),
       command: command
     }
     if (res) visible.value = true;
@@ -287,7 +287,7 @@ const openHandler = {
     max.value = dashboard.value.evics;
     min.value = 1000;
     if (dashboard.value.evics < min.value) {
-      ElMessage.warning(`Sorry, you need to have at least ${min.value} EVICS to withdraw!`);
+      ElMessage.warning(`${proxy.$t('message.evic.atleast')} ${min.value} EVIC!`);
       return false;
     }
     amount.value = 10;
@@ -347,7 +347,7 @@ const evicHandler = {
   withdraw: () => {
     if (!amount1.value) return;
     if (amount1.value > dashboard.value.evics) {
-      ElMessage.warning("Sorry,the amount cannot exceed the balance!")
+      ElMessage.warning(proxy.$t('message.evic.limit'))
       return
     }
     let param = {
@@ -365,7 +365,7 @@ const evicHandler = {
       visible.value = false;
       loadingHelper.hide();
       if (res.code == 0) {
-        ElNotification({ type: "success", message: "it will take a few minutes,please refresh later" })
+        ElNotification({ type: "success", message: proxy.$t('message.evic.success') })
         evicBalance()
         listRefresh()
       }
@@ -376,7 +376,7 @@ const evicHandler = {
   withdrawAssets:()=>{
     if (!amount1.value) return;
     if (amount1.value > dashboard.value.assets) {
-      ElMessage.warning("Sorry,the amount cannot exceed the balance!")
+      ElMessage.warning(proxy.$t('message.evic.limit'))
       return
     }
     let param = {
@@ -394,7 +394,7 @@ const evicHandler = {
       visibleAssets.value = false;
       loadingHelper.hide();
       if (res.code == 0) {
-        ElNotification({ type: "success", message: "it will take a few minutes,please refresh later" })
+        ElNotification({ type: "success", message: proxy.$t('message.evic.success') })
         getAssets()
       }
     }).catch(err => {

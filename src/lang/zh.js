@@ -81,7 +81,10 @@ export default {
         hasaccount:"已有賬號",
         nickname:"昵称",
         profilesub:"查看或修改個人信息",
-        registersub:"立即注册账号吧"
+        registersub:"立即注册账号吧",
+        evictitle:"Evics交易",
+        tip:"提示",
+        atleast:"至少åå"
     },
     message: {
         nickname:{
@@ -142,6 +145,11 @@ export default {
         profile:{
             getwallet:"獲取當前錢包地址",
             view:"鏈上查看錢包"
+        },
+        evic:{
+            limit:"最大數量不能超出餘額總數",
+            success:"鏈上確認需要一些時間，請稍後刷新",
+            atleast:"您至少需要提現"
         }
     },
     require:{

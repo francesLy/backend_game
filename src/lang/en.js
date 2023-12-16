@@ -79,7 +79,10 @@ export default {
         hasaccount:"Already have an account",
         nickname:"Nickname",
         profilesub:"View or edit your profile",
-        registersub:"Register your own account"
+        registersub:"Register your own account",
+        evictitle:"Evics Transaction",
+        tip:"TIP",
+        atleast:"At least"
     },
     message:{
         nickname:{
@@ -140,6 +143,11 @@ export default {
         profile:{
             getwallet:"get current wallet address",
             view:"View address on blockchain"
+        },
+        evic:{
+            limit:"Sorry,the amount cannot exceed the balance!",
+            success:"it will take a few minutes,please refresh later",
+            atleast:"Sorry, you need to withdraw at least"
         }
     },
     require:{

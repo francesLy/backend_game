@@ -48,10 +48,10 @@
       <el-container>
         <el-header class="header">
           <el-row justify="space-between" style="height: 40px">
-            <el-col :span="2">
+            <!--<el-col :span="2">
               <i class="el-icon--right header-icon fa fa-navicon" @click="change"></i>
-            </el-col>
-            <el-col :span="22" style="text-align: right;">
+            </el-col>-->
+            <el-col :span="24" style="text-align: right;">
               <div style="margin-top:5px;margin-right:5px;display:inline-block" v-if="$store.state.role !== 3">
                 <metamask-connect></metamask-connect>
                 <!---->
