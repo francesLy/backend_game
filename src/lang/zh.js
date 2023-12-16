@@ -84,7 +84,7 @@ export default {
         registersub:"立即注册账号吧",
         evictitle:"Evics交易",
         tip:"提示",
-        atleast:"至少åå"
+        atleast:"至少提現"
     },
     message: {
         nickname:{
