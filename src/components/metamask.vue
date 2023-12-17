@@ -10,7 +10,7 @@
       </template>
       <template #default>
         <div style="text-align: center;">
-          <el-image :src="require('@/assets/metamask-fox.svg')"></el-image>
+          <el-image :src="imageUrl"></el-image>
           <p style="width:60%;margin:5px auto"><small>{{ $store.state.metaMask?.account }} <i class="fa fa-copy" @click="copy($store.state.metaMask?.account)"></i></small></p>
           <el-row :gutter="10" style="margin-top:10px">
             <el-col :span="10">
@@ -35,12 +35,14 @@ import { chainApi } from "@/api/request";
 import { base64 } from "@/utils/base64";
 import { copyClick } from '@/utils/copy';
 import Bus from "@/utils/event-bus";
+import metamaskUrl from '@/assets/metamask-fox.svg'
 const { proxy } = getCurrentInstance()
 const store = useStore()
 let CONTRACTS = store.state.abi?.contract;
 const emit = defineEmits(['refresh'])
 const metaMask = proxy.metaMask;
 const provider = window.ethereum;
+const imageUrl = ref(metamaskUrl);
 const abis = ref({ cosd: JSON.parse(base64.decode(CONTRACTS.cosd.abi)), busd: JSON.parse(base64.decode(CONTRACTS.busd.abi)) })
 const chains = ref({ '0x1': "ethereum", '0x61': 'bsc' })
 let isConnected = computed(() => {

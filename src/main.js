@@ -9,6 +9,7 @@ import { MetaMask } from "./utils/meta-mask";
 //require("../mock/index.js");
 const app = createApp(App);
 //installElementPlus(app);
+console.log(process.env)
 app.config.globalProperties.metaMask = new MetaMask();
 app.use(store).use(router).mount("#app");
 app.use(i18n);  

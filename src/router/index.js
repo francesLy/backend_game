@@ -69,7 +69,7 @@ const routes = [
           name: "assets",
           requireAuth: true,
         },
-      }, 
+      },
       {
         path: "nfts",
         name: "nfts",
@@ -81,7 +81,7 @@ const routes = [
           name: "nfts",
           requireAuth: true,
         },
-      }, 
+      },
       {
         path: "staking",
         name: "staking",
@@ -110,7 +110,7 @@ const routes = [
       {
         path: "home",
         name: "home",
-        component: ()=>import("@/views/admin/dashboard.vue"),
+        component: () => import("@/views/admin/dashboard.vue"),
         meta: {
           route: "/admin/home",
           permission: "admin",
@@ -194,7 +194,7 @@ const routes = [
         component: () => import("@/views/setting/profile.vue"),
         meta: {
           route: "/setting/profile",
-          permission: "admin",
+          permission: "user",
           title: "profile",
           name: "profile",
           requireAuth: true,
@@ -210,28 +210,39 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    document.title = 'Accout - Chess of Stars';
-    store.commit("clearRequestToken");
-    //进入登录页面的时候清除 token
-    if (to.path == "/login" || to.path == "/register") {
-      store.commit("setUser", null);
-      store.commit("setRole", null);
-      store.commit("removeToken", "");
-      store.commit("setMetaMask", null);
-    }
-    if (to.meta.requireAuth) {
-      let token = localStorage.getItem("TOKEN");
-      // 判断该路由是否需要登录权限
-      if (token !== "" && token !== null) {
-        next();
-      } else {
-        next({
-          path: "/login",
-        });
-      }
-    } else {
+  document.title = 'Accout - Chess of Stars';
+  store.commit("clearRequestToken");
+  //进入登录页面的时候清除 token
+  if (to.path == "/login" || to.path == "/register") {
+    store.commit("setUser", null);
+    store.commit("setRole", null);
+    store.commit("removeToken", "");
+    store.commit("setMetaMask", null);
+  }
+  if (to.meta.requireAuth) {
+    let token = localStorage.getItem("TOKEN");
+    // 判断该路由是否需要登录权限
+    if (token !== "" && token !== null) {
       next();
+    } else {
+      next({
+        path: "/login",
+      });
     }
+  } else {
+    next();
+  }
 });
+router.onError((error) => {
+  // 这里的正则表达式可以根据实际情况下js命名来进行修改,“ (\d)+  ”只匹配数字
+  const pattern = /Loading chunk (\d)+ failed/g;
+  const isChunkLoadFailed = error.message.match(pattern);
+  const targetPath = router.history.pending.fullPath;
+  if (isChunkLoadFailed) {
+    router.replace(targetPath);
+  }
+
+})
+
 
 export default router;

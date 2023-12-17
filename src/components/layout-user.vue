@@ -34,24 +34,22 @@
           <!--/plat/nfts-->
           <el-menu-item index="#1" style="cursor:not-allowed" v-if="$store.state.role == 2||$store.state.role == 1">
             <i class="fa fa-ticket"></i>
-            <span>NFTs </span>
-            <small>&nbsp;({{ $t('text.coming') }})</small>
+            <span>NFTs <small>&nbsp;({{ $t('text.coming') }})</small></span>
           </el-menu-item>
           <!--/plat/staking-->
           <el-menu-item index="#2" style="cursor:not-allowed" v-if="$store.state.role == 2||$store.state.role == 1">
             <i class="fa fa-hdd-o"></i>
-            <span>{{ $t('text.staking') }} </span>
-            <small>&nbsp;({{ $t('text.coming') }})</small>
+            <span>{{ $t('text.staking') }} <small>&nbsp;({{ $t('text.coming') }})</small></span>
           </el-menu-item>
         </el-menu>
       </el-aside>
       <el-container>
         <el-header class="header">
           <el-row justify="space-between" style="height: 40px">
-            <!--<el-col :span="2">
+            <el-col :span="2">
               <i class="el-icon--right header-icon fa fa-navicon" @click="change"></i>
-            </el-col>-->
-            <el-col :span="24" style="text-align: right;">
+            </el-col>
+            <el-col :span="22" style="text-align: right;">
               <div style="margin-top:5px;margin-right:5px;display:inline-block" v-if="$store.state.role !== 3">
                 <metamask-connect></metamask-connect>
                 <!---->
@@ -64,7 +62,7 @@
               </div>
               <el-dropdown @command="handleCommand">
                 <span class="el-dropdown-link">
-                  <el-avatar :size="32" :src="require('@/assets/img/avatar.webp')" />
+                  <el-avatar :size="32" :src="avatarUrl" />
                   <span class="text-container">
                     <i class="el-icon--right fa fa-caret-down"></i>
                   </span>
@@ -98,7 +96,7 @@
     <el-dialog v-model="inviteVisible" :title="$t('text.welcome')" :width="dialogWidth">
       <qcode-cont :id="inviterId" style="width:100%;text-align: center;"></qcode-cont>
     </el-dialog>
-    <el-drawer class="menu-container open" v-model="isCollapse" direction="ltr" :with-header="false" :size="240">
+    <el-drawer class="menu-container open" v-model="isCollapsePhone" direction="ltr" :with-header="false" :size="240">
       <div>
         <div class="logo" style="position: relative; z-index: 9; padding-left: 20px; text-align: left">
           <img :src="require('@/assets/img/logo.webp')" />
@@ -155,27 +153,33 @@ import QcodeCont from "@/components/qcode.vue";
 import MetamaskConnect from "@/components/metamask.vue";
 import Lang from "@/components/user/lang.vue"
 import { userApi } from "@/api/request"
+import avatarurl from "@/assets/img/avatar.webp"
 const router = useRouter()
 const store = useStore()
 const { proxy } = getCurrentInstance();
 const metaMask = proxy.metaMask;
 const isCollapse = ref(false);
+const isCollapsePhone = ref(false);
 const width = ref("0");
 const visible = ref(false);
 const visible1 = ref(false);
 const inviteVisible = ref(false)
 const inviterId = ref();
 const dialogWidth = ref("90%");
+const avatarUrl = ref(avatarurl)
 function change() {
-  isCollapse.value = !isCollapse.value;
   let twidth = window.innerWidth;
-  if(twidth > 768){
-  if (isCollapse.value) {
-    width.value = "70px";
+
+  console.log(twidth)
+  if (twidth > 768) {
+    isCollapse.value = !isCollapse.value;
+    if (isCollapse.value) {
+      width.value = "70px";
+    } else {
+      width.value = "240px";
+    }
   } else {
-    width.value = "240px";
-  }
-}else{
+    isCollapsePhone.value = !isCollapsePhone.value;
     width.value = "0";
   }
 }
@@ -206,9 +210,9 @@ function inviteHandler() {
     }
   })
 }
-onMounted(()=>{
+onMounted(() => {
   let twidth = window.innerWidth;
-  if(twidth>768){
+  if (twidth > 768) {
     width.value = "240px"
     dialogWidth.value = "440px"
   }

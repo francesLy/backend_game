@@ -42,7 +42,7 @@
     <div class="card card-pricing card-raised" v-show="activeName == TYPES.buy">
       <div class="card-body" style="background-color: #fcfcff;">
         <div>
-          <el-image style="width:300px" :src="require('@/assets/img/blindbox.gif')"></el-image>
+          <el-image style="width:300px" :src="imgUrl"></el-image>
         </div>
         <h6 class="card-category">Get a NFT in the blind box</h6>
         <h3 class="card-title">20 USDT</h3>
@@ -156,6 +156,7 @@ import { copyClick } from '@/utils/copy';
 import { ASSETTYPE, TXTYPE, savaAfterTransaction } from "@/utils/meta-mask";
 import confetti from 'canvas-confetti';
 import NFTTYPES from "@/data/nft-img-name.json";
+import blindboxUrl from '@/assets/img/blindbox.gif'
 const store = useStore()
 const TYPES = ref({ buy: 3, used: 2, active: 0, using: 1 })
 let activeName = ref(TYPES.value.active);
@@ -173,6 +174,7 @@ let pageNum = ref(1); let total = ref(1);
 let pageSize = ref(10);
 let blockChain = ref('Binance Smart Chain')
 let CONTRACTS = store.state.abi?.contract;
+const imgUrl = ref(blindboxUrl)
 let abis = ref({ blindbox: JSON.parse(base64.decode(CONTRACTS.blindbox.abi)), busd: JSON.parse(base64.decode(CONTRACTS.busd.abi)), nft: JSON.parse(base64.decode(CONTRACTS.nft.abi)) })
 const allowance = ref({ sl: 0, club: 0, defi: 0, blindbox: 0, buycosd: 0 })
 const isOnlyUpdateStatus = ref(true);
