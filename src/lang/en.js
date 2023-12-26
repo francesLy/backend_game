@@ -14,13 +14,20 @@ export default {
       signup:"Sign Up",
       addToken:"Add Token",
       save:"Save",
-      update:"Update"
+      update:"Update",
+      claim:"Claim rewards"
     },
     text:{
         invite:"Invite",
         invited: "Invited",
         level:"Level",
-        staking:"Staking",
+        staking:"Staking ",
+        stake:"Stake",
+        unstake:"Unstake",
+        unstaking:"Unstaking ",
+        stakingfor:"Staking For",
+        league:"League",
+        list:"List",
         coming:"coming soon",
         assets:"Assets",
         profile:"Profile",
@@ -82,7 +89,21 @@ export default {
         registersub:"Register your own account",
         evictitle:"Evics Transaction",
         tip:"TIP",
-        atleast:"At least"
+        atleast:"At least",
+        stop:"Stop ",
+        pool:"pool ",
+        contractAddress:"contract address",
+        actRules:"Activity Rules",
+        starlight:"Starlight ",
+        club:"Club ",
+        current:"Current ",
+        qualified:"Qualified",
+        unqualified:"Unqualified",
+        earning:"earning ",
+        ownership:"ownership",
+        starttime:"Activity Start Time",
+        lock:"Lockup Period",
+        return:"Annualized Return"
     },
     message:{
         nickname:{
@@ -148,6 +169,16 @@ export default {
             limit:"Sorry,the amount cannot exceed the balance!",
             success:"it will take a few minutes,please refresh later",
             atleast:"Sorry, you need to withdraw at least"
+        },
+        defi:{
+            limit:"Sorry,the amount cannot exceed the balance!",
+            reward:"COSD will be rewarded",
+            place:"Tips: Retain 3 decimal places",
+            reminder:"Reminder: BSC(Binance smart chain) chain supported only, we'll support various chains soon.",
+            stake:"You can only stake",
+            lock:"Sorry, stake is not allowed when locked!",
+            locktip:"Sorry, this operation is not allowed when locked",
+            rule:"Users can only stake after the event starts. The duration of the defi event is 30 days. The staking income is calculated on a daily basis, and the annual return rate is 52%, so the earlier you operate, the higher the income you will get."
         }
     },
     require:{

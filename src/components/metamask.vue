@@ -10,7 +10,7 @@
       </template>
       <template #default>
         <div style="text-align: center;">
-          <el-image :src="imageUrl"></el-image>
+          <el-image :src="require('@/assets/metamask-fox.svg')"></el-image>
           <p style="width:60%;margin:5px auto"><small>{{ $store.state.metaMask?.account }} <i class="fa fa-copy" @click="copy($store.state.metaMask?.account)"></i></small></p>
           <el-row :gutter="10" style="margin-top:10px">
             <el-col :span="10">

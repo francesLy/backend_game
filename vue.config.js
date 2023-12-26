@@ -47,9 +47,9 @@ module.exports = defineConfig({
     },
     externals: {
       fs: "var fs",
-      echarts: "echarts",
-      "tinymce/tinymce": "tinymce",
-      web3: "Web3",
+      //echarts: "echarts",
+      //"tinymce/tinymce": "tinymce",
+      //web3: "Web3",
       //"@metamask/sdk":"MetaMaskSDK"
     },
     optimization: {
