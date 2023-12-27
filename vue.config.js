@@ -50,7 +50,7 @@ module.exports = defineConfig({
       //echarts: "echarts",
       //"tinymce/tinymce": "tinymce",
       web3: "Web3",
-      "@metamask/sdk":"MetaMaskSDK"
+      //"@metamask/sdk":"MetaMaskSDK"
     },
     optimization: {
       minimize: true,
