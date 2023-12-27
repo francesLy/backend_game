@@ -102,6 +102,7 @@ export default {
         qualified:"資格",
         unqualified:"無資格",
         earning:"賺取",
+        earn:"賺取",
         ownership:"所有權",
         starttime:"活動開始時間",
         lock:"鎖定期",
