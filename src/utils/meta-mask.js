@@ -328,19 +328,19 @@ export class MetaMask {
     const myContract = this.getContract(param.abi, param.address);
     if (!myContract) return
     let balance = await myContract.methods.balanceOf(param.from).call()
-    return (param.key && param.key == 'nft') ? balance : (balance / Math.pow(10, 18));
+    return (param.key && param.key == 'nft') ? Number(balance) : (Number(balance) / Math.pow(10, 18));
   }
   async getMarketBalanceByContract(param) {
     const myContract = this.getContract(param.abi, param.address);
     if (!myContract) return
     let balance = await myContract.methods.balanceOf(param.baddress).call()
-    return balance / Math.pow(10, 18)
+    return Number(balance) / Math.pow(10, 18)
   }
   async getRewardByContract(param) {
     const myContract = this.getContract(param.abi, param.address);
     if (!myContract) return
     let reward = await myContract.methods.stakingReward(param.from).call()
-    return reward / Math.pow(10, 18);
+    return Number(reward) / Math.pow(10, 18);
   }
   async getRewardRateByContract(param) {
     const myContract = this.getContract(param.abi, param.address);
