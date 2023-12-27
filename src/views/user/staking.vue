@@ -65,7 +65,7 @@
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" :class="active=='cosd'?' active show':''" data-toggle="tab" @click="handleClick('cosd')" role="tablist">
-                        <i class="fa fa-btc"></i> {{ $t('text.stakingfor') }} <br />{{$t('text.earning') }} COSD
+                        <i class="fa fa-btc"></i> {{ $t('text.stakingfor') }} <br />{{$t('text.earn') }} COSD
                       </a>
                     </li>
                   </ul>
@@ -315,7 +315,7 @@ const needApprove = ref(true);
 const { proxy } = getCurrentInstance();
 const metaMask = proxy.metaMask;
 const disabled = ref(false)
-const titles = ref({ buy: `${proxy.$t('btn.buy')} COSD`, "slstaking": `${ proxy.$t('text.stakingfor') } ${proxy.$t('text.starlight')} ${proxy.$t('text.league') }`, "clubstaking": `${ proxy.$t('text.stakingfor') } club ownership`, "defistaking": `${ proxy.$t('text.stakingfor') }${proxy.$t('text.earning') } COSD` })
+const titles = ref({ buy: `${proxy.$t('btn.buy')} COSD`, "slstaking": `${ proxy.$t('text.stakingfor') } ${proxy.$t('text.starlight')} ${proxy.$t('text.league') }`, "clubstaking": `${ proxy.$t('text.stakingfor') } club ownership`, "defistaking": `${ proxy.$t('text.stakingfor') }${proxy.$t('text.earn') } COSD` })
 const reward = ref(0)
 const rewardRate = ref('52%')
 const buttonText = ref(computed(()=>proxy.$t('text.stake')))

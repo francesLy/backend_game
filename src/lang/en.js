@@ -100,6 +100,7 @@ export default {
         qualified:"Qualified",
         unqualified:"Unqualified",
         earning:"earning ",
+        earn:"earn ",
         ownership:"ownership",
         starttime:"Activity Start Time",
         lock:"Lockup Period",
