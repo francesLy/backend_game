@@ -379,6 +379,7 @@ export class MetaMask {
     const myContract = this.getContract(param.abiApprove, param.approveAddress);
     if (!myContract) return
     return new Promise((resolve, reject) => {
+      console.log(param.amount,this.toHex(param.amount))
       myContract.methods.approve(param.address, this.toHex(param.amount)).send({ from: param.from })
         .then(res => {
           ElNotification({ type: "success", message: globals.$t('success.success') })

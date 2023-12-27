@@ -206,6 +206,7 @@ export default {
         isbinding:"Would you like to bind the current wallet address to your account?"
     },
     success:{
-        bind:"Bind successfully"
+        bind:"Bind successfully",
+        success:"successful!\nIf the balance is not refreshed, manually refresh later"
     }
   }
