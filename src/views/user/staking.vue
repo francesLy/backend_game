@@ -496,12 +496,7 @@ function validatorAmount(key) {
     ElMessage.error(proxy.$t('message.defi.limit'))
     return false
   } else {
-    if (action.value.amount < min.value){
-      ElMessage.error(proxy.$t('message.defi.min')+' '+min.value)
-    return false
-    }else{
-      return true;
-    }   
+    return true; 
   }
 }
 async function getStakeTime(key) {
@@ -545,6 +540,10 @@ async function stakingApprove(key) {
   if (!metaMask.isAvailable()) return;
   let data = { from: store.state.metaMask?.account, address: CONTRACTS[key].proxyAddress, amount: action.value.amount, abi: abis.value[key], abiApprove: abis.value["cosd"], approveAddress: CONTRACTS["cosd"].address }
   if (!validatorAmount('cosd')) return;
+  if (action.value.amount < min.value){
+      ElMessage.error(proxy.$t('message.defi.min')+' '+min.value)
+    return
+  }  
   loadingHelper.show()
   metaMask.approveByContract(data).then(() => {
     loadingHelper.hide();
@@ -556,6 +555,10 @@ async function stakingApprove(key) {
 }
 function stakingTransfer(key) {
   if (!metaMask.isAvailable()) return;
+  if (action.value.amount < min.value){
+      ElMessage.error(proxy.$t('message.defi.min')+' '+min.value)
+    return
+  } 
   let data = { from: store.state.metaMask?.account, address: CONTRACTS[key].proxyAddress, amount: action.value.amount, abi: abis.value[key], abiApprove: abis.value["cosd"], approveAddress: CONTRACTS["cosd"].address }
   loadingHelper.show()
   metaMask.stakingByContract(data).then((res) => {
