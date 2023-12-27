@@ -96,7 +96,7 @@ const routes = [
       }
     ],
   },
-  {
+  /*{
     path: "/admin",
     component: LayoutUser,
     redirect: "/admin/home",
@@ -164,7 +164,7 @@ const routes = [
         },
       },
     ],
-  },
+  },*/
   {
     path: "/channel",
     name: "channel",

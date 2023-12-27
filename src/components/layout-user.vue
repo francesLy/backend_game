@@ -37,9 +37,9 @@
             <span>NFTs <small>&nbsp;({{ $t('text.coming') }})</small></span>
           </el-menu-item>
           <!--/plat/staking-->
-          <el-menu-item index="#2" style="cursor:not-allowed" v-if="$store.state.role == 2||$store.state.role == 1">
+          <el-menu-item index="/plat/staking" v-if="$store.state.role == 2||$store.state.role == 1">
             <i class="fa fa-hdd-o"></i>
-            <span>{{ $t('text.staking') }} <small>&nbsp;({{ $t('text.coming') }})</small></span>
+            <span>{{ $t('text.staking') }}</span>
           </el-menu-item>
         </el-menu>
       </el-aside>
@@ -132,10 +132,9 @@
             <span>NFTs</span>
             <small>&nbsp;({{ $t('text.coming') }})</small>
           </el-menu-item>
-          <el-menu-item index="#" v-if="$store.state.role == 2||$store.state.role == 1">
+          <el-menu-item index="/plat/staking" v-if="$store.state.role == 2||$store.state.role == 1">
             <i class="fa fa-hdd-o"></i>
             <span>{{$t('text.staking')}}</span>
-            <small>&nbsp;({{ $t('text.coming') }})</small>
           </el-menu-item>
         </el-menu>
       </div>

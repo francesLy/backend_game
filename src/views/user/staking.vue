@@ -5,7 +5,7 @@
         <!--Purchase cosd-->
         <div class="card" style="margin-bottom:0;margin-top:10px">
           <div class="card-header" style="display:flex;align-items: center;justify-content: space-between;padding:10px;">
-            <div>Current COSD: <b>{{ balance.cosd }}</b></div>
+            <div>COSD&nbsp;{{ $t('text.balance') }}: <b>{{ balance.cosd }}</b></div>
             <div>
               <purchase-cosd @balance="getBalance('cosd')"></purchase-cosd>
             </div>
@@ -20,18 +20,18 @@
                 <ul class="nav nav-tabs" data-tabs="tabs">
                   <li class="nav-item" @click="handleClickb('trans')">
                     <a class="nav-link" :class="activeNameb =='trans'?' active show':''" href="javascript:void(0);" data-toggle="tab">
-                      COSD Staking
+                      COSD&nbsp;{{ $t('text.staking') }}
                     </a>
                   </li>
                   <li class="nav-item" @click="handleClickb('list')">
                     <a class="nav-link" :class="activeNameb =='list'?' active show':''" href="javascript:void(0);" data-toggle="tab">
-                      Staking List
+                      {{ $t('text.staking') }}{{ $t('text.list') }}
                       <div class="ripple-container"></div>
                     </a>
                   </li>
                   <li class="nav-item" @click="handleClickb('unstakelist')">
                     <a class="nav-link" :class="activeNameb =='unstakelist'?' active show':''" href="javascript:void(0);" data-toggle="tab">
-                      UnStaking List
+                      {{ $t('text.unstaking') }}{{ $t('text.list') }}
                       <div class="ripple-container"></div>
                     </a>
                   </li>
@@ -47,23 +47,25 @@
           </div>
           <div class="card-body">
             <div v-show="activeNameb =='trans'">
-              <el-alert type="warning" style="margin-bottom:20px" title="Reminder: BSC(Binance smart chain) chain supported only, we'll support various chains soon."></el-alert>
+              <el-alert type="warning" style="margin-bottom:20px" :title="`${$t('message.defi.reminder')}`"></el-alert>
               <div class="row">
                 <div class="col-md-3">
                   <ul class="staking-nav nav nav-pills nav-pills-warning nav-pills-icons flex-column" role="tablist">
                     <li class="nav-item">
                       <a class="nav-link" :class="active=='sl'?' active show':''" data-toggle="tab" @click="handleClick('sl')" role="tablist">
-                        <i class="fa fa-connectdevelop"></i> Staking for <br />starlight league
+                        <i class="fa fa-connectdevelop"></i> {{ $t('text.stakingfor') }} <br /><span>{{ $t('text.starlight') }}</span><span>{{ $t('text.league') }}</span>
+                        <br /><small>({{ $t('text.coming') }})</small>
                       </a>
                     </li>
-                    <!--<li class="nav-item">
+                    <li class="nav-item">
                       <a class="nav-link" :class="active=='club'?' active show':''" data-toggle="tab" @click="handleClick('club')" role="tablist">
-                        <i class="fa fa-group"></i> Staking for <br />club ownership
+                        <i class="fa fa-group"></i> {{ $t('text.stakingfor') }} <br />{{$t('text.club')}}{{$t('text.ownership')}}
+                        <br /><small>({{ $t('text.coming') }})</small>
                       </a>
-                    </li>-->
+                    </li>
                     <li class="nav-item">
                       <a class="nav-link" :class="active=='cosd'?' active show':''" data-toggle="tab" @click="handleClick('cosd')" role="tablist">
-                        <i class="fa fa-btc"></i> Staking for <br />earning COSD
+                        <i class="fa fa-btc"></i> {{ $t('text.stakingfor') }} <br />{{$t('text.earning') }} COSD
                       </a>
                     </li>
                   </ul>
@@ -77,14 +79,14 @@
                           <div class="card-icon">
                             <i class="fa fa-connectdevelop"></i>
                           </div>
-                          <p class="card-category">Current staking COSD</p>
+                          <p class="card-category">{{$t('text.current')}} {{$t('text.staking')}} COSD</p>
                           <h3 class="card-title">{{ balance.sl }}</h3>
-                          <span class="badge badge-pill badge-success" v-if="balance.sl>=400">Starlight League Unqualified</span>
-                          <span class="badge badge-pill badge-default" v-if="balance.sl<400">Starlight League Qualified</span>
+                          <span class="badge badge-pill badge-success" v-if="balance.sl>=400">{{ $t('text.starlight') }}{{ $t('text.league') }}{{$t('text.unqualified')}}</span>
+                          <span class="badge badge-pill badge-default" v-if="balance.sl<400">{{ $t('text.starlight') }}{{ $t('text.league') }}{{$t('text.qualified')}}</span>
                         </div>
                         <div class="card-footer">
                           <div class="stats">
-                            <i class="fa fa-cubes"></i>&nbsp;Staking pool contract address:&nbsp;&nbsp;
+                            <i class="fa fa-cubes"></i>&nbsp;{{ $t('text.staking') }}{{ $t('text.pool') }}{{ $t('text.contractAddress') }}:&nbsp;&nbsp;
                             <a :href="$store.state.metaMask?`${$store.state.metaMask?.url}address/${contracts.sl.address}`:'javascript:void(0);'" :target="$store.state.metaMask?'_blank':null">{{contracts.sl.proxyAddress}}</a>
                           </div>
                         </div>
@@ -99,10 +101,10 @@
                             <span style="text-decoration:line-through!important;">1980 COSD = 99 USDT</span>&nbsp;&nbsp;Limited time discount
                           </div>
                           <p class="card-description">
-                            You need to stake 400 COSD (equivalent to 20 USDT) to get a qualification for Starlight League.
+                            You need to stake 400 COSD (400 COSD = 20 USDT) to get a qualification for Starlight {{ $t('text.league') }}.
                           </p>
-                          <button class="btn btn-rose btn-round" @click="open('slstaking')">Stake</button>
-                          <button class="btn btn-warning btn-round" v-if="balance.sl" @click="open('slunstaking')">Stop staking</button>
+                          <button class="btn btn-rose btn-round" @click="open('slstaking')">{{ $t('text.stake') }}</button>
+                          <button class="btn btn-warning btn-round" v-if="balance.sl" @click="open('slunstaking')">{{ $t('text.stop') }}{{ $t('text.staking') }}</button>
                         </div>
                       </div>
                     </div>
@@ -135,7 +137,7 @@
                             <span style="text-decoration:line-through!important;">19800 COSD = 990 USDT</span>&nbsp;&nbsp;Limited time discount
                           </div>
                           <p class="card-description">
-                            You need to stake 4000 COSD (equivalent to 200 USDT) to get a qualification for a club ownership.
+                            You need to stake 4000 COSD (= 200 USDT) to get a qualification for a club ownership.
                           </p>
                           <el-popover placement="top" :width="300" effect="dark" trigger="hover">
                             <template #reference>
@@ -161,12 +163,12 @@
                           <div class="card-icon">
                             <i class="fa fa-btc"></i>
                           </div>
-                          <p class="card-category">Current staking COSD</p>
+                          <p class="card-category">{{ $t('text.staking') }} COSD</p>
                           <h3 class="card-title">{{ balance.defi }}</h3>
                         </div>
                         <div class="card-footer">
                           <div class="stats">
-                            <i class="fa fa-cubes"></i>&nbsp;Staking pool contract address:&nbsp;&nbsp;
+                            <i class="fa fa-cubes"></i>&nbsp;{{ $t('text.staking') }}{{ $t('text.pool') }}{{ $t('text.contractAddress') }}:&nbsp;&nbsp;
                             <a :href="$store.state.metaMask?`${$store.state.metaMask?.url}address/${contracts.defi.address}`:'javascript:void(0);'" :target="$store.state.metaMask?'_blank':null">{{contracts.defi.proxyAddress}}</a>
                           </div>
                         </div>
@@ -181,19 +183,19 @@
                               <div style="width:100%">
                                 <h3 class="card-title"> <el-tooltip placement="top" :content="reward+''"><b>{{ Math.round((reward) * 1000) / 1000 }}</b></el-tooltip></h3>
                                 <p class="card-category">
-                                  COSD will be rewarded
+                                  {{$t('message.defi.reward')}}
                                 </p>
                               </div>
                             </el-col>
                             <el-col :span="12" style="text-align:right">
-                              <button class="btn btn-warning btn-sm btn-round" v-if="balance.defi" @click="open('defiunstaking')">Stop staking</button>
-                              <button class="btn btn-success btn-sm btn-round" v-if="reward" @click="claimReward()">Claim rewards</button>
+                              <button class="btn btn-warning btn-sm btn-round" v-if="balance.defi" @click="open('defiunstaking')">{{ $t('text.stop') }}{{ $t('text.staking') }}</button>
+                              <button class="btn btn-success btn-sm btn-round" v-if="reward" @click="claimReward()">{{ $t('btn.claim') }}</button>
                             </el-col>
                           </el-row>
                         </div>
                         <div class="card-footer">
                           <div class="stats">
-                            Tips: Retain 3 decimal places
+                            {{$t('message.defi.place')}}
                           </div>
                         </div>
                       </div>
@@ -202,23 +204,23 @@
                           <div class="card-icon icon-rose">
                             <i class="fa fa-btc"></i>
                           </div>
-                          <h3 class="card-title"> 2000 COSD = 100 USDT</h3>
+                          <h3 class="card-title"> 4000 COSD = 200 USDT</h3>
                           <p class="card-description">
-                            You can only stake 2000 COSD (equivalent to 100 USDT).
+                            {{$t('message.defi.stake')}} 4000 COSD (200 USDT).
                           </p>
                           <el-popover placement="top" effect="dark" :width="300" trigger="hover">
                             <template #reference>
-                              <p>Activity Rules: <i class="fa fa-question-circle"></i></p>
+                              <p>{{ $t('text.actRules') }}: <i class="fa fa-question-circle"></i></p>
                             </template>
                             <div style="letter-spacing: .01em;line-height: 1.2;">
-                              <h4 style="padding-bottom: 15px;">Activity Rules</h4>
-                              <p><span style="display:inline-block;width:140px">Activity Start Time: </span>{{ stakeStartTime.defi?.time }}</p>
-                              <p><span style="display:inline-block;width:140px">Lockup Period: </span>90 Days</p>
-                              <p><span style="display:inline-block;width:140px">Annualized Return: </span>{{ rewardRate }}</p>
-                              <p> Users can only stake after the event starts. The duration of the defi event is 90 days. The staking income is calculated on a daily basis, and the annual return rate is {{ rewardRate }}, so the earlier you operate, the higher the income you will get.</p>
+                              <h4 style="padding-bottom: 15px;">{{ $t('text.actRules') }}</h4>
+                              <p><span style="display:inline-block;width:140px">{{$t('text.starttime')}}: </span>{{ stakeStartTime.defi?.time }}</p>
+                              <p><span style="display:inline-block;width:140px">{{$t('text.lock')}}: </span>30 Days</p>
+                              <p><span style="display:inline-block;width:140px">{{$t('text.return')}}: </span>{{ '52%'||rewardRate }}</p>
+                              <p>{{$t('message.defi.rule')}}</p>
                             </div>
                           </el-popover>
-                          <button class="btn btn-rose btn-round" @click="open('defistaking')">Stake</button>
+                          <button class="btn btn-rose btn-round" @click="open('defistaking')">{{ $t('text.stake') }}</button>
                         </div>
                       </div>
 
@@ -231,8 +233,8 @@
               <el-row :gutter="10">
                 <el-col  :md="6" :sm="24">
                   <el-select v-model="stakeListType">
-                    <el-option label="starlight" :value="2"></el-option>
-                    <el-option label="club" :value="3"></el-option>
+                    <el-option :label="$t('text.starlight')" :value="2"></el-option>
+                    <el-option :label="$t('text.club')" :value="3"></el-option>
                     <el-option label="defi" :value="1"></el-option>
                   </el-select>
                 </el-col>
@@ -243,8 +245,8 @@
               <el-row :gutter="10">
                 <el-col :md="6" :sm="24">
                   <el-select v-model="unstakeListType">
-                    <el-option label="starlight" :value="5"></el-option>
-                    <el-option label="club" :value="6"></el-option>
+                    <el-option :label="$t('text.starlight')" :value="5"></el-option>
+                    <el-option :label="$t('text.club')" :value="6"></el-option>
                     <el-option label="defi" :value="4"></el-option>
                   </el-select>
                 </el-col>
@@ -266,10 +268,10 @@
         </el-col>
         <el-col :span="24" style="margin-top:15px" v-if="needApprove">
           <div style="text-align: right;">
-            <b style="display:inline-block;padding:0 10px;background: #fef1db;color:#ff9800;">Current approved allowance: {{ allowance[action.key] }}</b>
+            <b style="display:inline-block;padding:0 10px;background: #fef1db;color:#ff9800;">{{ $t('text.currentallowance') }}: {{ allowance[action.key] }}</b>
           </div>
           <el-button type="primary" @click="handleApproveOperate()" style="width:100%" :disabled="disabled">
-            <el-tag size="small">1</el-tag>&nbsp;Approve Spending
+            <el-tag size="small">1</el-tag>&nbsp;{{$t('btn.approve')}}
           </el-button>
         </el-col>
         <el-col :span="24" style="margin-top:15px">
@@ -282,10 +284,10 @@
   </div>
 </template>
 <script setup>
-import { ref, onMounted, getCurrentInstance, onUnmounted } from "vue"
+import { ref, onMounted, getCurrentInstance, onUnmounted,computed } from "vue"
 import { useStore } from "vuex"
 import { DateHelper } from "@/utils/helper";
-import { loadingHelper } from "@/utils/loading";
+import { loadingHelper   } from "@/utils/loading";
 import { ASSETTYPE, TXTYPE, POOL, savaAfterTransaction } from "@/utils/meta-mask";
 import { base64 } from "@/utils/base64";
 import { cosdApi } from "@/api/request";
@@ -293,7 +295,7 @@ import PurchaseCosd from "@/components/purchase-cosd.vue";
 import BuyList from "@/components/user/trans-table.vue";
 import Bus from "@/utils/event-bus";
 const store = useStore();
-const active = ref("sl");
+const active = ref("cosd");
 const balance = ref({
   cosd: 0,
   sl: 0, club: 0, defi: 0
@@ -307,16 +309,16 @@ const action = ref({
 let CONTRACTS = store.state.abi?.contract;
 const contracts = ref(CONTRACTS);
 const abis = ref({ sl: JSON.parse(base64.decode(CONTRACTS.sl.abi)), club: JSON.parse(base64.decode(CONTRACTS.club.abi)), defi: JSON.parse(base64.decode(CONTRACTS.defi.abi)), buy: JSON.parse(base64.decode(CONTRACTS.buycosd.abi)), cosd: JSON.parse(base64.decode(CONTRACTS.cosd.abi)), busd: JSON.parse(base64.decode(CONTRACTS.busd.abi)) })
-const titles = ref({ buy: "Purchase COSD", "slstaking": "Staking for starlight league", "clubstaking": "Staking for club ownership", "defistaking": "Staking for earning COSD" })
 const visible = ref(false)
 const isClubBoss = ref(false)
 const needApprove = ref(true);
 const { proxy } = getCurrentInstance();
 const metaMask = proxy.metaMask;
 const disabled = ref(false)
+const titles = ref({ buy: `${proxy.$t('btn.buy')} COSD`, "slstaking": `${ proxy.$t('text.stakingfor') } ${proxy.$t('text.starlight')} ${proxy.$t('text.league') }`, "clubstaking": `${ proxy.$t('text.stakingfor') } club ownership`, "defistaking": `${ proxy.$t('text.stakingfor') }${proxy.$t('text.earning') } COSD` })
 const reward = ref(0)
-const rewardRate = ref('11%')
-const buttonText = ref('Stake')
+const rewardRate = ref('52%')
+const buttonText = ref(computed(()=>proxy.$t('text.stake')))
 const min = ref(1)
 const stakeStartTime = ref({ club: {}, defi: {} })
 const activeNameb = ref("trans")
@@ -326,7 +328,7 @@ const unstakeListType = ref(5)
 const isrefresh =ref(false)
 const allowance = ref({sl:0,club:0,defi:0,blindbox:0,buycosd:0})
 function handleClick(tab) {
-  active.value = tab;
+  if(tab=='cosd') active.value = tab;
 }
 
 function getBalance(key,isProxy) {
@@ -414,7 +416,7 @@ const openHandler = {
   slstaking: () => {
     action.value.amount = 400;
     needApprove.value = true;
-    buttonText.value = "Stake";
+    buttonText.value = computed(()=>proxy.$t('text.stake'));
     min.value = 400;
     action.value.key = 'sl'
     visible.value = true
@@ -424,7 +426,7 @@ const openHandler = {
     if (!isTimeAvailable) return;
     action.value.amount = 4000;
     needApprove.value = true;
-    buttonText.value = "Stake";
+    buttonText.value = computed(()=>proxy.$t('text.stake'));
     min.value = 4000;
     action.value.key = 'club'
     visible.value = true
@@ -434,7 +436,7 @@ const openHandler = {
     if (!isTimeAvailable) return;
     action.value.amount = 1;
     needApprove.value = true;
-    buttonText.value = "Stake";
+    buttonText.value = computed(()=>proxy.$t('text.stake'));
     min.value = 1;
     action.value.key = 'defi'
     visible.value = true
@@ -442,7 +444,7 @@ const openHandler = {
   slunstaking: () => {
     action.value.amount = balance.value['sl'];
     needApprove.value = false
-    buttonText.value = "Unstake"
+    buttonText.value = computed(()=>proxy.$t('text.unstake'))
     disabled.value = true;
     action.value.key = 'club'
     visible.value = true
@@ -452,7 +454,7 @@ const openHandler = {
     if (!isTimeAvailable) return;
     action.value.amount = balance.value['club'];
     needApprove.value = false
-    buttonText.value = "Unstake"
+    buttonText.value = computed(()=>proxy.$t('text.unstake'))
     disabled.value = true;
     action.value.key = 'club'
     visible.value = true
@@ -462,7 +464,7 @@ const openHandler = {
     if (!isTimeAvailable) return;
     action.value.amount = balance.value['defi'];
     needApprove.value = false
-    buttonText.value = "Unstake"
+    buttonText.value = computed(()=>proxy.$t('text.unstake'))
     disabled.value = true;
     action.value.key = 'defi'
     visible.value = true
@@ -484,14 +486,14 @@ function handleTransferOperate() {
 }
 function isEmpty() {
   if (!action.value.amount) {
-    ElMessage.error("amount is required!")
+    ElMessage.error(proxy.$t('require.amount'))
   }
   return action.value.amount ? false : true;
 }
 function validatorAmount(key) {
   if (isEmpty()) return false;
   if (action.value.amount > balance.value[key]) {
-    ElMessage.error("Cannot exceed the balance value!")
+    ElMessage.error(proxy.$t('message.defi.limit'))
     return false
   } else {
     return true;
@@ -525,13 +527,13 @@ async function getUnstakeTime(key) {
 async function isStakeTimeAvailable(key) {
   let ret = false;
   ret = await getStakeTime(key)
-  if (!ret) ElMessage.warning("Sorry, stake is not allowed when locked!")
+  if (!ret) ElMessage.warning(proxy.$t('message.defi.lock'))
   return ret
 }
 async function isUnStakeTimeAvailable(key) {
   let ret = false;
   ret = await getUnstakeTime(key)
-  if (!ret) ElMessage.warning("Sorry, this operation is not allowed when locked")
+  if (!ret) ElMessage.warning(proxy.$t('message.defi.locktip'))
   return ret
 }
 async function stakingApprove(key) {

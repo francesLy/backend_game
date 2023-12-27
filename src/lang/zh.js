@@ -14,13 +14,20 @@ export default {
         signup:"註冊",
         addToken:"添加代幣",
         save:"保存",
-        update:"更新"
+        update:"更新",
+        claim:"提取獎勵"
     },
     text: {
         invite: "邀請",
         invited: "已邀請",
         level:"等級",
         staking:"質押",
+        stake:"質押",
+        unstaking:"取消質押",
+        unstake:"取消質押",
+        list:"列表",
+        stakingfor:"質押",
+        league:"合約",
         coming:"敬請期待",
         assets:"資產",
         profile:"個人信息",
@@ -84,7 +91,21 @@ export default {
         registersub:"立即注册账号吧",
         evictitle:"Evics交易",
         tip:"提示",
-        atleast:"至少提現"
+        atleast:"至少提現",
+        stop:"結束",
+        pool:"池",
+        contractAddress:"合約地址",
+        actRules:"活動規則",
+        starlight:"星光",
+        club:"俱樂部",
+        current:"當前",
+        qualified:"資格",
+        unqualified:"無資格",
+        earning:"賺取",
+        ownership:"所有權",
+        starttime:"活動開始時間",
+        lock:"鎖定期",
+        return:"年轉化率"
     },
     message: {
         nickname:{
@@ -150,6 +171,16 @@ export default {
             limit:"最大數量不能超出餘額總數",
             success:"鏈上確認需要一些時間，請稍後刷新",
             atleast:"您至少需要提現"
+        },
+        defi:{
+            limit:"最大數量不能超出餘額總數",
+            reward:"COSD將作為獎勵",
+            place:"提示：保留三位小數",
+            reminder:"提示: 目前僅支持BSC(Binance smart chain)鏈，我們將盡快適配更多的網絡",
+            stake:"您每次只能質押",
+            lock:"當前仍在鎖定時間，不能質押",
+            locktip:"當前仍在鎖定時間，不能進行該操作",
+            rule:"活動開始後才可以質押，活動持續時間為30天。質押收入是按天計算的，年化收益率為52%，越早參與活動，收入越高。"
         }
     },
     require:{
@@ -177,6 +208,7 @@ export default {
         isbinding:"是否為當前賬戶綁定該錢包地址？"
     },
     success:{
-        bind:"綁定成功"
+        bind:"綁定成功",
+        success:"成功!\n最終確認需要一定的時間,如果餘額未刷新, 請稍後嘗試！"
     }
 }
