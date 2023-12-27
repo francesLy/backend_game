@@ -314,7 +314,7 @@ export class MetaMask {
         from: param.from
       }).then(res => {
         console.log("success")
-        ElNotification({ type: "success", message: "transaction successfully\nIf the balance is not refreshed, manually refresh later" })
+        ElNotification({ type: "success", message: globals.$t('success.success') })
         resolve(res)
       }).catch(err => {
         reject(err)
@@ -365,14 +365,14 @@ export class MetaMask {
     const myContract = this.getContract(param.abi, param.address);
     if (!myContract) return
     let balance = await myContract.methods.cumulativePurchase(param.from).call()
-    return balance / Math.pow(10, 18);
+    return Number(balance) / Math.pow(10, 18);
   }
   //查询授权余额
   async getAllowanceByContract(param) {
     const myContract = this.getContract(param.abi, param.address);
     if (!myContract) return;
     let allowance = await myContract.methods.allowance(param.from, param.to).call()
-    return allowance / Math.pow(10, 18);
+    return Number(allowance) / Math.pow(10, 18);
   }
   //授权
   async approveByContract(param) {
@@ -381,7 +381,7 @@ export class MetaMask {
     return new Promise((resolve, reject) => {
       myContract.methods.approve(param.address, this.toHex(param.amount)).send({ from: param.from })
         .then(res => {
-          ElNotification({ type: "success", message: `You've authorized ${param.amount} usdt for purchasing, please click buy to proceed.` })
+          ElNotification({ type: "success", message: globals.$t('success.success') })
           resolve(res)
         }).catch(err => {
           errorHandlerOfMetaMaskRequest(err)
@@ -397,7 +397,7 @@ export class MetaMask {
       myContract.methods.stake(this.toHex(param.amount)).send({
         from: param.from
       }).then(res => {
-        ElNotification({ type: "success", message: "Stake successfully\nIf the balance is not refreshed, manually refresh later" })
+        ElNotification({ type: "success", message: globals.$t('success.success') })
         console.log("success")
         resolve(res)
       }).catch(err => {
@@ -414,7 +414,7 @@ export class MetaMask {
       myContract.methods.unStake(this.toHex(param.amount)).send({
         from: param.from
       }).then(res => {
-        ElNotification({ type: "success", message: "Unstake successfully\nIf the balance is not refreshed, manually refresh later" })
+        ElNotification({ type: "success", message: globals.$t('success.success') })
         resolve(res)
       }).catch(err => {
         errorHandlerOfMetaMaskRequest(err)
@@ -429,7 +429,7 @@ export class MetaMask {
       myContract.methods.claimReward().send({
         from: param.from
       }).then(res => {
-        ElNotification({ type: "success", message: "Claim rewards successfully" })
+        ElNotification({ type: "success", message: globals.$t('success.success') })
         resolve(res)
       }).catch(err => {
         errorHandlerOfMetaMaskRequest(err)
@@ -465,7 +465,7 @@ export class MetaMask {
         from: param.from
       }).then(res => {
         console.log("success")
-        ElNotification({ type: "success", message: "it will take a few minutes,please refresh later" })
+        ElNotification({ type: "success", message: globals.$t('success.success') })
         resolve(res)
       }).catch(err => {
         errorHandlerOfMetaMaskRequest(err)

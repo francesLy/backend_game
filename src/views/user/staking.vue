@@ -204,9 +204,9 @@
                           <div class="card-icon icon-rose">
                             <i class="fa fa-btc"></i>
                           </div>
-                          <h3 class="card-title"> 2000 COSD = 100 USDT</h3>
+                          <h3 class="card-title"> 4000 COSD = 200 USDT</h3>
                           <p class="card-description">
-                            {{$t('message.defi.stake')}} 2000 COSD (100 USDT).
+                            {{$t('message.defi.stake')}} 4000 COSD (200 USDT).
                           </p>
                           <el-popover placement="top" effect="dark" :width="300" trigger="hover">
                             <template #reference>
