@@ -434,10 +434,10 @@ const openHandler = {
   defistaking: async () => {
     let isTimeAvailable = await isStakeTimeAvailable('defi');
     if (!isTimeAvailable) return;
-    action.value.amount = 1;
+    action.value.amount = 4000;
     needApprove.value = true;
     buttonText.value = computed(()=>proxy.$t('text.stake'));
-    min.value = 1;
+    min.value = 4000;
     action.value.key = 'defi'
     visible.value = true
   },
@@ -496,7 +496,12 @@ function validatorAmount(key) {
     ElMessage.error(proxy.$t('message.defi.limit'))
     return false
   } else {
-    return true;
+    if (action.value.amount < min.value){
+      ElMessage.error(proxy.$t('message.defi.min')+min.value)
+    return false
+    }else{
+      return true;
+    }   
   }
 }
 async function getStakeTime(key) {

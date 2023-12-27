@@ -25,7 +25,7 @@ export default {
         stake:"Stake",
         unstake:"Unstake",
         unstaking:"Unstaking ",
-        stakingfor:"Staking For",
+        stakingfor:"Staking For ",
         league:"League",
         list:"List",
         coming:"coming soon",
@@ -178,7 +178,8 @@ export default {
             stake:"You can only stake",
             lock:"Sorry, stake is not allowed when locked!",
             locktip:"Sorry, this operation is not allowed when locked",
-            rule:"Users can only stake after the event starts. The duration of the defi event is 30 days. The staking income is calculated on a daily basis, and the annual return rate is 52%, so the earlier you operate, the higher the income you will get."
+            rule:"Users can only stake after the event starts. The duration of the defi event is 30 days. The staking income is calculated on a daily basis, and the annual return rate is 52%, so the earlier you operate, the higher the income you will get.",
+            min:"The amount can not be less than"
         }
     },
     require:{
