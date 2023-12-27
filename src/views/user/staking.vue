@@ -497,7 +497,7 @@ function validatorAmount(key) {
     return false
   } else {
     if (action.value.amount < min.value){
-      ElMessage.error(proxy.$t('message.defi.min')+'&nbsp;'+min.value)
+      ElMessage.error(proxy.$t('message.defi.min')+' '+min.value)
     return false
     }else{
       return true;
