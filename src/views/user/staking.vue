@@ -317,9 +317,9 @@ const metaMask = proxy.metaMask;
 const disabled = ref(false)
 const titles = ref({ 
   buy: computed(()=>`${proxy.$t('btn.buy')} COSD`),
- "slstaking": computed(()=>`${ proxy.$t('text.stakingfor') } ${proxy.$t('text.starlight')} ${proxy.$t('text.league') }`), 
- "clubstaking": computed(()=>`${ proxy.$t('text.stakingfor') } club ownership`), 
- "defistaking": computed(()=>`${ proxy.$t('text.stakingfor') }${proxy.$t('text.earn') } COSD`) })
+ slstaking: computed(()=>`${ proxy.$t('text.stakingfor') } ${proxy.$t('text.starlight')} ${proxy.$t('text.league') }`), 
+ clubstaking: computed(()=>`${ proxy.$t('text.stakingfor') } club ownership`), 
+ defistaking: computed(()=>`${ proxy.$t('text.stakingfor') }${proxy.$t('text.earn') } COSD`) })
 const reward = ref(0)
 const rewardRate = ref('52%')
 const buttonText = ref(proxy.$t('text.stake'))
@@ -405,13 +405,8 @@ function getStakeStartTime(key) {
 }
 async function open(command) {
   if (!metaMask.isAvailable()) return;
-  action.value = {
-    amount1: 20,
-    amount: 1,
-    title: titles.value[command],
-    command: command,
-    key:''
-  }
+  action.value.command = command;
+  action.value.title = titles.value[command]
   disabled.value = false;
   min.value = 1;
   openHandler[command]();

@@ -25,7 +25,7 @@ export default {
         stake:"Stake",
         unstake:"Unstake",
         unstaking:"Unstaking ",
-        stakingfor:"Staking For ",
+        stakingfor:"Staking to ",
         league:"League",
         list:"List",
         coming:"coming soon",
