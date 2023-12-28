@@ -14,16 +14,16 @@ const messages = {
 }
 
 // 获取浏览器的语言
-const lang = (navigator.language || 'en').toLocaleLowerCase() 
+const lang = (navigator.language || 'en').toLocaleLowerCase()
 const language = store.state.language || lang.split('-')[0] || 'zh';
-store.commit("setLanguage",language)
+store.commit("setLanguage", language)
 const i18n = createI18n({
   legacy: false,
-  globalInjection: true, 
-  locale: language, 
-  fallbackLocale: 'en', 
-  messages, 
+  globalInjection: true,
+  locale: language,
+  fallbackLocale: 'en',
+  messages,
 })
-export {i18n}
- 
+export { i18n }
+
 
