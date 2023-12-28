@@ -284,7 +284,7 @@
   </div>
 </template>
 <script setup>
-import { ref, onMounted, getCurrentInstance, onUnmounted } from "vue"
+import { ref, onMounted, getCurrentInstance, onUnmounted,computed } from "vue"
 import { useStore } from "vuex"
 import { DateHelper } from "@/utils/helper";
 import { loadingHelper   } from "@/utils/loading";
@@ -315,7 +315,11 @@ const needApprove = ref(true);
 const { proxy } = getCurrentInstance();
 const metaMask = proxy.metaMask;
 const disabled = ref(false)
-const titles = ref({ buy: `${proxy.$t('btn.buy')} COSD`, "slstaking": `${ proxy.$t('text.stakingfor') } ${proxy.$t('text.starlight')} ${proxy.$t('text.league') }`, "clubstaking": `${ proxy.$t('text.stakingfor') } club ownership`, "defistaking": `${ proxy.$t('text.stakingfor') }${proxy.$t('text.earn') } COSD` })
+const titles = ref({ 
+  buy: computed(()=>`${proxy.$t('btn.buy')} COSD`),
+ "slstaking": computed(()=>`${ proxy.$t('text.stakingfor') } ${proxy.$t('text.starlight')} ${proxy.$t('text.league') }`), 
+ "clubstaking": computed(()=>`${ proxy.$t('text.stakingfor') } club ownership`), 
+ "defistaking": computed(()=>`${ proxy.$t('text.stakingfor') }${proxy.$t('text.earn') } COSD`) })
 const reward = ref(0)
 const rewardRate = ref('52%')
 const buttonText = ref(proxy.$t('text.stake'))
