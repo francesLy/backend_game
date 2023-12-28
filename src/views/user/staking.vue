@@ -284,7 +284,7 @@
   </div>
 </template>
 <script setup>
-import { ref, onMounted, getCurrentInstance, onUnmounted,computed } from "vue"
+import { ref, onMounted, getCurrentInstance, onUnmounted } from "vue"
 import { useStore } from "vuex"
 import { DateHelper } from "@/utils/helper";
 import { loadingHelper   } from "@/utils/loading";
@@ -318,7 +318,7 @@ const disabled = ref(false)
 const titles = ref({ buy: `${proxy.$t('btn.buy')} COSD`, "slstaking": `${ proxy.$t('text.stakingfor') } ${proxy.$t('text.starlight')} ${proxy.$t('text.league') }`, "clubstaking": `${ proxy.$t('text.stakingfor') } club ownership`, "defistaking": `${ proxy.$t('text.stakingfor') }${proxy.$t('text.earn') } COSD` })
 const reward = ref(0)
 const rewardRate = ref('52%')
-const buttonText = ref(computed(()=>proxy.$t('text.stake')))
+const buttonText = ref(proxy.$t('text.stake'))
 const min = ref(1)
 const stakeStartTime = ref({ club: {}, defi: {} })
 const activeNameb = ref("trans")
@@ -416,7 +416,7 @@ const openHandler = {
   slstaking: () => {
     action.value.amount = 400;
     needApprove.value = true;
-    buttonText.value = computed(()=>proxy.$t('text.stake'));
+    buttonText.value = proxy.$t('text.stake');
     min.value = 400;
     action.value.key = 'sl'
     visible.value = true
@@ -426,7 +426,7 @@ const openHandler = {
     if (!isTimeAvailable) return;
     action.value.amount = 4000;
     needApprove.value = true;
-    buttonText.value = computed(()=>proxy.$t('text.stake'));
+    buttonText.value = proxy.$t('text.stake');
     min.value = 4000;
     action.value.key = 'club'
     visible.value = true
@@ -436,7 +436,7 @@ const openHandler = {
     if (!isTimeAvailable) return;
     action.value.amount = 4000;
     needApprove.value = true;
-    buttonText.value = computed(()=>proxy.$t('text.stake'));
+    buttonText.value = proxy.$t('text.stake');
     min.value = 4000;
     action.value.key = 'defi'
     visible.value = true
@@ -444,7 +444,7 @@ const openHandler = {
   slunstaking: () => {
     action.value.amount = balance.value['sl'];
     needApprove.value = false
-    buttonText.value = computed(()=>proxy.$t('text.unstake'))
+    buttonText.value = proxy.$t('text.unstake')
     disabled.value = true;
     action.value.key = 'club'
     visible.value = true
@@ -454,7 +454,7 @@ const openHandler = {
     if (!isTimeAvailable) return;
     action.value.amount = balance.value['club'];
     needApprove.value = false
-    buttonText.value = computed(()=>proxy.$t('text.unstake'))
+    buttonText.value = proxy.$t('text.unstake')
     disabled.value = true;
     action.value.key = 'club'
     visible.value = true
@@ -464,7 +464,7 @@ const openHandler = {
     if (!isTimeAvailable) return;
     action.value.amount = balance.value['defi'];
     needApprove.value = false
-    buttonText.value = computed(()=>proxy.$t('text.unstake'))
+    buttonText.value = proxy.$t('text.unstake')
     disabled.value = true;
     action.value.key = 'defi'
     visible.value = true
