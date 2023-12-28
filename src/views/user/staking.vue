@@ -239,7 +239,7 @@
                   </el-select>
                 </el-col>
               </el-row>
-              <buy-list v-model:refresh="isrefresh" v-show="activeNameb =='list'" :txtype="stakeListType"></buy-list>
+              <buy-list v-model:refresh="isrefresh" display="to" v-show="activeNameb =='list'" :txtype="stakeListType"></buy-list>
             </div>
             <div v-show="activeNameb =='unstakelist'">
               <el-row :gutter="10">
@@ -323,8 +323,8 @@ const min = ref(1)
 const stakeStartTime = ref({ club: {}, defi: {} })
 const activeNameb = ref("trans")
 const transTypes = ref(TXTYPE)
-const stakeListType = ref(2)
-const unstakeListType = ref(5)
+const stakeListType = ref(1)
+const unstakeListType = ref(4)
 const isrefresh =ref(false)
 const allowance = ref({sl:0,club:0,defi:0,blindbox:0,buycosd:0})
 function handleClick(tab) {

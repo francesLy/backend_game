@@ -178,7 +178,7 @@ export default {
             reward:"COSD將作為獎勵",
             place:"提示：保留三位小數",
             reminder:"提示: 目前僅支持BSC(Binance smart chain)鏈，我們將盡快適配更多的網絡",
-            stake:"您每次只能質押",
+            stake:"每次至少質押",
             lock:"當前仍在鎖定時間，不能質押",
             locktip:"當前仍在鎖定時間，不能進行該操作",
             rule:"活動開始後才可以質押，活動持續時間為30天。質押收入是按天計算的，年化收益率為52%，越早參與活動，收入越高。",

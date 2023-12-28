@@ -158,7 +158,7 @@
             <buy-list v-model:refresh="isrefresh" v-if="activeName =='evic'" :txtype="evicType"></buy-list>
           </el-tab-pane>
           <el-tab-pane label="COSD" name="cosd">
-            <buy-list v-model:refresh="isrefresh" v-if="activeName =='cosd'" :txtype="transTypes.buy"></buy-list>
+            <buy-list v-model:refresh="isrefresh" display="to" v-if="activeName =='cosd'" :txtype="transTypes.buy"></buy-list>
           </el-tab-pane>
           <!--<el-tab-pane label="Blindbox" name="blindbox">
             <buy-list v-model:refresh="isrefresh" v-show="activeName =='blindbox'" :txtype="transTypes.blindbox"></buy-list>

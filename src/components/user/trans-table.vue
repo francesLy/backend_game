@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="ui-table">
     <el-table :data="listData" style="width:100%;min-height:360px" v-loading="loading">
       <el-table-column label="#" width="40">
         <template #default="scope">
@@ -8,7 +8,10 @@
       </el-table-column>
       <el-table-column :label="$t('text.amount')" min-width="20%">
         <template #default="scope">
-          <div>
+          <div v-if="display=='to'">
+            <span style="margin:0;"><b>{{ scope.row.toAmount }}</b>&nbsp;<small style="color:#999">{{ txtype[scope.row.transType].to }}</small></span>
+          </div>
+          <div v-else>
             <!--<span style="margin:0;font-size:28px;"><b>{{ scope.row.toAmount }}</b>&nbsp;<small style="font-size:14px;color:#999">{{ txtype[scope.row.transType].to }}</small></span>-->
             <span v-show="[0,7,8,9].indexOf(scope.row.transType) > -1">({{ scope.row.fromAmount }} <small>{{ txtype[scope.row.transType].from }}</small>)</span>
           </div>
@@ -46,7 +49,8 @@ const currentType = ref()
 const emit = defineEmits(['update:refresh'])
 const props = defineProps({
   txtype: { type: [Number, String] },
-  refresh: { type: Boolean, default: false }
+  refresh: { type: Boolean, default: false },
+  display:{type:String,default:"from"}
 })
 const screen = ref(window.innerWidth)
 const loading = ref(false)
@@ -133,3 +137,8 @@ function queryEvic() {
   })
 }
 </script>
+<style scoped>
+.ui-table :deep .el-table .cell{
+  padding:0 6px;
+}
+</style>

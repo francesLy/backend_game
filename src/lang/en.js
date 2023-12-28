@@ -176,7 +176,7 @@ export default {
             reward:"COSD will be rewarded",
             place:"Tips: Retain 3 decimal places",
             reminder:"Reminder: BSC(Binance smart chain) chain supported only, we'll support various chains soon.",
-            stake:"You can only stake",
+            stake:"At least stake",
             lock:"Sorry, stake is not allowed when locked!",
             locktip:"Sorry, this operation is not allowed when locked",
             rule:"Users can only stake after the event starts. The duration of the defi event is 30 days. The staking income is calculated on a daily basis, and the annual return rate is 52%, so the earlier you operate, the higher the income you will get.",
