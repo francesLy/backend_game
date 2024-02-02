@@ -221,6 +221,7 @@
                             </div>
                           </el-popover>
                           <button class="btn btn-rose btn-round" @click="open('defistaking')">{{ $t('text.stake') }}</button>
+                          <button class="btn btn-rose btn-round" v-if="stakeTime.defi?.origin<stakeStartTime.defi?.origin && reward" @click="restakeTransfer('defi')">{{ $t('text.re')+$t('text.stake') }}</button>
                         </div>
                       </div>
 
@@ -325,6 +326,7 @@ const rewardRate = ref('52%')
 const buttonText = ref(proxy.$t('text.stake'))
 const min = ref(1)
 const stakeStartTime = ref({ club: {}, defi: {} })
+const stakeTime = ref({club:{},defi:{}})
 const activeNameb = ref("trans")
 const transTypes = ref(TXTYPE)
 const stakeListType = ref(1)
@@ -403,6 +405,18 @@ function getStakeStartTime(key) {
     stakeStartTime.value[key] = { time: DateHelper.toString(res * 1000), origin: res * 1000 }
   });
 }
+function getStakeTimeByContract(key) {
+  if (!metaMask.isAvailable()) return;
+  let data = {
+    abi: abis.value[key],
+    address: CONTRACTS[key].proxyAddress,
+    from: store.state.metaMask?.account
+  }
+  metaMask.getStakeTimeByContract(data).then(res => {
+    console.log("stakingtime",res)
+    stakeTime.value[key] = { time: DateHelper.toString(res * 1000), origin: res * 1000 }
+  });
+}
 async function open(command) {
   if (!metaMask.isAvailable()) return;
   action.value.command = command;
@@ -467,7 +481,7 @@ const openHandler = {
     disabled.value = true;
     action.value.key = 'defi'
     visible.value = true
-  }
+  },
 }
 const transferHandler = {
   slstaking: stakingTransfer.bind(this, 'sl'),
@@ -475,7 +489,8 @@ const transferHandler = {
   defistaking: stakingTransfer.bind(this, 'defi'),
   slunstaking: unstakingTransfer.bind(this, 'sl'),
   clubunstaking: unstakingTransfer.bind(this, 'club'),
-  defiunstaking: unstakingTransfer.bind(this, 'defi')
+  defiunstaking: unstakingTransfer.bind(this, 'defi'),
+  defirestake: restakeTransfer.bind(this, 'defi')
 }
 function handleApproveOperate() {
   stakingApprove(action.value.key);
@@ -618,6 +633,16 @@ async function unstakingTransfer(key) {
     loadingHelper.hide();
   })
 }
+function restakeTransfer(key) {
+  if (!metaMask.isAvailable()) return;
+  let data = { from: store.state.metaMask?.account, address: CONTRACTS[key].proxyAddress,  abi: abis.value[key] }
+  loadingHelper.show()
+  metaMask.confirmRestakeByContract(data).then((res) => {
+    loadingHelper.hide()
+  }).catch(err => {
+    loadingHelper.hide();
+  })
+}
 async function claimReward() {
   let isTimeAvailable = await isUnStakeTimeAvailable('defi');
   if (!isTimeAvailable) return;
@@ -640,6 +665,8 @@ function refresh() {
   getBalance('defi',true)
   getStakeStartTime('club')
   getStakeStartTime('defi')
+  getStakeTimeByContract('club')
+  getStakeTimeByContract('defi')
   getClubStatus()
   getRewardBalance()
   getRewardRate()

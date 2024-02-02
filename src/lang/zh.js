@@ -106,7 +106,8 @@ export default {
         ownership: "所有權",
         starttime: "活動開始時間",
         lock: "鎖定期",
-        return: "年轉化率"
+        return: "年轉化率",
+        re:"恢復"
     },
     message: {
         nickname: {

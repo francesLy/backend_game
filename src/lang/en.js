@@ -104,7 +104,8 @@ export default {
         ownership: "ownership",
         starttime: "Activity Start Time",
         lock: "Lockup Period",
-        return: "Annualized Return"
+        return: "Annualized Return",
+        re:"re"
     },
     message: {
         nickname: {

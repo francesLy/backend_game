@@ -360,6 +360,12 @@ export class MetaMask {
     let time = await myContract.methods.stakingStartTime().call()
     return time;
   }
+  async getStakeTimeByContract(param) {
+    const myContract = this.getContract(param.abi, param.address);
+    if (!myContract) return
+    let time = await myContract.methods.stakingTime(param.from).call()
+    return time;
+  }
   //累计购买数量
   async getCOSDHasBuyByContract(param) {
     const myContract = this.getContract(param.abi, param.address);
@@ -396,6 +402,23 @@ export class MetaMask {
     if (!myContract) return
     return new Promise((resolve, reject) => {
       myContract.methods.stake(this.toHex(param.amount)).send({
+        from: param.from
+      }).then(res => {
+        ElNotification({ type: "success", message: globals.$t('success.success') })
+        console.log("success")
+        resolve(res)
+      }).catch(err => {
+        errorHandlerOfMetaMaskRequest(err)
+        reject(err)
+      })
+    })
+  }
+  //二期再次质押
+  async confirmRestakeByContract(param) {
+    const myContract = this.getContract(param.abi, param.address);
+    if (!myContract) return
+    return new Promise((resolve, reject) => {
+      myContract.methods.confirmRestake().send({
         from: param.from
       }).then(res => {
         ElNotification({ type: "success", message: globals.$t('success.success') })

@@ -7,7 +7,7 @@ import 'font-awesome/css/font-awesome.min.css'
 import { MetaMask } from "./utils/meta-mask";
 //import installElementPlus from "./plugins/element";
 //require("../mock/index.js");
-console.log("环境：",process.env.NODE_ENV)
+console.log("环境：",process.env.VUE_APP_ENV)
 import VConsole from 'vconsole';
 if(process.env.VUE_APP_ENV != "production"){
   const vConsole = new VConsole(); 
