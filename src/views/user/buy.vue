@@ -211,19 +211,6 @@ const evicHandler = {
     metaMask.transferEvicByContract(data).then((res) => {
       visible.value = false;
       loadingHelper.hide();
-      let param = {
-        "txId": res.transactionHash,
-        "transType": TXTYPE.evic,
-        "fromUserId": store.state.user.id,
-        "fromAssetType": ASSETTYPE.usdt,
-        "fromAmount": amount.value,
-        "toUserId": store.state.user.id,
-        "toAssetType": ASSETTYPE.evic,
-        "toAmount": amount1.value,
-        "nftVo": {},
-      }
-      savaAfterTransaction(param)
-      evicBalance()
       listRefresh()
     }).catch(err => {
       loadingHelper.hide();
