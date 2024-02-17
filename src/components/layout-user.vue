@@ -3,8 +3,8 @@
     <el-container>
       <el-aside class="menu-container" :class="!isCollapse ? 'open' : 'close'" :width="width">
         <div class="logo" style="position: relative; z-index: 9; padding-left: 20px; text-align: left">
-          <img :src="require('@/assets/img/logo.webp')" />
-          <span class="wtext-l">Chess Of Stars</span>
+          <img :src="require('@/assets/img/logo&text.png')" />
+          
         </div>
         <el-menu class="menu" :default-active="$route.meta.route" :collapse="isCollapse" router>
           <el-menu-item index="/plat/assets" v-if="$store.state.role != 3">
@@ -99,8 +99,8 @@
     <el-drawer class="menu-container open" v-model="isCollapsePhone" direction="ltr" :with-header="false" :size="240">
       <div>
         <div class="logo" style="position: relative; z-index: 9; padding-left: 20px; text-align: left">
-          <img :src="require('@/assets/img/logo.webp')" />
-          <span class="wtext-l">Chess Of Stars</span>
+          <img :src="require('@/assets/img/logo&text.png')" />
+          
         </div>
         <el-menu class="menu" :default-active="$route.meta.route" router>
           <el-menu-item index="/plat/assets" v-if="$store.state.role != 3">

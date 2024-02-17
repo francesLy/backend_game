@@ -163,7 +163,7 @@
           <div class="card card-profile for-admin-only">
             <div class="card-avatar">
               <a href="#pablo">
-                <img class="img" :src="require('@/assets/img/logo.webp')" />
+                <img class="img" :src="require('@/assets/img/logo&text.png')" />
               </a>
             </div>
             <div class="card-body">

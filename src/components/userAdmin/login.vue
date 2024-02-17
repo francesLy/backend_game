@@ -1,8 +1,8 @@
 <template>
   <div class="login-bg" style="overflow-y: hidden;">
     <div class="logo" style="position: relative; z-index: 9; padding-left: 20px; text-align: left">
-      <img :src="require('@/assets/img/logo.webp')" />
-      <span class="wtext-l">Chess Of Stars</span>
+      <img :src="require('@/assets/img/logo&text.png')" />
+      
       <lang style="margin-left:20px"></lang>
     </div>
     <div class="login-box">
