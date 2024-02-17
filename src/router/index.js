@@ -2,12 +2,22 @@ import { createRouter, createWebHistory } from "vue-router";
 import store from "../store/index";
 import LayoutUser from "@/components/layout-user.vue";
 import Login from "@/components/userAdmin/login.vue";
+import Buy from "@/views/user/buy.vue";
 import LoginAdmin from "@/components/admin/login-admin.vue";
 import Notfound from "@/components/404.vue";
 const routes = [
   {
     path: "/",
     redirect: "/plat",
+  },
+  {
+    path: "/buy",
+    name: "buy",
+    component: Buy,
+    meta: {
+      title: "buy",
+      route: "/buy",
+    }
   },
   {
     path: "/login",
