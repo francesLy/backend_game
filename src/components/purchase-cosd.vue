@@ -28,7 +28,7 @@
           </el-button>
         </el-col>
         <el-col :span="24">
-          <p style="text-align: right;"><small>1COSD = 0.05USDT</small></p>
+          <p style="text-align: right;"><small>1COSD = 0.07USDT</small></p>
         </el-col>
         <el-col :span="24" style="margin-top:15px">
           <el-button type="success" @click="purchase" style="width:100%" :disabled="allowance['buycosd'] >= action.amount?false:true">
@@ -91,11 +91,11 @@ function open() {
   visible.value = true
 }
 function translate(type) {
-  let rate = 20;
+  let rate = 0.07;
   if (type == 'cosd') {
-    action.value.amount1 = action.value.amount * rate;
+    action.value.amount1 = action.value.amount / rate;
   } else if (type == 'usdt') {
-    action.value.amount = action.value.amount1 / rate;
+    action.value.amount = action.value.amount1 * rate;
   }
 }
 function toMax() {
